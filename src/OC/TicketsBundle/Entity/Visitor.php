@@ -5,12 +5,12 @@ namespace OC\TicketsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * visitor
+ * Visitor
  *
  * @ORM\Table(name="visitor")
  * @ORM\Entity(repositoryClass="OC\TicketsBundle\Repository\visitorRepository")
  */
-class visitor
+class Visitor
 {
     /**
      * @var int

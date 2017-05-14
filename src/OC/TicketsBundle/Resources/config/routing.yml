@@ -1,6 +1,10 @@
-oc_tickets_homepage:
+oc_tickets_select:
     path:     /
     defaults: { _controller: OCTicketsBundle:Tickets:select }
+
+oc_tickets_visitor:
+    path:     /visitor/{id}
+    defaults: { _controller: OCTicketsBundle:Tickets:visitor }
 
 oc_tickets_ajax_opening:
     path:     /getOpening

@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<h2>Votre sélection</h2>
+	<h3>{{ prettyDate }} -
+	{{ ticket.nbticket }} billet(s)
+		{% if ticket.duration == constant('OC\\TicketsBundle\\Entity\\Ticket::DAY') %}
+		Journée
+		{% else %}
+		demi-journée
+		{% endif %}
+		</h3>
+	{{ render(controller("OCTicketsBundle:Pricelist:list")) }}
+
+	
+
+{% endblock %}

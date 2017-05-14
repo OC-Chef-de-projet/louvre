@@ -1,0 +1,25 @@
+
+<div class="row">
+	<h2>Tarif</h2>
+	<div class="col-xs-4">
+		<table class="table table-condensed table-bordered">
+  			{% for price in pricelist %}
+  			<tr>
+    			<td>
+    				<b>{{ price.name }}</b> - {{ price.description }}
+    			</td>
+    			<td class="text-right">
+    				{{ price.price }} &euro;
+    			</td>
+    		</tr>
+  			{% endfor %}
+		</table>
+	</div>
+	<div class="col-xs-8">
+		<div class="jumbotron">
+		Le musée du Louvre est ouvert tous les jours,<br>
+		sauf les mardi et les 1er janvier, 1er mai et 25 décembre et les jours fériés.
+		</div>
+	</div>
+</div>
+

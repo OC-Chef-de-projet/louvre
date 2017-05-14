@@ -15,9 +15,7 @@ class TicketsController extends Controller
 
         $default = $this->container->get('oc.ticketsbundle.opening')->getTodayAndTomorrow();
 
-        error_log(print_r($default,true));
-        
-    	$ticket = new Ticket();
+        $ticket = new Ticket();
         $ticket->setNbticket(1);
         $ticket->setDuration(Ticket::DAY);
         $ticket->setEmail('nobody@nowhere.com');
@@ -31,6 +29,7 @@ class TicketsController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($ticket);
                 $em->flush();
+                return $this->redirectToRoute('oc_tickets_visitor', array('id' => $ticket->getId()));
             }
         }
 
@@ -39,5 +38,20 @@ class TicketsController extends Controller
         	'default' => $default
         	]
         );
+    }
+
+    public function visitorAction($id){
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('OCTicketsBundle:Ticket')
+        ;
+
+        $ticket = $repository->find($id);
+        $date = new \DateTime($ticket->getVisit()->format('y-m-d'));
+        setlocale(LC_ALL, 'fr_FR');
+        $prettyDate = strftime("%A %e %B %Y",$date->getTimestamp());
+
+        return $this->render('OCTicketsBundle:Tickets:visitor.html.twig',[ 'ticket' => $ticket, 'prettyDate' => $prettyDate ]);
     }
 }
