@@ -1,0 +1,202 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<div class="jumbotron">
+		Le musée du Louvre est ouvert tous les jours,<br>
+		sauf les mardi et les 1er janvier, 1er mai et 25 décembre et les jours fériés.
+	</div>
+
+
+  {{ form_start(form) }}
+	<h2>Sélectionnez le jour de votre visite</h2>
+	<div class="btn-group" data-toggle="buttons">
+		<label id="btn-today" class="btn btn-primary btn-lg btn-select">
+			<label for="today">Aujourd'hui</label>
+			<input id="today" value="{{ default.today }}" type="radio" autocomplete="off">
+      	</label>
+      	<label id="btn-tomorrow" class="btn btn-primary btn-lg btn-select">
+			<label for="tomorrow">Demain</label>
+			<input id="tomorrow" class="ch_date" value="{{ default.tomorrow }}" autocomplete="off" type="radio">
+      	</label>
+      	<label class="btn btn-primary btn-lg btn-select">
+			<label for="other">Autre jour</label>
+			<input id="other"  class="datepicker" value="" type="radio" autocomplete="off">
+      	</label>
+    </div>
+
+    <div style="display:block">
+		{{ form_widget(form.visit) }}
+	</div>
+
+    <h3 id="visit"></h3>
+    <h4 id="message"></h4>
+
+  	<h2>Sélectionnez votre type de billet</h2>
+  	<div class="btn-group" data-toggle="buttons">
+  		{% for choix in form.duration %}
+		<label class="btn btn-primary btn-lg btn-select">
+			{{ form_label(choix) }}
+			{{ form_widget(choix) }}
+      	</label>
+      	{% endfor %}
+    </div>
+	<p>Les billets 1/2 journée sont valables à partir de 14h</p>
+
+
+	<h2>Nombre de billets souhaités</h2>
+	<div class="input-group spinner">
+		{{ form_widget(form.nbticket) }}
+    	<div class="input-group-btn-vertical">
+      		<button class="btn btn-primary btn-lg btn-select" type="button">
+      			<i class="glyphicon glyphicon-chevron-up"></i>
+      		</button>
+      		<button class="btn btn-primary btn-lg btn-select" type="button">
+      			<i class="glyphicon glyphicon-chevron-down"></i>
+      		</button>
+    	</div>
+  	</div>
+
+	<div class="row">
+		<div class="col-xs-3 col-xs-offset-6">
+			{{ form_widget(form.save) }}
+		</div>
+	</div>
+
+  {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		$(function() {
+
+			// Mise en évidence de la date sélectionnée
+			// par défaut
+			if("{{ default.current }}" == "{{ default.today }}"){
+				$('#btn-today').addClass('active');
+			}
+
+			if("{{ default.current }}" == "{{ default.tomorrow }}"){
+				$('#btn-tomorrow').addClass('active');
+			}
+
+			// Désactive le bouton aujourd'hui si nécessaire
+			if({{ default.today_open }} == 0 ){
+				$("#btn-today").addClass('disabled')
+				$("#today").prop('disabled','disabled');;
+			}
+
+			// Désactive le bouton demain si nécessaire
+			if({{ default.tomorrow_open }} == 0 ){
+				$("#btn-tomorrow").addClass('disabled');
+				$("#tomorrow").prop('disabled','disabled');;
+			}
+
+
+			// Affichage dans un joli format de la date par défaut
+			displaySelectedDate("{{ default.current }}");
+
+			// Mise en évidence du type de billet par défaut
+			var $duration = $('input[name="oc_ticketsbundle_ticket[duration]"]:checked');
+			$duration.each(function(index, value){
+				if(value.checked){
+					$(this).closest('label').addClass("active focus");
+				}
+			});
+			// Spinner augmenter pour le nombre de billets
+			$('.spinner .btn:first-of-type').on('click', function() {
+				var val = parseInt($('.spinner input').val());
+				// Si la valeur est vide
+				if(!val){
+					val = 0;
+				}
+    			$('.spinner input').val( val + 1);
+  			});
+
+  			// Spinner diminuer pour le nombre de bilets
+  			// On ne pas pas choisir 0 ou un nombre
+  			// négatif
+  			$('.spinner .btn:last-of-type').on('click', function() {
+  				var val = parseInt($('.spinner input').val(), 10);
+  				if(!val){
+					val = 2;
+				}
+  				if(val == 1){
+  					val = 2;
+  				}
+    			$('.spinner input').val( val - 1);
+  			});
+
+  			// Affichage dans un joli format de la date
+  			// lorsqu'elle a été choisie  avec la checkbox
+			$('.btn-select').on('click', function () {
+				var input = $(this).find("input").val();
+    			displaySelectedDate(input)
+			});
+
+		});
+
+		// Sélection de la date
+		$('.datepicker').datepicker({
+				format: "yyyy-mm-dd",
+    		    startDate: "{{ default.current }}",
+    			language: "fr",
+    			keyboardNavigation: false,
+    			autoclose: true,
+    			immediateUpdates: true,
+				beforeShowDay: DisableSpecificDates
+		});
+
+		// Affichage dans un joli format de la date
+  		// lorsqu'elle a été choisie avec datepicker
+		$('.datepicker').datepicker().on('changeDate', function (ev) {
+    		displaySelectedDate(ev.date)
+		});
+
+		/*
+		$(".datepicker").datepicker().on('changeMonth', function(e){ 
+   			var currMonth = new Date(e.date).getMonth() + 1;
+   			$('.datepicker').datepicker({daysOfWeekDisabled: [0, 6]});
+   			$('.datepicker').datepicker('update');
+   			console.log(currMonth);
+
+ 		});
+ 		*/
+		// Vérifie que pour la date sélectionnée le musée
+		// est bien ouvert
+		function isOpen(date){ 
+			return $.ajax({
+				url: '{{path('oc_tickets_ajax_opening')}}',
+				method: 'post',
+				data : {'date': date}
+			}).done(function(msg){
+				response = msg.open;
+			});
+		}
+
+
+		function DisableSpecificDates(date) {
+			console.log(date);
+			isOpen(date).done(function(value) {
+				if(value.open === true){
+					return true;
+				}
+        	});
+			return(false);
+		}
+		// Affichage de la date et mise à jour du champ
+		// de saisie ainsi que les hoarires d'ouverture
+		// du musée
+		function displaySelectedDate(date){
+			isOpen(date).done(function(value) {
+				if(value.open === true){
+					$("input[name='oc_ticketsbundle_ticket[visit]']").val(value.date);
+					$('#visit').html(value.display);
+					$('#message').html(value.message);
+				}
+        	});
+		}
+
+	</script>
+{% endblock %}

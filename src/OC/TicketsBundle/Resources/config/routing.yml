@@ -1,0 +1,13 @@
+oc_tickets_homepage:
+    path:     /
+    defaults: { _controller: OCTicketsBundle:Tickets:select }
+
+oc_tickets_ajax_opening:
+    path:     /getOpening
+    defaults: { _controller: OCTicketsBundle:Ajax:getOpening }
+    methods: [post]
+
+oc_tickets_ajax_opening_month:
+    path:     /getOpeningMonth
+    defaults: { _controller: OCTicketsBundle:Ajax:getOpening }
+    methods: [post]
