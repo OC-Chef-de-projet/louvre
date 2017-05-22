@@ -1,0 +1,154 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<h2>Votre sélection</h2>
+	<h3>{{ prettyDate }} -
+	{{ ticket.nbticket }} billet(s)
+		{% if ticket.duration == constant('OC\\BookingBundle\\Entity\\Ticket::DAY') %}
+		Journée
+		{% else %}
+		demi-journée
+		{% endif %}
+	</h3>
+
+	{{ render(controller("OCBookingBundle:Pricelist:list")) }}
+
+	{{ form_start(form) }}
+		<table class="table" id="visitorsTable">
+			<thead>
+				<tr>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Pays</th>
+					<th>Date de naissance</th>
+					<th>Tarif</th>
+					<th>Montant</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for visitor in form.visitors %}
+				<tr id="user_{{ loop.index }}">
+					<td>{{ form_widget(visitor.surname) }}</td>
+					<td>{{ form_widget(visitor.name) }}</td>
+					<td>{{ form_widget(visitor.country) }}</td>
+					<td>{{ form_widget(visitor.birthday, { 'attr': {'class': 'datepicker'} } ) }}</td>
+					<td>
+						<span id="pricelist_{{ loop.index }}">&nbsp;</span><br>
+						<span id="reduced_{{ loop.index }}">
+						{{ form_widget(visitor.reduced, { 'attr': {'class': 'reduced'} }) }}&nbsp; {{ form_label(visitor.reduced) }}
+						</span>
+
+					</td>
+					<td  class="text-right amount"><span id="amount_{{ loop.index }}">&nbsp;</span>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="5" class="text-right">Total</th>
+					<th class="text-right">
+						<span id="total">0.00</span> &euro;
+					</th>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="row">
+			<div class="col-xs-3">
+				{{ form_widget(form.save) }}
+			</div>
+		</div>
+	{{ form_end(form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(function() {
+
+		// Sélection date de naissance
+		$('.datepicker').datepicker({
+				format: "dd/mm/yyyy",
+				endDate: '+0d',
+    			language: "fr",
+    			assumeNearbyYear: true,
+    			keyboardNavigation: true,
+    			autoclose: true,
+		});
+
+		// Mise à jour du tarif et de montant après la
+		// saisie de la date de naissance
+		$('.datepicker').datepicker()
+    		.on('hide', function(e) {
+    			// Est-ce que la case "tarif reduit" est cochée
+    			var tr_id = $(this).closest('tr').attr('id');
+    			var re = tr_id.replace('user_','reduced_');
+    			var reduce = $('#' + re).children("input").attr('id');
+    			var checked = $('#' + reduce).is(':checked');
+    			getPrice(e.date.toISOString(),checked,e.currentTarget);
+    	});
+
+    	// Mise à jour du tarif click tarif réduit
+    	$(".reduced").change(function() {
+    		var tr_id = $(this).closest('tr').attr('id');
+    		var input_id = $(this).closest('td').prev('td').find('input').attr('id');
+    		var birthday = $('#' + input_id).val();
+    		if($(this).is(':checked')) {
+    			getPrice(birthday,1,this);
+    		} else {
+    			if(birthday){
+					getPrice(birthday,0,this)
+    			} else {
+    				var pl = tr_id.replace('user_','pricelist_');
+    				$('#' + pl).html('');
+
+    				var amount = tr_id.replace('user_','amount_');
+    				$('#' + amount).html('0.00');
+    				totalPrice();
+    			}
+    		}
+		});
+	});
+
+	// Calcule le prix total de la commande
+	function totalPrice(){
+		var total = 0;
+ 		$('#visitorsTable').find("tbody").find("tr").each(function(){
+ 			var amount = $(this).find(".amount").text();
+ 			if(!amount.trim())amount = '0.00';
+	    	total =  parseFloat(total) +  parseFloat(amount);
+    		$('#total').html(total.toFixed(2));
+    	});
+	}
+
+	// Rechercdu prix
+	function getPrice(birthday,reduced, target){
+		getPriceList(birthday,reduced, function(data){
+    		var tr_id = $(target).closest('tr').attr('id');
+    		var pl = tr_id.replace('user_','pricelist_');
+    		$('#' + pl).html(data.name);
+
+    		var amount = tr_id.replace('user_','amount_');
+    		$('#' + amount).html(data.price);
+    		totalPrice();
+		});
+	}
+
+	function getPriceList(birthday,reduced,callback) {
+    	var count;
+    	$.ajax({
+       		method: 'post',
+       		url: '{{path('oc_booking_ajax_listprice')}}',
+       		data : {
+       			'birthday': birthday,
+       			'reduced': reduced,
+       			'duration': {{ ticket.duration }}
+       		},
+       		success: function (data) {
+        		if(typeof callback === "function") callback(data);
+      		}
+   		});
+	}
+</script>
+{% endblock %}

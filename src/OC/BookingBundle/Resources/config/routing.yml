@@ -1,0 +1,22 @@
+oc_booking_select:
+  path:     /
+  defaults: { _controller: OCBookingBundle:Booking:select }
+
+oc_booking_visitor:
+  path:     /visitor
+  defaults: { _controller: OCBookingBundle:Booking:visitor }
+
+oc_booking_prepare_order:
+  path:     /prepare
+  defaults: { _controller: OCBookingBundle:Booking:prepare }
+
+
+oc_booking_ajax_opening:
+  path:     /getOpening
+  defaults: { _controller: OCBookingBundle:Ajax:getOpening }
+  methods: [post]
+
+oc_booking_ajax_listprice:
+  path:     /getListprice
+  defaults: { _controller: OCBookingBundle:Ajax:getListprice }
+  methods: [post]
