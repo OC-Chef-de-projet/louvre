@@ -54,7 +54,6 @@ class Price
     public function getTotalPrice($ticket_id)
     {
         $total = $this->em->getRepository('OCBookingBundle:Visitor')->calculateAmount($ticket_id);
-        print_r($total);
     }
 
 
