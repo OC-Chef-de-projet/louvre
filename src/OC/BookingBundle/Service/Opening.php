@@ -162,3 +162,4 @@ class Opening
         return true;
     }
 }
+

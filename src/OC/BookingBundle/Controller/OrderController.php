@@ -1,15 +1,11 @@
 <?php
 
 namespace OC\TicketsBundle\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class OrderController extends Controller
 {
-	/**
-	 * @Route("/prepare", name="order_prepare")
-	 */
-	public function prepare()
+	public function prepareAction()
 	{
-		echo "OK";
-		exit;
 	}
 }

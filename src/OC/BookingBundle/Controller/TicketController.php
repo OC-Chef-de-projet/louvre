@@ -3,10 +3,9 @@ namespace OC\BookingBundle\Controller;
 
 use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Entity\Visitor;
-use OC\BookingBundle\Form\TicketType;
+use OC\BookingBundle\Form\Type\TicketType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use OC\BookingBundle\Service;
 
 /**
  * Tickets
@@ -26,7 +25,6 @@ class TicketController extends Controller
 
         $ticket = new Ticket();
 
-        //$form = $this->get('form.factory')->create(TicketType::class, $ticket);
         $form = $this->createForm(TicketType::class, $ticket);    //
 
         if ($request->isMethod('POST')) {
@@ -49,15 +47,7 @@ class TicketController extends Controller
         $form->handleRequest($request);
         return $this->render('OCBookingBundle:Tickets:test.html.twig', array(
             'form' => $form->createView(),
+	    $default
         ));
-        /*
-        return $this->render(
-            'OCBookingBundle:Tickets:test.html.twig',
-            [
-                'form' => $form->createView(),
-                'default' => $default
-            ]
-        );
-        */
     }
 }

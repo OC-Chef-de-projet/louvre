@@ -75,16 +75,4 @@ class Booking
         }
         return $ticket;
    }
-
-    public function getAmount($ticket_id)
-    {
-        /*
-        $repo = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('OCBookingBundle:Visitor')
-        ;
-        return $repo->calculateAmount($ticket_id);
-        */
-    }
 }

@@ -3,12 +3,9 @@
 namespace OC\BookingBundle\Controller;
 
 use OC\BookingBundle\Entity\Visitor;
-use OC\BookingBundle\Form\VisitorType;
-
-use OC\BookingBundle\Entity\Ticket;
-use OC\BookingBundle\Form\TicketType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use OC\BookingBundle\Form\Type\VisitorsType;
 
 /**
  * Saisie des visieturs
@@ -45,9 +42,6 @@ class VisitorController extends Controller
         $ticket = $repository->find($id);
        
         $visitor = new Visitor();
-        //$visitor->setTicket($ticket);
-
-        $nb = $ticket->getNbticket();
 
         $visitor->setName(array_fill(0, $ticket->getNbTicket(), ''));
         $visitor->setSurname(array_fill(0, $ticket->getNbTicket(), ''));

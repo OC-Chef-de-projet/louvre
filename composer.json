@@ -1,4 +1,5 @@
 {
+    "description": "Module de paiement",
     "name": "psa/louvre",
     "license": "proprietary",
     "type": "project",

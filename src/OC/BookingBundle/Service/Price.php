@@ -2,8 +2,6 @@
 namespace OC\BookingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use OC\BookingBundle\Entity\Ticket;
-use OC\BookingBundle\Entity\Visitor;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Price

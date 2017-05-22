@@ -1,9 +1,7 @@
 <?php
 namespace OC\BookingBundle\Controller;
 
-use OC\BookingBundle\Entity\Pricelist;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Tarif

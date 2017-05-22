@@ -2,9 +2,7 @@
 
 namespace OC\BookingBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Collections\ArrayCollection;
 use OC\BookingBundle\Entity\Ticket;
 
@@ -150,7 +148,6 @@ class Visitor
             $birthday = $date[2].'-'.$date[1].'-'.$date[0];
         }
         $this->birthday = new \DateTime($birthday);
-        //$this->birthday = $birthday;
 
         return $this;
     }

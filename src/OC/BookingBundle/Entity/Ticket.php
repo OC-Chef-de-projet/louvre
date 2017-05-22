@@ -2,14 +2,9 @@
 
 namespace OC\BookingBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
-//
-//use OC\BookingBundle\Entity\Visitor;
 /**
  * Ticket
  *
@@ -83,7 +78,7 @@ class Ticket
 
 
 
-    public function __construct(array $options = array())
+    public function __construct()
     {
     	// valeurs par défault à la création
         $this->setNbticket(1);
@@ -115,7 +110,6 @@ class Ticket
     public function setVisit($visit)
     {
         $this->visit = new \DateTime($visit);
-        //$this->visit = $visit;
 
         return $this;
     }

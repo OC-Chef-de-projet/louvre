@@ -3,12 +3,9 @@ namespace OC\BookingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use OC\BookingBundle\Controller\TicketController;
 
 use OC\BookingBundle\Entity\Ticket;
-use OC\BookingBundle\Entity\Visitor;
-use OC\BookingBundle\Form\TicketType;
-use OC\BookingBundle\Service;
+use OC\BookingBundle\Form\Type\TicketType;
 
 /**
  * Tickets
@@ -74,3 +71,4 @@ class BookingController extends Controller
         echo "FIN";
     }
 }
+
