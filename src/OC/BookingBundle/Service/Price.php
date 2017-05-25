@@ -3,17 +3,18 @@ namespace OC\BookingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use OC\BookingBundle\Entity\Ticket;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use OC\BookingBundle\Service\Utils;
 
 class Price
 {
 
     private $em;
-    private $container;
+    private $utils;
 
-    public function __construct(EntityManager $doctrine, ContainerInterface $container)
+    public function __construct(EntityManager $em, Utils $utils)
     {
-        $this->em = $doctrine;
-        $this->container = $container;
+        $this->em = $em;
+        $this->utils = $utils;
     }
 
     /**
@@ -36,7 +37,7 @@ class Price
             $reduced = 0;
         }
 
-        $age = $this->container->get('oc.bookingbundle.utils')->getAge($birthday->format('Y-m-d'));
+        $age = $this->utils->getAge($birthday->format('Y-m-d'));
 
         if($reduced == 1){
             $age = 9999;

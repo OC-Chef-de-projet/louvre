@@ -5,17 +5,17 @@ use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Entity\Visitor;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use OC\BookingBundle\Service\Price;
 class Booking
 {
 
     private $em;
-    private $container;
+    private $price;
 
-    public function __construct(EntityManager $doctrine, ContainerInterface $container)
+    public function __construct(EntityManager $em, Price $price)
     {
-        $this->em = $doctrine;
-        $this->container = $container;
+        $this->em = $em;
+        $this->price = $price;
     }
 
 
@@ -32,7 +32,7 @@ class Booking
     public function saveVisitors(Ticket $ticket,Request $request)
     {
         foreach($ticket->getVisitors() as $visitor){
-            $price = $this->container->get('oc.bookingbundle.price')->getTicketPrice(
+            $price = $this->price->getTicketPrice(
                 $visitor->getBirthday(),
                 $ticket->getDuration(),
                 $visitor->getReduced()
@@ -45,7 +45,7 @@ class Booking
         $this->em->flush();
 
         // Calcul du total de la commande
-        (float)$total = $this->container->get('oc.bookingbundle.price')->getTotalPrice($ticket->getId());
+        (float)$total = $this->price->getTotalPrice($ticket->getId());
         $ticket->setAmount($total);
         $this->em->persist($ticket);
         $this->em->flush();
