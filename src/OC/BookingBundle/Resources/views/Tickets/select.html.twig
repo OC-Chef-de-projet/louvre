@@ -151,6 +151,7 @@
 		// Affichage dans un joli format de la date
   		// lorsqu'elle a été choisie avec datepicker
 		$('.datepicker').datepicker().on('changeDate', function (ev) {
+			console.log(ev.date.getDate());
     		displaySelectedDate(ev.date)
 		});
 
@@ -172,7 +173,6 @@
 		// du musée
 		function displaySelectedDate(date){
 			isOpen(date).done(function(value) {
-				console.log(value);
 				if(value.open === true){
 					$("input[name='oc_bookingbundle_ticket[visit]']").val(value.date);
 					$('#visit').html(value.display);

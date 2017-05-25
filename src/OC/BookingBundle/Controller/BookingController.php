@@ -23,7 +23,21 @@ class BookingController extends Controller
     {
 
         $default = $this->container->get('oc.bookingbundle.opening')->getDefaultDates();
-        $ticket = new Ticket();
+        
+
+        $ticket_id = $session = $request->getSession()->get('ticket_id');
+        
+        if($ticket_id){
+            $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('OCBookingBundle:Ticket')
+                ;
+            $ticket = $repository->find($ticket_id);
+        } else {
+            $ticket = new Ticket();
+        }
+        
     	$form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
@@ -64,7 +78,7 @@ class BookingController extends Controller
         ));
     }
 
-    public function PrepareAction(Request $request)
+    public function prepareAction(Request $request)
     {
         $session = $request->getSession();
         $id = $session->get('ticket_id');
