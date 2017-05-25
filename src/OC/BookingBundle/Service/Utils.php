@@ -29,7 +29,7 @@ class Utils
 
     }
 */
-    function getAge($date) {
+    public function getAge($date) {
         $age = date('Y') - date('Y', strtotime($date));
         if (date('md') < date('md', strtotime($date))) {
             return $age - 1;
