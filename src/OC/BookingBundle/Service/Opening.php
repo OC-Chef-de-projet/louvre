@@ -47,7 +47,6 @@ class Opening
         // Vaux mieux  ne pas tomber dans une
         // boucle infinie
         $max = self::MAX_MONTH * 31;
-        $counter = 0;
         $disabled = array();
 
         while(true){
@@ -107,8 +106,6 @@ class Opening
 
     public function isOpen(\DateTime $date)
     {
-
-        $response = false;
 
         $today = new \DateTime('now');
 

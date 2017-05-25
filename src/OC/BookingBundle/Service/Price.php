@@ -48,12 +48,4 @@ class Price
         }
         return $tariff;
     }
-
-
-    public function getTotalPrice($ticket_id)
-    {
-        $total = $this->em->getRepository('OCBookingBundle:Visitor')->calculateAmount($ticket_id);
-    }
-
-
 }

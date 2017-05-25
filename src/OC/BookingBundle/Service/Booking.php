@@ -29,7 +29,7 @@ class Booking
         $session->set('ticket_id', $ticket->getId());
    }
 
-    public function saveVisitors(Ticket $ticket,Request $request)
+    public function saveVisitors(Ticket $ticket)
     {
         foreach($ticket->getVisitors() as $visitor){
             $price = $this->price->getTicketPrice(

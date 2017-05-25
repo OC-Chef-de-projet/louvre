@@ -25,7 +25,7 @@ class BookingController extends Controller
         $default = $this->container->get('oc.bookingbundle.opening')->getDefaultDates();
         
 
-        $ticket_id = $session = $request->getSession()->get('ticket_id');
+        $ticket_id = $request->getSession()->get('ticket_id');
         
         if($ticket_id){
             $repository = $this
@@ -80,9 +80,6 @@ class BookingController extends Controller
 
     public function prepareAction(Request $request)
     {
-        $session = $request->getSession();
-        $id = $session->get('ticket_id');
-        echo "FIN";
     }
 }
 
