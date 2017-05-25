@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Pricelist
  *
  * @ORM\Table(name="pricelist")
- * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\pricelistRepository")
+ * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\PricelistRepository")
  */
 class Pricelist
 {

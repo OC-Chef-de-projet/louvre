@@ -10,7 +10,7 @@ use OC\BookingBundle\Entity\Ticket;
  * Visitor
  *
  * @ORM\Table(name="visitor")
- * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\visitorRepository")
+ * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\VisitorRepository")
  */
 class Visitor
 {
