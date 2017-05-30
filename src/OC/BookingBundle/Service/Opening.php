@@ -41,9 +41,6 @@ class Opening
         $startDate = new \DateTime();
         $endDate = new \DateTime("+".self::MAX_MONTH." month");
 
-        error_log("Start ".$startDate->format('d/m/Y'));
-        error_log("End   ".$endDate->format('d/m/Y'));
-
         // Vaux mieux  ne pas tomber dans une
         // boucle infinie
         $max = self::MAX_MONTH * 31;
@@ -51,13 +48,15 @@ class Opening
 
         while(true){
             if(!$this->isOpen($startDate)){
-                $disabled[] = "'".$startDate->format('Y-m-d')."'";
+                
+                $disabled[] = $startDate->format('Y-m-d');
             }
             if($startDate == $endDate)break;
             if($max-- <= 0)break;
             $startDate->modify('+1 day');
         }
-        return implode(',',$disabled);
+        //return implode(',',$disabled);
+        return $disabled;
     }
 
     public function getDefaultDates(){

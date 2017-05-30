@@ -145,7 +145,11 @@
     			language: "fr",
     			keyboardNavigation: false,
     			autoclose: true,
-    			datesDisabled: [{{ default.disabledDates }}]
+    			datesDisabled: [
+    				{% for disabledDate in default.disabledDates %}
+						"{{ disabledDate }}",
+					{% endfor %}
+    			]
 		});
 
 		// Affichage dans un joli format de la date
