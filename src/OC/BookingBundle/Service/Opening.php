@@ -48,14 +48,12 @@ class Opening
 
         while(true){
             if(!$this->isOpen($startDate)){
-                
                 $disabled[] = $startDate->format('Y-m-d');
             }
             if($startDate == $endDate)break;
             if($max-- <= 0)break;
             $startDate->modify('+1 day');
         }
-        //return implode(',',$disabled);
         return $disabled;
     }
 
