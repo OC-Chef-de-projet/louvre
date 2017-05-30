@@ -4,7 +4,6 @@ use Doctrine\ORM\EntityManager;
 use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Entity\Visitor;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use OC\BookingBundle\Service\Price;
 class Booking
 {
