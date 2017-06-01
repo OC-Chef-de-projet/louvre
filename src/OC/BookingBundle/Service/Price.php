@@ -2,6 +2,7 @@
 namespace OC\BookingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use OC\BookingBundle\Entity\Ticket;
+use OC\BookingBundle\Entity\Visitor;
 use OC\BookingBundle\Service\Utils;
 
 class Price
@@ -27,7 +28,7 @@ class Price
     public function getTicketPrice(\DateTime $birthday,$duration,$reduced = 0)
     {
 
-
+        error_log("ok");
         if($reduced == 'true'){
             $reduced = 1;
         }
@@ -46,5 +47,11 @@ class Price
             $tariff->setPrice(number_format($tariff->getPrice() / 2,2,'.',''));
         }
         return $tariff;
+    }
+
+    public function getTotalPrice($ticket_id)
+    {
+        $total = $this->em->getRepository('OCBookingBundle:Visitor')->getTotalAmount($ticket_id);
+        return $total;
     }
 }

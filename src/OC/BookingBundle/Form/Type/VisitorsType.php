@@ -4,10 +4,10 @@ namespace OC\BookingBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use OC\BookingBundle\Form\VisitorType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class VisitorsType extends AbstractType
 {
@@ -16,16 +16,24 @@ class VisitorsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nbticket',   TextType::class,array(
-                    'attr' => array('class' => 'form-control')
+            $builder->add('visitors', CollectionType::class, array(
+                   'entry_type' => VisitorType::class
                 )
             )
-            ->add('visitors', CollectionType::class, array(
-                'entry_type' => VisitorType::class
-        )
-        ->add('save', SubmitType::class,array(
+            ->add('save', SubmitType::class,array(
                     'attr' => array('class' => 'btn btn-primary btn-block btn-lg'),
                 )
+            );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'OC\BookingBundle\Entity\Ticket'
             )
         );
     }
@@ -33,21 +41,10 @@ class VisitorsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    /*
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'OC\TicketsBundle\Entity\Visitor'
-        ));
-    }
-    */
-    /**
-     * {@inheritdoc}
-     */
-    /*
     public function getBlockPrefix()
     {
-        return 'oc_ticketsbundle_visitor';
+        return 'oc_bookingbundle_ticket';
     }
-    */
+
+
 }

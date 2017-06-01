@@ -12,7 +12,7 @@
 		{% endif %}
 	</h3>
 
-	{{ render(controller("OCBookingBundle:Pricelist:list")) }}
+	{{ render(controller("OCBookingBundle:Pricelist:list",{ 'coeff':ticket.duration} ))  }}
 
 	{{ form_start(form) }}
 		<table class="table" id="visitorsTable">
@@ -40,7 +40,7 @@
 						</span>
 
 					</td>
-					<td  class="text-right amount"><span id="amount_{{ loop.index }}">&nbsp;</span>
+					<td  class="text-right amount"><span id="amount_{{ loop.index }}">&nbsp;</span>&nbsp;&euro;
 					</td>
 				</tr>
 				{% endfor %}
@@ -60,6 +60,15 @@
 			</div>
 		</div>
 	{{ form_end(form) }}
+<h1>Variables passed to the view:</h1>
+{% for key, value in _context %}
+    {% if key starts with '_' %}
+    {% else %}
+        <pre style="background: #eee">{{ key }}</pre>
+        {{ dump(value) }}
+    {% endif %}
+{% endfor %}
+
 {% endblock %}
 
 
@@ -67,6 +76,14 @@
 <script type="text/javascript">
 	$(function() {
 
+		{% for visitor in ticket.visitors %}
+			$("#amount_{{ loop.index }}").text("{{visitor.amount|number_format(2, '.', '')}}");
+			{% if visitor.pricelists.name is defined %}
+				$("#pricelist_{{ loop.index }}").text("{{visitor.pricelists.name}}");
+			{% endif %}
+		{% endfor %}
+		
+		totalPrice();
 		// Sélection date de naissance
 		$('.datepicker').datepicker({
 				format: "dd/mm/yyyy",

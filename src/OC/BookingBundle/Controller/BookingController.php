@@ -6,7 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Form\Type\TicketType;
-
+use OC\BookingBundle\Form\Type\PaymentType;
+use OC\BookingBundle\Form\Type\VisitorsType;
 /**
  * Tickets
  */
@@ -21,23 +22,9 @@ class BookingController extends Controller
      */
     public function selectAction(Request $request)
     {
+        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
+        $default = $this->container->get('oc.bookingbundle.opening')->getDefaults($ticket);
 
-        $default = $this->container->get('oc.bookingbundle.opening')->getDefaultDates();
-        
-
-        $ticket_id = $request->getSession()->get('ticket_id');
-        
-        if($ticket_id){
-            $repository = $this
-                ->getDoctrine()
-                ->getManager()
-                ->getRepository('OCBookingBundle:Ticket')
-                ;
-            $ticket = $repository->find($ticket_id);
-        } else {
-            $ticket = new Ticket();
-        }
-        
     	$form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
@@ -55,22 +42,28 @@ class BookingController extends Controller
         );
     }
 
+    /**
+     * Etape 2
+     * Saisie des visiteurs
+     *
+     * @param  Request $request
+     * @return
+     */
     public function visitorAction(Request $request)
     {
 
-        $ticket = $this->container->get('oc.bookingbundle.booking')->initVisitors($request);
-        if(!$ticket){
-            return $this->redirectToRoute('homepage');
-        }
+		$ticket = $this->container->get('oc.bookingbundle.booking')->getVisitors($request);
+		if(!$ticket->getId()){
+			return $this->redirectToRoute('oc_booking_select');
+		}
 
-        $form = $this->createForm(TicketType::class, $ticket, ['page' => 2]) ;
+        $form = $this->createForm(VisitorsType::class, $ticket) ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->container->get('oc.bookingbundle.booking')->saveVisitors($ticket,$request);
-            return $this->redirectToRoute('oc_booking_prepare_order');
+            return $this->redirectToRoute('oc_booking_payment');
         }
-
         return $this->render('OCBookingBundle:Visitor:visitors.html.twig', array(
             'form' => $form->createView(),
             'prettyDate' => $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d')),
@@ -78,8 +71,53 @@ class BookingController extends Controller
         ));
     }
 
-    public function prepareAction(Request $request)
+    /**
+     * Etape 3
+     * Paiement
+     *
+     * @param  Request $request
+     * @return
+     */
+    public function paymentAction(Request $request)
     {
+
+        $stripe_pk = $this->getParameter('stripe_pk');
+
+        $form = $this->createForm(PaymentType::class) ;
+        $form->handleRequest($request);
+
+        
+
+        $ticket_id = $request->getSession()->get('ticket_id');
+        if($ticket_id){
+            $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('OCBookingBundle:Ticket')
+                ;
+            $ticket = $repository->find($ticket_id);
+        }
+        if(!$ticket){
+            return $this->redirectToRoute('oc_booking_select');
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $ticket->setEmail($data['email']);
+            $ticket->setPaymentdate(new \DateTime('now'));
+            $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket,$request);
+            $data['amount'] = $ticket->getAmount();
+            $this->container->get('oc.bookingbundle.stripe')->charge($data);
+            exit;
+        }
+
+        return $this->render('OCBookingBundle:Payment:payment.html.twig', array(
+            'form' => $form->createView(),
+            'prettyDate' => $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d')),
+            'ticket' => $ticket,
+            'stripe_pk' => $stripe_pk
+
+        ));
     }
 }
 

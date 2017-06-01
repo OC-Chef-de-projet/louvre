@@ -1,10 +1,18 @@
 <?php
 namespace OC\BookingBundle\Service;
-
+use OC\BookingBundle\Entity\Ticket;
+use OC\BookingBundle\Service\Utils;
 class Opening
 {
 
     const MAX_MONTH = 6;
+
+
+    public function __construct(Utils $utils)
+    {
+        $this->utils = $utils;
+    }
+
 
     public function isOpenToday()
     {
@@ -17,10 +25,6 @@ class Opening
         return $this->isOpen($today->modify('+1 day'));
     }
 
-
-    public function isMonthOpen($month, $year){
-        error_log("$month, $year");
-    }
 
 
     public function getNextAvailable(\DateTime $date ){
@@ -57,7 +61,12 @@ class Opening
         return $disabled;
     }
 
-    public function getDefaultDates(){
+    public function getDefaults(Ticket $ticket){
+
+        /*
+         $default['pretty'] = $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d'));
+        $default['current'] = $ticket->getVisit()->format('Y-m-d');
+         */
         setlocale(LC_ALL, 'fr_FR');
         $date = new \DateTime('now');
         $date2 = new \DateTime('tomorrow');
@@ -70,6 +79,7 @@ class Opening
     
         $default = [
             'current' => '',
+            'startDate' => '',
             'today' => $today,
             'tomorrow' => $tomorrow,
             'today_open' => 0,
@@ -82,21 +92,25 @@ class Opening
          // On part de la fin pour que le jour le plus proche
         // d'ouverture soit sélectionné.
         if ($this->isOpenTomorrow()){
-            $default['current'] = $tomorrow;
+            $default['startDate'] = $tomorrow;
             $default['tomorrow_open'] = 1;
             $default['pretty'] = strftime("%A %e %B %Y",$date2->getTimestamp());
         }
         if($this->isOpenToday()){
-                $default['current'] = $today;
+                $default['startDate'] = $today;
                 $default['today_open'] = 1;
                 $default['pretty'] = strftime("%A %e %B %Y",$date->getTimestamp());
         }
 
-        if(empty($default['current'])){
-            $default['current'] = $this->getNextAvailable($date2);
+        if(empty($default['startDate'])){
+            $default['startDate'] = $this->getNextAvailable($date2);
         }
-
-        
+        if($ticket->getId()){
+            $default['current'] = $ticket->getVisit()->format('Y-m-d');
+        } else {
+            $default['current'] = $default['startDate'];
+        }
+        $default['pretty'] = $this->utils->getPrettyDate($default['current']); 
 
         return $default;
     }
@@ -106,7 +120,6 @@ class Opening
 
         $today = new \DateTime('now');
 
-        error_log($date->format('d/m/Y'));
 
         $plustard = new \DateTime('now +6 month');
         $interval = $plustard->diff($date);

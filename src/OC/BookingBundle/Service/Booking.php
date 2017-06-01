@@ -20,12 +20,49 @@ class Booking
 
    public function saveTicket(Ticket $ticket,Request $request)
    {
+        $ticket->setOrderdate(new \DateTime('now'));
+        error_log("FR ".$ticket->getVisit()->format('Y-m-d'));
         $this->em->persist($ticket);
         $this->em->flush();
 
         // L'identifiant du ticket est stocké dans une variable de session
         $session = $request->getSession();
         $session->set('ticket_id', $ticket->getId());
+   }
+
+   /**
+    * Retourne un nouveau ticket ou un ticket
+    * existant si l'ID est en session.
+    *
+    * @param  Request $request [description]
+    * @return [type]           [description]
+    */
+   public function getTicket(Request $request)
+   {
+        $ticket_id = $request->getSession()->get('ticket_id');
+        error_log("TICK $ticket_id");
+        if($ticket_id){
+            $repository = $this->em->getRepository('OCBookingBundle:Ticket');
+            $ticket = $repository->find($ticket_id);
+            //$this->initVisitors($ticket);
+            return $ticket;
+        }
+        $ticket = new Ticket();
+        return $ticket;
+   }
+
+   public function getVisitors(Request $request)
+   {
+        $ticket_id = $request->getSession()->get('ticket_id');
+        error_log("TICK $ticket_id");
+        if($ticket_id){
+            $repository = $this->em->getRepository('OCBookingBundle:Ticket');
+            $ticket = $repository->find($ticket_id);
+            $this->initVisitors($ticket);
+            return $ticket;
+        }
+        $ticket = new Ticket();
+        return $ticket;
    }
 
     public function saveVisitors(Ticket $ticket)
@@ -37,6 +74,7 @@ class Booking
                 $visitor->getReduced()
             );
             $visitor->setAmount($price->getPrice());
+            $visitor->setPricelist($price);
         }
 
         // Sauvegarde
@@ -57,21 +95,31 @@ class Booking
     * @param  Request $request
     * @return Ticket
     */
-   public function initVisitors(Request $request)
+   public function initVisitors(Ticket $ticket)
    {
-        $session = $request->getSession();
-        $ticket_id = $session->get('ticket_id');
 
-        if(empty($ticket_id)){
+        if(!$ticket->getId()){
             return false;
         }
-        $ticket = $this->em->find('OC\BookingBundle\Entity\Ticket',$ticket_id);
         $nbTicket = $ticket->getNbticket();
-        for ($i = 0 ; $i < $nbTicket ; $i++){
-            $v = new Visitor();
-            $v->setTicket($ticket);
-            $ticket->addVisitor($v);
+        $visitors = $ticket->getVisitors();
+
+        // Dans le cas où le nombre de tickets
+        // sélectionnés est inférieur au nombre
+        // de ticket déjà saisi on efface en partant
+        // de la fin.
+        if(count($visitors) > $nbTicket){
+            for ($i = count($visitors) - 1 ; $i >= $nbTicket; $i--){
+                $ticket->removeVisitor($visitors[$i]);
+            }
+            $this->em->persist($ticket);
+            $this->em->flush();
+        } else {
+            for ($i = count($visitors) ; $i < $nbTicket ; $i++){
+                $v = new Visitor();
+                $v->setTicket($ticket);
+                $ticket->addVisitor($v);
+            }
         }
-        return $ticket;
    }
 }

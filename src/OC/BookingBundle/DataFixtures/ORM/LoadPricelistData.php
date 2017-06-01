@@ -1,8 +1,8 @@
 <?php
-namespace OC\TicketsBundle\DataFixtures\ORM;
+namespace OC\BookingBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OC\TicketsBundle\Entity\Pricelist;
+use OC\BookingBundle\Entity\Pricelist;
 
 class LoadPricelistData implements FixtureInterface
 {

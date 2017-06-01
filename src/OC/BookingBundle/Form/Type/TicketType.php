@@ -19,21 +19,11 @@ class TicketType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($options['page'] == 2){
-            $builder->add('visitors', CollectionType::class, array(
-                   'entry_type' => VisitorType::class
-                )
-            )
-            ->add('save', SubmitType::class,array(
-                    'attr' => array('class' => 'btn btn-primary btn-block btn-lg'),
-                )
-            );
-        } else {
             $builder
                 ->add('visit', DateType::class,array(
                         'attr' => array('class' => 'form-control'),
                         'widget' => 'single_text',
-                        'format' => 'yyyy-mm-dd'
+                        'html5' => true
                     )
                 )
                 ->add('duration', ChoiceType::class,array(
@@ -55,7 +45,6 @@ class TicketType extends AbstractType
                     )
                 )
             ;
-        }
     }
 
     /**

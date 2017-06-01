@@ -1,8 +1,30 @@
 services:
-#    oc_tickets.example:
-#        class: OC\TicketsBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
-oc.bookingbundle.listprice:
-  class: OC\BookingBundle\Service\Listprice
-  arguments: []
+  oc.bookingbundle.listprice:
+    class: OC\BookingBundle\Service\Listprice
+    arguments: []
 
+  oc.bookingbundle.utils:
+    class: OC\BookingBundle\Service\Utils
+    arguments: []
+
+  oc.bookingbundle.opening:
+    class: OC\BookingBundle\Service\Opening
+    arguments: ['@oc.bookingbundle.utils']
+
+
+  oc.bookingbundle.booking:
+    class: OC\BookingBundle\Service\Booking
+    arguments: ["@doctrine.orm.entity_manager", '@oc.bookingbundle.price' ]
+
+  oc.bookingbundle.price:
+    class: OC\BookingBundle\Service\Price
+    arguments: ["@doctrine.orm.entity_manager", '@oc.bookingbundle.utils']
+
+  oc.bookingbundle.stripe:
+    class: OC\BookingBundle\Service\StripePayment
+    arguments: ["%stripe_sk%"]
+
+  oc.bookingbundle.twig.country_extension:
+    class: OC\BookingBundle\Twig\CountryExtension
+    tags:
+      - { name: twig.extension }

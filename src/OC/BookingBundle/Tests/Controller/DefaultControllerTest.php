@@ -1,6 +1,6 @@
 <?php
 
-namespace OC\TicketsBundle\Tests\Controller;
+namespace OC\BookingBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

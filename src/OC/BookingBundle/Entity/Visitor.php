@@ -59,7 +59,6 @@ class Visitor
      */
     private $amount;
 
-
     /**
      * @var int
      *
@@ -68,12 +67,22 @@ class Visitor
      */
     private $ticket;
 
+    /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="Pricelist", inversedBy="visitors")
+     * @ORM\JoinColumn(name="pricelist_id", referencedColumnName="id")
+     */
+    private $pricelists;
+
    /**
     * @var boolean $isEnabled
     *
     * @ORM\Column(name="reduced", type="boolean")
     */
     private $reduced;
+
+
 
     /**
      * Get id
@@ -143,12 +152,15 @@ class Visitor
     public function setBirthday($birthday)
     {
 
+
+        /*
         if(preg_match('#/#',$birthday)){
             $date = explode('/',$birthday);
             $birthday = $date[2].'-'.$date[1].'-'.$date[0];
         }
         $this->birthday = new \DateTime($birthday);
-
+        */
+        $this->birthday = $birthday;
         return $this;
     }
 
@@ -307,4 +319,76 @@ class Visitor
         return $this->reduced;
     }
 
+
+    /**
+     * Add pricelist
+     *
+     * @param \OC\BookingBundle\Entity\Pricelist $pricelist
+     *
+     * @return Visitor
+     */
+    public function addPricelist(\OC\BookingBundle\Entity\Pricelist $pricelist)
+    {
+        $this->pricelist[] = $pricelist;
+
+        return $this;
+    }
+
+    /**
+     * Remove pricelist
+     *
+     * @param \OC\BookingBundle\Entity\Pricelist $pricelist
+     */
+    public function removePricelist(\OC\BookingBundle\Entity\Pricelist $pricelist)
+    {
+        $this->pricelist->removeElement($pricelist);
+    }
+
+    /**
+     * Get pricelist
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPricelist()
+    {
+        return $this->pricelist;
+    }
+
+    /**
+     * Get pricelists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPricelists()
+    {
+        return $this->pricelists;
+    }
+
+    /**
+     * Set pricelist
+     *
+     * @param \OC\BookingBundle\Entity\Pricelist $pricelist
+     *
+     * @return Visitor
+     */
+    public function setPricelist(\OC\BookingBundle\Entity\Pricelist $pricelist = null)
+    {
+        $this->pricelist = $pricelist;
+
+        return $this;
+    }
+
+    /**
+     * Set pricelists
+     *
+     * @param \OC\BookingBundle\Entity\Pricelist $pricelists
+     *
+     * @return Visitor
+     */
+    public function setPricelists(\OC\BookingBundle\Entity\Pricelist $pricelists = null)
+    {
+        $this->pricelists = $pricelists;
+
+        return $this;
+    }
 }

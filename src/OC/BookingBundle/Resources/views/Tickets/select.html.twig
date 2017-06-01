@@ -19,13 +19,13 @@
 			<label for="tomorrow">Demain</label>
 			<input id="tomorrow" class="ch_date" value="{{ default.tomorrow }}" autocomplete="off" type="radio">
       	</label>
-      	<label class="btn btn-primary btn-lg btn-select">
+      	<label id="btn-other" class="btn btn-primary btn-lg btn-select">
 			<label for="other">Autre jour</label>
 			<input id="other"  class="datepicker" value="" type="radio" autocomplete="off">
       	</label>
     </div>
 
-    <div style="display:block">
+    <div style="display:none">
 		{{ form_widget(form.visit) }}
 	</div>
 
@@ -35,7 +35,7 @@
   	<h2>Sélectionnez votre type de billet</h2>
   	<div class="btn-group" data-toggle="buttons">
   		{% for choix in form.duration %}
-		<label class="btn btn-primary btn-lg btn-select">
+		<label class="btn btn-primary btn-lg">
 			{{ form_label(choix) }}
 			{{ form_widget(choix) }}
       	</label>
@@ -75,10 +75,10 @@
 			// par défaut
 			if("{{ default.current }}" == "{{ default.today }}"){
 				$('#btn-today').addClass('active');
-			}
-
-			if("{{ default.current }}" == "{{ default.tomorrow }}"){
+			} else if("{{ default.current }}" == "{{ default.tomorrow }}"){
 				$('#btn-tomorrow').addClass('active');
+			} else {
+				$('#btn-other').addClass('active');
 			}
 
 			// Désactive le bouton aujourd'hui si nécessaire
@@ -140,7 +140,7 @@
 		// Sélection de la date
 		$('.datepicker').datepicker({
 				format: "yyyy-mm-dd",
-    		    startDate: "{{ default.current }}",
+    		    startDate: "{{ default.startDate }}",
 				endDate: "{{ default.endDate }}",
     			language: "fr",
     			keyboardNavigation: false,
@@ -155,7 +155,6 @@
 		// Affichage dans un joli format de la date
   		// lorsqu'elle a été choisie avec datepicker
 		$('.datepicker').datepicker().on('changeDate', function (ev) {
-			console.log(ev.date.getDate());
     		displaySelectedDate(ev.date)
 		});
 
@@ -178,7 +177,7 @@
 		function displaySelectedDate(date){
 			isOpen(date).done(function(value) {
 				if(value.open === true){
-					$("input[name='oc_bookingbundle_ticket[visit]']").val(value.date);
+					$("#oc_bookingbundle_ticket_visit").val(value.date);
 					$('#visit').html(value.display);
 					$('#message').html(value.message);
 				}

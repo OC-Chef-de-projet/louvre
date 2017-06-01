@@ -1,6 +1,6 @@
 <?php
 
-namespace OC\TicketsBundle\DependencyInjection;
+namespace OC\BookingBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

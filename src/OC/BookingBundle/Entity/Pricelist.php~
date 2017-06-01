@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Pricelist
  *
  * @ORM\Table(name="pricelist")
- * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\pricelistRepository")
+ * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\PricelistRepository")
  */
 class Pricelist
 {
@@ -56,6 +56,12 @@ class Pricelist
      */
     private $description;
 
+   /**
+     * @var visitor
+     *
+     * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="pricelists", cascade="all", orphanRemoval=true)
+     */
+    private $visitors;
 
     /**
      * Get id
@@ -185,5 +191,46 @@ class Pricelist
     public function getDescription()
     {
         return $this->description;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->visitors = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add visitor
+     *
+     * @param \OC\BookingBundle\Entity\Visitor $visitor
+     *
+     * @return Pricelist
+     */
+    public function addVisitor(\OC\BookingBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors[] = $visitor;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitor
+     *
+     * @param \OC\BookingBundle\Entity\Visitor $visitor
+     */
+    public function removeVisitor(\OC\BookingBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors->removeElement($visitor);
+    }
+
+    /**
+     * Get visitors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitors()
+    {
+        return $this->visitors;
     }
 }

@@ -35,6 +35,20 @@ class Ticket
     private $visit;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="paymentdate", type="datetime", nullable=true)
+     */
+    private $paymentdate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="orderdate", type="datetime")
+     */
+    private $orderdate;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="duration", type="smallint")
@@ -109,8 +123,11 @@ class Ticket
      */
     public function setVisit($visit)
     {
-        $this->visit = new \DateTime($visit);
-
+        if(is_object($visit)){
+            $this->visit = $visit;
+        } else {
+            $this->visit = new \DateTime($visit);
+        }
         return $this;
     }
 
@@ -276,5 +293,53 @@ class Ticket
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set paymentdate
+     *
+     * @param \DateTime $paymentdate
+     *
+     * @return Ticket
+     */
+    public function setPaymentdate($paymentdate)
+    {
+        $this->paymentdate = $paymentdate;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentdate
+     *
+     * @return \DateTime
+     */
+    public function getPaymentdate()
+    {
+        return $this->paymentdate;
+    }
+
+    /**
+     * Set orderdate
+     *
+     * @param \DateTime $orderdate
+     *
+     * @return Ticket
+     */
+    public function setOrderdate($orderdate)
+    {
+        $this->orderdate = $orderdate;
+
+        return $this;
+    }
+
+    /**
+     * Get orderdate
+     *
+     * @return \DateTime
+     */
+    public function getOrderdate()
+    {
+        return $this->orderdate;
     }
 }

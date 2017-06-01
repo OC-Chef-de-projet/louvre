@@ -4,18 +4,3 @@ parameters:
     #parameter_name: value
 
 services:
-  oc.bookingbundle.opening:
-    class: OC\BookingBundle\Service\Opening
-    arguments: []
-
-  oc.bookingbundle.utils:
-    class: OC\BookingBundle\Service\Utils
-    arguments: []
-
-  oc.bookingbundle.booking:
-    class: OC\BookingBundle\Service\Booking
-    arguments: ["@doctrine.orm.entity_manager", '@oc.bookingbundle.price' ]
-
-  oc.bookingbundle.price:
-    class: OC\BookingBundle\Service\Price
-    arguments: ["@doctrine.orm.entity_manager", '@oc.bookingbundle.utils']

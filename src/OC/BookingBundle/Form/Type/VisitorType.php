@@ -8,6 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class VisitorType extends AbstractType
 {
@@ -31,8 +34,11 @@ class VisitorType extends AbstractType
                     'label' => 'Tarif réduit'
                 )
             )
-        ->add('birthday',   TextType::class,array(
-                    'attr' => array('class' => 'form-control')
+        ->add('birthday',   DateType::class,array(
+                    'attr' => array('class' => 'form-control'),
+                    'widget' => 'single_text',
+                    'html5' => false,
+                    'format' => 'dd/mm/yyyy'
                 )
             )
         ->add('country',   CountryType::class,array(

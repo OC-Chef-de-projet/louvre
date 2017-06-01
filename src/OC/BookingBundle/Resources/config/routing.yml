@@ -1,17 +1,17 @@
 oc_booking_select:
   path:     /
   defaults: { _controller: OCBookingBundle:Booking:select }
-  methods: [get]
+  methods: [get,post]
 
 oc_booking_visitor:
   path:     /visitor
   defaults: { _controller: OCBookingBundle:Booking:visitor }
-  methods: [get]
+  methods: [get,post]
 
-oc_booking_prepare_order:
-  path:     /prepare
-  defaults: { _controller: OCBookingBundle:Booking:prepare }
-  methods: [get]
+oc_booking_payment:
+  path:     /payment
+  defaults: { _controller: OCBookingBundle:Booking:payment }
+  methods: [get,post]
 
 oc_booking_ajax_opening:
   path:     /getOpening
