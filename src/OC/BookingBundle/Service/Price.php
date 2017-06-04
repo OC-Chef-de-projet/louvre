@@ -25,10 +25,9 @@ class Price
      * @param  [type]    $duration journée ou 1/2 journée
      * @return Pricelist
      */
-    public function getTicketPrice(\DateTime $birthday,$duration,$reduced = 0)
+    public function getTicketPrice(\DateTime $birthday,$reduced = 0)
     {
 
-        error_log("ok");
         if($reduced == 'true'){
             $reduced = 1;
         }
@@ -43,9 +42,6 @@ class Price
             $age = 9999;
         }
         $tariff = $this->em->getRepository('OCBookingBundle:Pricelist')->getWithAge($age);
-        if($duration == Ticket::HALFDAY){
-            $tariff->setPrice(number_format($tariff->getPrice() / 2,2,'.',''));
-        }
         return $tariff;
     }
 

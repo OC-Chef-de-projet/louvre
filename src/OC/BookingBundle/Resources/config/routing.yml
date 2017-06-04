@@ -13,6 +13,11 @@ oc_booking_payment:
   defaults: { _controller: OCBookingBundle:Booking:payment }
   methods: [get,post]
 
+oc_booking_checkout:
+  path:     /checkout
+  defaults: { _controller: OCBookingBundle:Booking:checkout }
+  methods: [get,post]
+
 oc_booking_ajax_opening:
   path:     /getOpening
   defaults: { _controller: OCBookingBundle:Ajax:getOpening }

@@ -377,4 +377,18 @@ class Visitor
 
         return $this;
     }
+
+    /**
+     * Set pricelists
+     *
+     * @param \OC\BookingBundle\Entity\Pricelist $pricelists
+     *
+     * @return Visitor
+     */
+    public function setPricelists(\OC\BookingBundle\Entity\Pricelist $pricelists = null)
+    {
+        $this->pricelists = $pricelists;
+
+        return $this;
+    }
 }

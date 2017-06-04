@@ -19,7 +19,8 @@
 					<th>Prénom</th>
 					<th>Pays</th>
 					<th>Date de naissance</th>
-					<th>Montant</th>
+					<th>Tarif</th>
+					<th class="text-right">Montant</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -29,7 +30,8 @@
 					<td>{{ visitor.surname }}</td>
 					<td>{{ visitor.name }}</td>
 					<td>{{ visitor.country|country }}</td>
-					<td>{{ visitor.birthday|date('d/m/Y') }}</td>
+					<td>{{ visitor.birthday|date("d/m/Y") }}</td>
+					<td>{{ visitor.pricelists.name }}</td>
 					<td class="text-right">{{ visitor.amount|number_format(2, '.', '') }} &euro;</td>
 					<td>&nbsp;</td>
 				</tr>
@@ -37,7 +39,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="4" class="text-right">Total</th>
+					<th colspan="5" class="text-right">Total</th>
 					<th class="text-right">
 						<span id="total">{{ ticket.amount|number_format(2, '.', '') }}</span> &euro;
 					</th>
@@ -46,24 +48,81 @@
 	</table>
 
 	<div class="row">
-		{{ form_start(form, {'attr': {'id': 'payment-form'}}) }}
-		<div class="col-xs-offset-2 col-xs-4">
+		{{ form_start(form, {'attr': {'id': 'payment-form', 'class':'form-horizontal' }}) }}
+		<div class="col-xs-offset-1 col-xs-4">
 			<h2>Email</h2>
 			{{ form_row(form.email) }}
 			<br/>
-			<div class="jumbotron">
-				Veuillez vérifier votre adresse email
+			<div class="alert alert-warning text-center">
+				<b>Veuillez vérifier votre adresse email<br>
+				avant d'envoyer votre paiement</b>
 			</div>
 		</div>
-		<div class="col-xs-4">
-				<h2>Paiement</h2>
-				<div id="payment-error" class="alert alert-danger"></div>
-				{{ form_row(form.name) }}
-				{{ form_row(form.cardno) }}
-				{{ form_row(form.expmonth) }} / {{ form_row(form.expyear) }}
-				{{ form_row(form.cvv) }}
-				<br/>
-				{{ form_row(form.save) }}
+		<div class="col-xs-7">
+
+
+
+				<div class="form-group">
+					<label class="control-label col-sm-4">&nbsp;</label>
+					<div class="col-sm-6">
+						<h2>Paiement</h2>
+						{% image '@OCBookingBundle/Resources/public/images/stripe-secure.png'  output="images/stripe-secure.png" %}
+						<img src="{{ asset_url }}" width="50%" height="100%" alt="Stripe payment" class="pull-left">
+						{% endimage %}
+						<div id="payment-error" class="alert alert-danger" style="display:none"></div>
+    				</div>
+  				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-4">Montant</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="texte" readonly=true value="{{ ticket.amount }} EUR">
+    				</div>
+  				</div>
+
+
+				<div class="form-group">
+					<label class="control-label col-sm-4">{{ form_label(form.name) }}</label>
+					<div class="col-sm-6">
+						{{ form_widget(form.name) }}
+    				</div>
+  				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-4">{{ form_label(form.cardno) }}</label>
+					<div class="col-sm-6">
+						{{ form_widget(form.cardno) }}
+    				</div>
+  				</div>
+
+  				<div class="form-group">
+					<label class="control-label col-sm-4" for="email">{{ form_label(form.expmonth) }}</label>
+					<div class="col-sm-6">
+						<div class="row">
+    						<div class="col-sm-6">
+								{{ form_widget(form.expmonth) }}
+							</div>
+							<div class="col-sm-6">
+								{{ form_widget(form.expyear) }}
+							</div>
+						</div>
+    				</div>
+  				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-4" for="email">{{ form_label(form.cvv) }}</label>
+					<div class="col-sm-6">
+						{{ form_widget(form.cvv) }}
+    				</div>
+  				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-4">&nbsp;</label>
+					<div class="col-sm-6">
+						{{ form_row(form.save) }}
+    				</div>
+  				</div>
+
+
 		</div>
 		{{ form_end(form) }}
 	</div>
@@ -85,6 +144,7 @@
 		function stripeResponseHandler(status, response) {
 			var $form = $('#payment-form');
   			if (response.error) {
+  				$('#payment-error').show();
     			$('#payment-error').text(response.error.message);
     			$('#payment_save').prop('disabled', false);
 

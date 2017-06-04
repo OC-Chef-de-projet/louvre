@@ -38,7 +38,7 @@ class VisitorType extends AbstractType
                     'attr' => array('class' => 'form-control'),
                     'widget' => 'single_text',
                     'html5' => false,
-                    'format' => 'dd/mm/yyyy'
+                    'format' => 'dd/MM/yyyy'
                 )
             )
         ->add('country',   CountryType::class,array(

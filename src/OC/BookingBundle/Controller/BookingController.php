@@ -108,7 +108,7 @@ class BookingController extends Controller
             $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket,$request);
             $data['amount'] = $ticket->getAmount();
             $this->container->get('oc.bookingbundle.stripe')->charge($data);
-            exit;
+            return $this->redirectToRoute('oc_booking_checkout');
         }
 
         return $this->render('OCBookingBundle:Payment:payment.html.twig', array(
@@ -119,5 +119,40 @@ class BookingController extends Controller
 
         ));
     }
+
+    /**
+     * Etape 4
+     * Envoi d'un mail de confirmation ainsi que
+     * le billet
+     *
+     * Le mail doit indiquer:
+            Le nom et le logo du musée
+            La date de la réservation
+            Le tarif
+            Le nom de chaque visiteur
+            Le code de la réservation (un ensemble de lettres et de chiffres)
+     *
+     * @param  Request $request
+     * @return
+     */
+    public function checkoutAction(Request $request)
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Votre réservation')
+            ->setFrom('info@lignedemire.eu')
+            ->setTo('ps.augereau@gmail.com')
+            ->setBody(
+                $this->renderView(
+                    'OCBookingBundle:Checkout:mail.html.twig',
+                    array(
+                        'name' => 'Mon nom'
+                        )
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+        return $this->render('OCBookingBundle:Checkout:checkout.html.twig');
+    }
+
 }
 

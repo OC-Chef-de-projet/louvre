@@ -74,7 +74,6 @@ class AjaxController extends Controller
             $birthday = new \DateTime($birthday);
             $tariff = $this->container->get('oc.bookingbundle.price')->getTicketPrice(
                 $birthday,
-                $duration,
                 $reduced
             );
 
@@ -82,7 +81,7 @@ class AjaxController extends Controller
                 $response['id'] = $tariff->getId();
                 $response['name'] = $tariff->getName();
                 $response['description'] = $tariff->getDescription();
-                $response['price'] = $tariff->getPrice();
+                $response['price'] = number_format($tariff->getPrice() / $duration,2,'.','');
             }
             return new JsonResponse($response);
         }

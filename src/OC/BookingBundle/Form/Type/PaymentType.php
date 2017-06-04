@@ -27,7 +27,7 @@ class PaymentType extends AbstractType
                     )
                 )
                 ->add('name', TextType::class,array(
-                        'label' => ' ',
+                        'label' => 'Nom',
                         'attr' => array(
                             'class' => 'form-control',
                             'placeholder' => 'Nom'
@@ -35,7 +35,7 @@ class PaymentType extends AbstractType
                     )
                 )
                 ->add('cardno', TextType::class,array(
-                        'label' => ' ',
+                        'label' => 'N° de carte de crédit',
                         'attr' => array(
                             'class' => 'form-control',
                             'placeholder' => 'N° de carte',
@@ -44,15 +44,25 @@ class PaymentType extends AbstractType
                     )
                 )
                 ->add('expmonth', ChoiceType::class,array(
-                        'label' => ' ',
+                        'label' => 'Date d\'expiration ',
                         'attr' => array(
                             'class' => 'form-control',
                             'placeholder' => 'Date expiration mois',
                             'data-stripe' => 'exp-month'
                         ),
-                        'choices'  => array_combine(
-                            range(1, 12), 
-                            range(1, 12)
+                        'choices'  => array(
+                            '1 - janvier' => '01',
+                            '2  - février' => '02',
+                            '3  - mars' => '03',
+                            '4  - avril' => '04',
+                            '5  - mai' => '05',
+                            '6  - juin' => '06',
+                            '7  - juillet' => '07',
+                            '8  - août' => '08',
+                            '9  - septembre' => '09',
+                            '10 - octobre' => '10',
+                            '11 - novembre' => '11',
+                            '12 - décembre' => '12',
                         )
                     )
                 )
@@ -70,7 +80,7 @@ class PaymentType extends AbstractType
                     )
                 )
                 ->add('cvv', TextType::class,array(
-                        'label' => ' ',
+                        'label' => 'Code de sécurité',
                         'attr' => array(
                             'class' => 'form-control',
                             'placeholder' => 'Code de sécurité',

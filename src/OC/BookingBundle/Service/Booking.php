@@ -70,11 +70,13 @@ class Booking
         foreach($ticket->getVisitors() as $visitor){
             $price = $this->price->getTicketPrice(
                 $visitor->getBirthday(),
-                $ticket->getDuration(),
                 $visitor->getReduced()
             );
-            $visitor->setAmount($price->getPrice());
-            $visitor->setPricelist($price);
+
+            // Le calcul du demi-tarif
+            $p =  $price->getPrice() / $ticket->getDuration();
+            $visitor->setAmount(number_format($p,2,'.',''));
+            $visitor->setPricelists($price);
         }
 
         // Sauvegarde
