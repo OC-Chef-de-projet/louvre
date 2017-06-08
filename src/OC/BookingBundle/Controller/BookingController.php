@@ -86,8 +86,6 @@ class BookingController extends Controller
         $form = $this->createForm(PaymentType::class) ;
         $form->handleRequest($request);
 
-        
-
         $ticket_id = $request->getSession()->get('ticket_id');
         if($ticket_id){
             $repository = $this
@@ -137,21 +135,13 @@ class BookingController extends Controller
      */
     public function checkoutAction(Request $request)
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Votre réservation')
-            ->setFrom('info@lignedemire.eu')
-            ->setTo('ps.augereau@gmail.com')
-            ->setBody(
-                $this->renderView(
-                    'OCBookingBundle:Checkout:mail.html.twig',
-                    array(
-                        'name' => 'Mon nom'
-                        )
-                ),
-                'text/html'
-            );
-        $this->get('mailer')->send($message);
-        return $this->render('OCBookingBundle:Checkout:checkout.html.twig');
+        $ticket = $this->container->get('oc.bookingbundle.booking')->saveCheckout($request);
+        $this->container->get('oc.bookingbundle.mailer')->sendCheckout($ticket);
+        return $this->render('OCBookingBundle:Checkout:checkout.html.twig',array(
+            'ticket' => $ticket,
+            'prettyDate' => $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d')),
+            )
+        );
     }
 
 }

@@ -61,15 +61,6 @@
 			</div>
 		</div>
 	{{ form_end(form) }}
-<h1>Variables passed to the view:</h1>
-{% for key, value in _context %}
-    {% if key starts with '_' %}
-    {% else %}
-        <pre style="background: #eee">{{ key }}</pre>
-        {{ dump(value) }}
-    {% endif %}
-{% endfor %}
-
 {% endblock %}
 
 

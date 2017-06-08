@@ -1,5 +1,39 @@
-<h3>You did it! You registered!</h3>
 
-Hi {{ name }}! You're successfully registered.
+<table style="width:100%;background-color:black;border-collapse: collapse;">
+		<tr>
+			<td style="height:50px;width:40%;">
+				<img src="{{ absolute_url(asset('images/8bccac7.png')) }}" height="70px">
+			</td>
+			<td>
+				<h1 style="color:white;text-align:center">Billeterie du musée du Louvre</h1>
+			</td>
+		</tr>
+</table>
+<p>Bonjour,</p>
+<p>Nous vous remercions pour votre commande.<p>
+<p><b style="color:green">Votre autorisation de paiement a été confirmée et elle est considérée comme ferme.</b></p>
+<p>Pour votre visite au musée, veuillez vous munir d'une copie imprimée de ce mail, d'une pièce d'identité pour chacun des visiteurs et d'un justificatif pour les visiteurs qui bénéficient d'un tarif réduit.</p>
 
-Thanks!
+<div style="color: #31708f;background-color: #d9edf7;border-color: #bce8f1;padding: 15px;margin-bottom: 20px;border: 1px solid transparent;border-radius: 4px;">
+	<h3>N° de réservation : {{ ticket.code }}</h3>
+	<h4>{{ prettyDate }} - {{ ticket.nbticket }} billet(s)
+		{% if ticket.duration == constant('OC\\BookingBundle\\Entity\\Ticket::DAY') %}
+		Journée
+		{% else %}
+		demi-journée
+		{% endif %}
+	</h4>
+</div>
+<div>
+	<h4>Visiteurs</h4>
+	{% for visitor in ticket.visitors %}
+		<b>{{ visitor.surname }} {{ visitor.name }}</b> tarif : {{ visitor.pricelists.name }} ({{ visitor.amount|number_format(2, '.', '') }} &euro;)
+	{% endfor %}
+</div>
+
+<hr>
+<p>Réglé par carte bancaire le {{ ticket.paymentdate|date('d/m/Y')}}</p>
+<p>Montant total de la transaction {{ ticket.amount|number_format(2, '.', '') }} &euro;</p>
+<p>Toute l'équipe du musée du Louvre vous souhaite une agréablie visite.</p>
+<p>Cordialement,</p>
+<p>L'équipe du musée du Louvre.</p>

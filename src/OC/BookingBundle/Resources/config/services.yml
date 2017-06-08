@@ -24,6 +24,10 @@ services:
     class: OC\BookingBundle\Service\StripePayment
     arguments: ["%stripe_sk%"]
 
+  oc.bookingbundle.mailer:
+    class: OC\BookingBundle\Service\Mailer
+    arguments: ["@Swift_Mailer",'@templating', '@oc.bookingbundle.utils']
+
   oc.bookingbundle.twig.country_extension:
     class: OC\BookingBundle\Twig\CountryExtension
     tags:

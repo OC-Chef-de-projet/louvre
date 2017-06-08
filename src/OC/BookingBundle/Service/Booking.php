@@ -21,7 +21,6 @@ class Booking
    public function saveTicket(Ticket $ticket,Request $request)
    {
         $ticket->setOrderdate(new \DateTime('now'));
-        error_log("FR ".$ticket->getVisit()->format('Y-m-d'));
         $this->em->persist($ticket);
         $this->em->flush();
 
@@ -40,7 +39,6 @@ class Booking
    public function getTicket(Request $request)
    {
         $ticket_id = $request->getSession()->get('ticket_id');
-        error_log("TICK $ticket_id");
         if($ticket_id){
             $repository = $this->em->getRepository('OCBookingBundle:Ticket');
             $ticket = $repository->find($ticket_id);
@@ -123,5 +121,47 @@ class Booking
                 $ticket->addVisitor($v);
             }
         }
+   }
+
+   /**
+    * Génération du n° de réservation
+    */
+   public function saveCheckout(Request $request)
+   {
+
+		$ticket = $this->getTicket($request);
+		// TODO: gérer les erreurs
+		$repository = $this->em->getRepository('OCBookingBundle:Ticket');
+		$result = 1;
+        while($result){
+        	$bookingNo = $this->getBookingNo();
+        	// Vérifie que le numéro de réservation nexiste pas
+        	$result = $repository->findByCode($bookingNo);
+        }
+        $ticket->setCode($bookingNo);
+        $this->saveTicket($ticket,$request);
+        // TODO: supprimer la session
+        return $ticket;
+
+   }
+
+   /**
+    * Génération d'un code de réservation
+    */
+   private function getBookingNo()
+   {
+		$number = rand(11111111,99999999);
+		if(substr($number,0,2) < 26){
+			$bookingNo = chr(64  + substr($number,0,2));
+		} else {
+			$bookingNo = chr(64  + substr($number,0,1));
+		}
+		if(substr($number,2,2) < 26){
+			$bookingNo .= chr(64  + substr($number,2,2));
+		} else {
+			$bookingNo .= chr(64  + substr($number,2,1));
+		}
+		$bookingNo .= substr($number,3,4);
+   		return $bookingNo;
    }
 }
