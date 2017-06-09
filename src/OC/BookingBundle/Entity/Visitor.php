@@ -5,6 +5,7 @@ namespace OC\BookingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use OC\BookingBundle\Entity\Ticket;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Visitor
@@ -27,6 +28,8 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(min = 1, max = 50)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -34,6 +37,8 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=255)
+     * @Assert\Length(min = 1,max = 50)
+     * @Assert\NotBlank()
      */
     private $surname;
 
@@ -41,6 +46,7 @@ class Visitor
      * @var \DateTime
      *
      * @ORM\Column(name="birthday", type="date")
+     * @Assert\DateTime(format = "Y-m-d")
      */
     private $birthday;
 
@@ -49,6 +55,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=3)
+     * @Assert\Country()
      */
     private $country;
 
@@ -56,6 +63,7 @@ class Visitor
      * @var decimal
      *
      *  @ORM\Column(name="amount", type="decimal")
+     *  @Assert\Type(type = "decimal")
      */
     private $amount;
 
@@ -79,6 +87,7 @@ class Visitor
     * @var boolean $isEnabled
     *
     * @ORM\Column(name="reduced", type="boolean")
+    * @Assert\Type("bool")
     */
     private $reduced;
 

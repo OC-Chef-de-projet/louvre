@@ -4,6 +4,7 @@ namespace OC\BookingBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use OC\BookingBundle\Entity\Ticket;
 
 /**
  * Fonctions Ajax
@@ -22,21 +23,19 @@ class AjaxController extends Controller
         $opening = $this->container->get('oc.bookingbundle.opening');
         // Requête Ajax
         if ($request->isXMLHttpRequest()) {
+            $errors = array();
             $date = $request->get('date');
-            $date = new \DateTime($date);
+            $date = new \DateTime(date("Y-m-d", strtotime($date)));
             setlocale(LC_ALL, 'fr_FR');
-            $open = (bool)$opening->isOpen($date);
-            if ($open) {
-                $message = 'Le musée est ouvert de 9h à 18h';
-            } else {
-                $message = 'Le musée est fermé';
-            }
+
+            $check = $opening->isOpen($date);
             return new JsonResponse(
                 [
                     'date' => $date->format('Y-m-d'),
                     'display' => strftime("%A %e %B %Y", $date->getTimestamp()),
-                    'open' => $open,
-                    'message' => $message
+                    'open' => $check['open'],
+                    'message' => $check['message'],
+                    'errors' => $errors
                 ]
             );
         }

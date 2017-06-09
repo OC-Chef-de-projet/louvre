@@ -4,6 +4,8 @@ namespace OC\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use OC\BookingBundle\Validator\Constraints as BookingAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket
@@ -31,6 +33,8 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="visit", type="datetime")
+     * @Assert\DateTime(format = "Y-m-d H:i:s")
+     * @BookingAssert\Isopen
      */
     private $visit;
 
@@ -38,6 +42,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="paymentdate", type="datetime", nullable=true)
+     * @Assert\Datetime(format = "Y-m-d H:i:s")
      */
     private $paymentdate;
 
@@ -45,6 +50,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="orderdate", type="datetime")
+     * @Assert\Datetime(format = "Y-m-d H:i:s")
      */
     private $orderdate;
 
@@ -52,6 +58,7 @@ class Ticket
      * @var int
      *
      * @ORM\Column(name="duration", type="smallint")
+     * @Assert\Choice(choices = {Ticket::DAY, Ticket::HALFDAY},strict = true)
      */
     private $duration;
 
@@ -59,6 +66,8 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\Email(checkMX = true )
      */
     private $email;
 
@@ -66,6 +75,7 @@ class Ticket
      * @var int
      *
      * @ORM\Column(name="nbticket", type="integer")
+     * @Assert\Range( min = 1, max = 10)
      */
     private $nbticket;
 
@@ -73,6 +83,7 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="amount", type="decimal", precision=10, scale=2)
+     * @Assert\Type(type = "numeric")
      */
     private $amount;
 
@@ -87,6 +98,8 @@ class Ticket
      * @var visitor
      *
      * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="ticket", cascade="all", orphanRemoval=true)
+     * @Assert\Count(max = 10)
+     * @Assert\Valid()
      */
     private $visitors;
 

@@ -28,6 +28,13 @@ services:
     class: OC\BookingBundle\Service\Mailer
     arguments: ["@Swift_Mailer",'@templating', '@oc.bookingbundle.utils']
 
+  oc.bookingbundle.validator.isopen:
+        class: OC\BookingBundle\Validator\Constraints\IsopenValidator
+        arguments: ['@oc.bookingbundle.opening']
+        tags:
+          - { name: validator.constraint_validator, alias: oc_bookingbundle_validator_isopen }
+
+
   oc.bookingbundle.twig.country_extension:
     class: OC\BookingBundle\Twig\CountryExtension
     tags:

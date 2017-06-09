@@ -34,6 +34,11 @@
 
     <h3 id="visit">{{ default.pretty }}</h3>
     <h4 id="message"></h4>
+    <div>
+    	{{ form_errors(form) }}
+    	{{ form_errors(form.visit) }}
+
+    </div>
 
   	<h2>Sélectionnez votre type de billet</h2>
   	<div class="btn-group" data-toggle="buttons">
@@ -59,6 +64,7 @@
       		</button>
     	</div>
   	</div>
+  	{{ form_errors(form.nbticket)}}
 
 	<div class="row">
 		<div class="col-xs-3 col-xs-offset-6">
@@ -114,6 +120,11 @@
 				if(!val){
 					val = 0;
 				}
+				/*
+				if(val > 9){
+					val = 9;
+				}
+				*/
     			$('.spinner input').val( val + 1);
   			});
 
@@ -164,13 +175,19 @@
 		// Vérifie que pour la date sélectionnée le musée
 		// est bien ouvert
 		function isOpen(date){ 
-			return $.ajax({
-				url: '{{path('oc_booking_ajax_opening')}}',
-				method: 'post',
-				data : {'date': date}
-			}).done(function(msg){
-				response = msg.open;
-			});
+			if (typeof date !== "undefined") {
+				if(date instanceof Date){
+					date = date.toJSON();
+				}
+				return $.ajax({
+					url: '{{path('oc_booking_ajax_opening')}}',
+					method: 'post',
+					data : {'date': date}
+				}).done(function(msg){
+					console.log(msg);
+					response = msg.open;
+				});
+			}
 		}
 
 
@@ -179,11 +196,9 @@
 		// du musée
 		function displaySelectedDate(date){
 			isOpen(date).done(function(value) {
-				if(value.open === true){
-					$("#oc_bookingbundle_ticket_visit").val(value.date);
-					$('#visit').html(value.display);
-					$('#message').html(value.message);
-				}
+				$("#oc_bookingbundle_ticket_visit").val(value.date);
+				$('#visit').html(value.display);
+				$('#message').html(value.message);
         	});
 		}
 

@@ -22,6 +22,7 @@ class BookingController extends Controller
      */
     public function selectAction(Request $request)
     {
+        $errors = array();
         $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
         $default = $this->container->get('oc.bookingbundle.opening')->getDefaults($ticket);
 
@@ -29,8 +30,11 @@ class BookingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket,$request);
-            return $this->redirectToRoute('oc_booking_visitor');
+            $errors = $this->get('validator')->validate($ticket);
+            if (count($errors) == 0) {
+                $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket,$request);
+                return $this->redirectToRoute('oc_booking_visitor');
+            }
         }
 
         return $this->render(

@@ -20,6 +20,7 @@ class Booking
 
    public function saveTicket(Ticket $ticket,Request $request)
    {
+        $ticket->setAmount(0.00);
         $ticket->setOrderdate(new \DateTime('now'));
         $this->em->persist($ticket);
         $this->em->flush();
@@ -27,6 +28,7 @@ class Booking
         // L'identifiant du ticket est stocké dans une variable de session
         $session = $request->getSession();
         $session->set('ticket_id', $ticket->getId());
+        return true;
    }
 
    /**
