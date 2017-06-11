@@ -22,7 +22,6 @@ services:
 
   oc.bookingbundle.stripe:
     class: OC\BookingBundle\Service\StripePayment
-    arguments: ["%stripe_sk%"]
 
   oc.bookingbundle.mailer:
     class: OC\BookingBundle\Service\Mailer
