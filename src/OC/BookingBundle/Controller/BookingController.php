@@ -56,7 +56,7 @@ class BookingController extends Controller
     public function visitorAction(Request $request)
     {
 
-		$ticket = $this->container->get('oc.bookingbundle.booking')->getVisitors($request);
+		$ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
 		if(!$ticket->getId()){
 			return $this->redirectToRoute('oc_booking_select');
 		}
@@ -65,6 +65,7 @@ class BookingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $ticket->setOrderdate(new \DateTime('now'));
             $this->container->get('oc.bookingbundle.booking')->saveVisitors($ticket,$request);
             return $this->redirectToRoute('oc_booking_payment');
         }
@@ -90,24 +91,20 @@ class BookingController extends Controller
         $form = $this->createForm(PaymentType::class) ;
         $form->handleRequest($request);
 
-        $ticket_id = $request->getSession()->get('ticket_id');
-        if($ticket_id){
-            $repository = $this
-                ->getDoctrine()
-                ->getManager()
-                ->getRepository('OCBookingBundle:Ticket')
-                ;
-            $ticket = $repository->find($ticket_id);
-        }
+        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
         if(!$ticket){
             return $this->redirectToRoute('oc_booking_select');
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Enregistrement du ticket
             $data = $form->getData();
             $ticket->setEmail($data['email']);
             $ticket->setPaymentdate(new \DateTime('now'));
-            $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket,$request);
+            $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket, $request);
+
+            // Demande de paiement
             $data['amount'] = $ticket->getAmount();
             $this->container->get('oc.bookingbundle.stripe')->charge($data);
             return $this->redirectToRoute('oc_booking_checkout');
@@ -139,8 +136,14 @@ class BookingController extends Controller
      */
     public function checkoutAction(Request $request)
     {
+        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
+        if(!$ticket->getId()){
+            return $this->redirectToRoute('oc_booking_select');
+        }
+
         $ticket = $this->container->get('oc.bookingbundle.booking')->saveCheckout($request);
-        $this->container->get('oc.bookingbundle.mailer')->sendCheckout($ticket);
+        $this->container->get('oc.bookingbundle.mailer')->sendCheckout($ticket,$request);
+
         return $this->render('OCBookingBundle:Checkout:checkout.html.twig',array(
             'ticket' => $ticket,
             'prettyDate' => $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d')),

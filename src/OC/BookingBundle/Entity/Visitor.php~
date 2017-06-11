@@ -63,7 +63,7 @@ class Visitor
      * @var decimal
      *
      *  @ORM\Column(name="amount", type="decimal")
-     *  @Assert\Type(type = "decimal")
+     *  @Assert\Type(type = "float")
      */
     private $amount;
 

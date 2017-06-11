@@ -34,6 +34,12 @@ services:
         tags:
           - { name: validator.constraint_validator, alias: oc_bookingbundle_validator_isopen }
 
+  oc.bookingbundle.validator.capacity:
+        class: OC\BookingBundle\Validator\Constraints\CapacityValidator
+        arguments: ['@oc.bookingbundle.booking']
+        tags:
+          - { name: validator.constraint_validator, alias: oc_bookingbundle_validator_capacity }
+
 
   oc.bookingbundle.twig.country_extension:
     class: OC\BookingBundle\Twig\CountryExtension

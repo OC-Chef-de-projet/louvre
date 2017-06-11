@@ -34,11 +34,12 @@
 
     <h3 id="visit">{{ default.pretty }}</h3>
     <h4 id="message"></h4>
-    <div>
-    	{{ form_errors(form) }}
-    	{{ form_errors(form.visit) }}
-
-    </div>
+    {% if form_errors(form)|length > 0 %}
+    	<div class="alert alert-danger">
+    		{{ form_errors(form) }}
+    		{{ form_errors(form.visit) }}
+    	</div>
+    {% endif %}
 
   	<h2>Sélectionnez votre type de billet</h2>
   	<div class="btn-group" data-toggle="buttons">

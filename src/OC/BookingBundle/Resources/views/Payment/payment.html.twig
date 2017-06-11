@@ -57,6 +57,12 @@
 				<b>Veuillez vérifier votre adresse email<br>
 				avant d'envoyer votre paiement</b>
 			</div>
+			{% if form_errors(form)|length > 0 %}
+    		<div class="alert alert-danger">
+    			{{ form_errors(form) }}
+	    	</div>
+    		{% endif %}
+
 		</div>
 		<div class="col-xs-7">
 
@@ -65,10 +71,14 @@
 				<div class="form-group">
 					<label class="control-label col-sm-4">&nbsp;</label>
 					<div class="col-sm-6">
-						<h2>Paiement</h2>
-						{% image '@OCBookingBundle/Resources/public/images/stripe-secure.png'  output="images/stripe-secure.png" %}
-						<img src="{{ asset_url }}" width="50%" height="100%" alt="Stripe payment" class="pull-left">
-						{% endimage %}
+						<div>
+							<h2>
+							{% image '@OCBookingBundle/Resources/public/images/stripe-secure.png'  output="images/stripe-secure.png" %}
+							<img src="{{ asset_url }}" width="50%" height="100%" alt="Stripe payment" class="pull-left">
+							{% endimage %}
+							Paiement
+							</h2>
+						</div>
 						<div id="payment-error" class="alert alert-danger" style="display:none"></div>
     				</div>
   				</div>

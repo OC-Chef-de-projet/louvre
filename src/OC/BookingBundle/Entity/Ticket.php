@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="ticket")
  * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\TicketRepository")
+ *
+ * @BookingAssert\Capacity(max = 12)
+ * @BookingAssert\HalfDay
  */
 class Ticket
 {

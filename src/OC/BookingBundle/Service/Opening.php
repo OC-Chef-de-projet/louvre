@@ -184,8 +184,8 @@ class Opening
             ];
         }
 
-        // Mardi et dimanche
-        if($day == 0){
+        // Dimanche
+        if($day == 1){
             $response = [
                 'message' => 'Il n\'est pas possible de réserver pour le dimanche, mais le musée est ouvert',
                 'open' => false

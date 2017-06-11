@@ -3,6 +3,7 @@ namespace OC\BookingBundle\Service;
 use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Entity\Visitor;
 use OC\BookingBundle\Service\Price;
+use Symfony\Component\HttpFoundation\Request;
 
 class Mailer
 {
@@ -20,7 +21,7 @@ class Mailer
 			$this->utils = $utils;
 		}
 
-		public function sendCheckout(Ticket $ticket)
+		public function sendCheckout(Ticket $ticket, Request $request)
 		{
 			$content = $this->templating->render(
                 'OCBookingBundle:Checkout:mail.html.twig',
@@ -30,6 +31,9 @@ class Mailer
 				)
             );
 			$this->sendMessage($ticket->getEmail(),'Musée du Louvre - Votre réservation pour le '.$ticket->getVisit()->format('d/m/Y'),$content);
+			// Supression de la session
+			$session = $request->getSession();
+        	$session->remove('ticket_id');
 		}
 
 		private function sendMessage($to,$subject,$content)

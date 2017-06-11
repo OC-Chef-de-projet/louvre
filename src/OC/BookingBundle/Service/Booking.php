@@ -20,8 +20,6 @@ class Booking
 
    public function saveTicket(Ticket $ticket,Request $request)
    {
-        $ticket->setAmount(0.00);
-        $ticket->setOrderdate(new \DateTime('now'));
         $this->em->persist($ticket);
         $this->em->flush();
 
@@ -34,6 +32,9 @@ class Booking
    /**
     * Retourne un nouveau ticket ou un ticket
     * existant si l'ID est en session.
+    * le parametère withVisitors ajoute
+    * le nombre de visiteurs demandé et complète ou
+    * dimuninue si le nombre de visiteurs à changé
     *
     * @param  Request $request [description]
     * @return [type]           [description]
@@ -44,20 +45,6 @@ class Booking
         if($ticket_id){
             $repository = $this->em->getRepository('OCBookingBundle:Ticket');
             $ticket = $repository->find($ticket_id);
-            //$this->initVisitors($ticket);
-            return $ticket;
-        }
-        $ticket = new Ticket();
-        return $ticket;
-   }
-
-   public function getVisitors(Request $request)
-   {
-        $ticket_id = $request->getSession()->get('ticket_id');
-        error_log("TICK $ticket_id");
-        if($ticket_id){
-            $repository = $this->em->getRepository('OCBookingBundle:Ticket');
-            $ticket = $repository->find($ticket_id);
             $this->initVisitors($ticket);
             return $ticket;
         }
@@ -65,8 +52,39 @@ class Booking
         return $ticket;
    }
 
+    /**
+     * Compte le nombre de visiteur actuellement enregistré
+     *
+     * @param  \DateTime $date      Date de la visite
+     * @param  integer   $ticket_id N° de ticket à exclure
+     *
+     * @return integer Nombre de tickets
+     */
+    public function getVisitorCount(\DateTime $date,$ticket_id = 0)
+    {
+        $repository = $this->em->getRepository('OCBookingBundle:Ticket');
+        $q_visitor_count = $repository->createQueryBuilder('t')
+            ->select("sum(t.nbticket) as ticket_count")
+            ->where('t.visit = :date_visit')
+            ->andWhere('t.id != :ticket_id')
+            ->setParameters([
+                'date_visit' => $date->format('Y-m-d'),
+                'ticket_id' => $ticket_id
+            ])
+            ->getQuery();
+        $visitorCount = $q_visitor_count->getOneOrNullResult();
+        return $visitorCount['ticket_count'];
+    }
+
+    /**
+     * [saveVisitors description]
+     * @param  Ticket $ticket [description]
+     * @return [type]         [description]
+     */
     public function saveVisitors(Ticket $ticket)
     {
+
+        $totalAmount = 0;
         foreach($ticket->getVisitors() as $visitor){
             $price = $this->price->getTicketPrice(
                 $visitor->getBirthday(),
@@ -78,6 +96,7 @@ class Booking
             $visitor->setAmount(number_format($p,2,'.',''));
             $visitor->setPricelists($price);
         }
+
 
         // Sauvegarde
         $this->em->persist($ticket);
