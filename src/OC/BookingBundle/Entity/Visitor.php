@@ -160,15 +160,6 @@ class Visitor
      */
     public function setBirthday($birthday)
     {
-
-
-        /*
-        if(preg_match('#/#',$birthday)){
-            $date = explode('/',$birthday);
-            $birthday = $date[2].'-'.$date[1].'-'.$date[0];
-        }
-        $this->birthday = new \DateTime($birthday);
-        */
         $this->birthday = $birthday;
         return $this;
     }

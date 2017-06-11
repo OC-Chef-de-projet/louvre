@@ -67,10 +67,6 @@ class Opening
 
     public function getDefaults(Ticket $ticket){
 
-        /*
-         $default['pretty'] = $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d'));
-        $default['current'] = $ticket->getVisit()->format('Y-m-d');
-         */
         setlocale(LC_ALL, 'fr_FR');
         $date = new \DateTime('now');
         $date2 = new \DateTime('tomorrow');
@@ -122,7 +118,6 @@ class Opening
         } else {
             $default['current'] = $default['startDate'];
         }
-        //$default['current'] = $default['startDate'];
         $default['pretty'] = $this->utils->getPrettyDate($default['current']); 
 
         return $default;
