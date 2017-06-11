@@ -84,7 +84,6 @@ class Booking
     public function saveVisitors(Ticket $ticket)
     {
 
-        $totalAmount = 0;
         foreach($ticket->getVisitors() as $visitor){
             $price = $this->price->getTicketPrice(
                 $visitor->getBirthday(),
