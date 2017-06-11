@@ -2,7 +2,6 @@
 namespace OC\BookingBundle\Service;
 use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Service\Utils;
-use Symfony\Component\Validator\Validator;
 
 class Opening
 {
