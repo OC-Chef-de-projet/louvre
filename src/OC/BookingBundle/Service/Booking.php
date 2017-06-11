@@ -151,19 +151,16 @@ class Booking
    {
 
 		$ticket = $this->getTicket($request);
-		// TODO: gérer les erreurs
 		$repository = $this->em->getRepository('OCBookingBundle:Ticket');
 		$result = 1;
         while($result){
         	$bookingNo = $this->getBookingNo();
-        	// Vérifie que le numéro de réservation nexiste pas
+        	// Vérifie que le numéro de réservation n'existe pas
         	$result = $repository->findByCode($bookingNo);
         }
         $ticket->setCode($bookingNo);
         $this->saveTicket($ticket,$request);
-        // TODO: supprimer la session
         return $ticket;
-
    }
 
    /**
