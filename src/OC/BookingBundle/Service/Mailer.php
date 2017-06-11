@@ -1,8 +1,6 @@
 <?php
 namespace OC\BookingBundle\Service;
 use OC\BookingBundle\Entity\Ticket;
-use OC\BookingBundle\Entity\Visitor;
-use OC\BookingBundle\Service\Price;
 use Symfony\Component\HttpFoundation\Request;
 
 class Mailer

@@ -4,7 +4,6 @@ namespace OC\BookingBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use OC\BookingBundle\Entity\Ticket;
 
 /**
  * Fonctions Ajax

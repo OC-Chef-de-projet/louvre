@@ -4,7 +4,6 @@ namespace OC\BookingBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Form\Type\TicketType;
 use OC\BookingBundle\Form\Type\PaymentType;
 use OC\BookingBundle\Form\Type\VisitorsType;

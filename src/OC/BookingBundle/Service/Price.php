@@ -1,8 +1,6 @@
 <?php
 namespace OC\BookingBundle\Service;
 use Doctrine\ORM\EntityManager;
-use OC\BookingBundle\Entity\Ticket;
-use OC\BookingBundle\Entity\Visitor;
 use OC\BookingBundle\Service\Utils;
 
 class Price
