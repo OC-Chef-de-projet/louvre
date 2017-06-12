@@ -22,7 +22,7 @@ class CapacityValidator extends ConstraintValidator
         }
         $count = $this->booking->getVisitorCount($ticket->getVisit(),$ticket->getId());
         if(($count + $ticket->getNbticket()) > $max){
-            $this->context->buildViolation('La capacité du musée a été atteinte, veuillez sélectionner un autre jour')->addViolation();
+            $this->context->buildViolation('capacity_limit')->addViolation();
         }
     }
 }

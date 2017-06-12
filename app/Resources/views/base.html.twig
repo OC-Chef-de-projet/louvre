@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% trans %}welcome_title{% endtrans %}{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet"
@@ -27,7 +27,7 @@
                 </a>
             </div>
             <div class="col-xs-3">
-                <h1>Billeterie</h1>
+                <h1>{% trans %}booking_title{% endtrans %}</h1>
             </div>
         </nav>
 

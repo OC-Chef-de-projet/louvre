@@ -13,7 +13,12 @@ class PricelistType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('agefrom')->add('ageto')->add('price')->add('description');
+        $builder
+            ->add('name')
+            ->add('agefrom')
+            ->add('ageto')
+            ->add('price')
+            ->add('description');
     }
     
     /**

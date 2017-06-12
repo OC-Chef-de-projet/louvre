@@ -3,27 +3,25 @@
 {% block body %}
 
 	<div class="jumbotron">
-		Le musée du Louvre est ouvert tous les jours de 9h à 18h<br>
-		sauf les mardi et les 1er janvier, 1er mai et 25 décembre et les jours fériés.
+		{% trans %}opening_warning{% endtrans %}
 		<hr>
-		Le musée est aussi ouvert le dimanche, mais il n'est pas possible de réserver de
-		billets pour ce jour là.
+		{% trans %}sunday_warning{% endtrans %}
 	</div>
 
 
   {{ form_start(form) }}
-	<h2>Sélectionnez le jour de votre visite</h2>
+	<h2>{% trans %}choose_your_visit{% endtrans %}</h2>
 	<div class="btn-group" data-toggle="buttons">
 		<label id="btn-today" class="btn btn-primary btn-lg btn-select">
-			<label for="today">Aujourd'hui</label>
+			<label for="today">{% trans %}today{% endtrans %}</label>
 			<input id="today" value="{{ default.today }}" type="radio" autocomplete="off">
       	</label>
       	<label id="btn-tomorrow" class="btn btn-primary btn-lg btn-select">
-			<label for="tomorrow">Demain</label>
+			<label for="tomorrow">{% trans %}tomorrow{% endtrans %}</label>
 			<input id="tomorrow" class="ch_date" value="{{ default.tomorrow }}" autocomplete="off" type="radio">
       	</label>
       	<label id="btn-other" class="btn btn-primary btn-lg btn-select">
-			<label for="other">Autre jour</label>
+			<label for="other">{% trans %}other_day{% endtrans %}</label>
 			<input id="other"  class="datepicker" value="" type="radio" autocomplete="off">
       	</label>
     </div>
@@ -41,7 +39,7 @@
     	</div>
     {% endif %}
 
-  	<h2>Sélectionnez votre type de billet</h2>
+  	<h2>{% trans %}ticket_duration{% endtrans %}</h2>
   	<div class="btn-group" data-toggle="buttons">
   		{% for choix in form.duration %}
 		<label class="btn btn-primary btn-lg">
@@ -50,10 +48,10 @@
       	</label>
       	{% endfor %}
     </div>
-	<p>Les billets 1/2 journée sont valables à partir de 14h</p>
+	<p>{% trans %}halfday_warning{% endtrans %}</p>
 
 
-	<h2>Nombre de billets souhaités</h2>
+	<h2>{% trans %}ticket_howmany{% endtrans %}</h2>
 	<div class="input-group spinner">
 		{{ form_widget(form.nbticket) }}
     	<div class="input-group-btn-vertical">
@@ -121,11 +119,9 @@
 				if(!val){
 					val = 0;
 				}
-				/*
 				if(val > 9){
 					val = 9;
 				}
-				*/
     			$('.spinner input').val( val + 1);
   			});
 

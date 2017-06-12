@@ -22,6 +22,8 @@ class VisitorsType extends AbstractType
             )
             ->add('save', SubmitType::class,array(
                     'attr' => array('class' => 'btn btn-primary btn-block btn-lg'),
+                    'label' => 'save_label',
+                    'translation_domain' => 'messages'
                 )
             );
     }

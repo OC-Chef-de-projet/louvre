@@ -29,7 +29,8 @@ class VisitorType extends AbstractType
         ->add('reduced',   CheckboxType::class,array(
                     'attr' => array('class' => ''),
                     'required' => false,
-                    'label' => 'Tarif réduit'
+                    'label' => 'label_reduced',
+                    'translation_domain' => 'messages',
                 )
             )
         ->add('birthday',   DateType::class,array(
@@ -41,7 +42,8 @@ class VisitorType extends AbstractType
             )
         ->add('country',   CountryType::class,array(
                     'attr' => array('class' => 'form-control'),
-                    'placeholder' => '...',
+                    'translation_domain' => 'messages',
+                    'placeholder' => 'to_be_continued',
                 )
             )
         ;

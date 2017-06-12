@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="label_day">
+                <source>label_day</source>
+                <target>Journée</target>
+            </trans-unit>
+            <trans-unit id="save_label">
+                <source>save_label</source>
+                <target>Suivant</target>
+            </trans-unit>
+            <trans-unit id="label_halfday">
+                <source>label_halfday</source>
+                <target>demi-journée</target>
+            </trans-unit>
+            <trans-unit id="choose_your_visit">
+                <source>choose_your_visit</source>
+                <target>Jour de votre visite</target>
+            </trans-unit>
+            <trans-unit id="today">
+                <source>today</source>
+                <target>Aujourd'hui</target>
+            </trans-unit>
+            <trans-unit id="tomorrow">
+                <source>tomorrow</source>
+                <target>Demain</target>
+            </trans-unit>
+            <trans-unit id="other_day">
+                <source>other_day</source>
+                <target>Autre jour</target>
+            </trans-unit>
+            <trans-unit id="ticket_duration">
+                <source>ticket_duration</source>
+                <target>Type de billet</target>
+            </trans-unit>
+            <trans-unit id="halfday_warning">
+                <source>halfday_warning</source>
+                <target>Les billets 1/2 journée sont valables à partir de 14h</target>
+            </trans-unit>
+            <trans-unit id="ticket_howmany">
+                <source>ticket_howmany</source>
+                <target>Nombre de billets</target>
+            </trans-unit>
+            <trans-unit id="opening_warning">
+                <source>opening_warning</source>
+                <target>Le musée du Louvre est ouvert tous les jours de 9h à 18h&lt;br&gt;sauf les mardi et les 1er janvier, 1er mai et 25 décembre et les jours fériés.</target>
+            </trans-unit>
+            <trans-unit id="sunday_warning">
+                <source>sunday_warning</source>
+                <target>Le musée est ouvert le dimanche, mais il n'est pas possible de réserver de
+        billets pour ce jour là.</target>
+            </trans-unit>
+            <trans-unit id="welcome_title">
+                <source>welcome_title</source>
+                <target>Bienvenue à la billeterie du Louvre</target>
+            </trans-unit>
+            <trans-unit id="booking_title">
+                <source>booking_title</source>
+                <target>Billeterie</target>
+            </trans-unit>
+            <trans-unit id="opening_message">
+                <source>opening_message</source>
+                <target>Le musée est ouvert de 9H00 à 22H00</target>
+            </trans-unit>
+            <trans-unit id="visit_in_past">
+                <source>visit_in_past</source>
+                <target>La machine à remonter le temps n'existe pas encore</target>
+            </trans-unit>
+            <trans-unit id="closing_hour">
+                <source>closing_hour</source>
+                <target>Le musée ferme à 19h00</target>
+            </trans-unit>
+            <trans-unit id="closed_day">
+                <source>closed_day</source>
+                <target>Le musée est fermé le mardi</target>
+            </trans-unit>
+            <trans-unit id="capacity_limit">
+                <source>capacity_limit</source>
+                <target>La capacité du musée a été atteinte, veuillez sélectionner un autre jour</target>
+            </trans-unit>
+            <trans-unit id="close_on_may_first">
+                <source>close_on_may_first</source>
+                <target>Le musée est fermé le 1er mai</target>
+            </trans-unit>
+            <trans-unit id="close_on_november_first">
+                <source>close_on_november_first</source>
+                <target>Le musée est fermé le 1er novembre</target>
+            </trans-unit>
+            <trans-unit id="close_on_xmass">
+                <source>close_on_xmass</source>
+                <target>Le musée est fermé le 25 décembre</target>
+            </trans-unit>
+            <trans-unit id="close_on_easter">
+                <source>close_on_easter</source>
+                <target>Le musée est fermé le jour de Pâques</target>
+            </trans-unit>
+            <trans-unit id="close_on_ascension">
+                <source>close_on_ascension</source>
+                <target>Le musée est fermé le jour de l\'Ascension</target>
+            </trans-unit>
+            <trans-unit id="close_on_pentecost">
+                <source>close_on_pentecost</source>
+                <target>Le musée est fermé le jour de la Pentcôte</target>
+            </trans-unit>
+            <trans-unit id="visit_in_future">
+                <source>visit_in_future</source>
+                <target>Vous ne pouvez pas commander pour une date supérieur au %future_date%</target>
+            </trans-unit>
+            <trans-unit id="label_reduced">
+                <source>label_reduced</source>
+                <target>Tarif réduit</target>
+            </trans-unit>
+            <trans-unit id="to_be_continued">
+                <source>to_be_continued</source>
+                <target>...</target>
+            </trans-unit>
+            <trans-unit id="label_selection">
+                <source>label_selection</source>
+                <target>Votre sélection</target>
+            </trans-unit>
+            <trans-unit id="reduced_warning">
+                <source>reduced_warning</source>
+                <target>Le tarif "réduit" est accordé sous certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)</target>
+            </trans-unit>
+
+            <trans-unit id="surname">
+                <source>surname</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="name">
+                <source>name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="country">
+                <source>country</source>
+                <target>Pays</target>
+            </trans-unit>
+            <trans-unit id="birthday">
+                <source>birthday</source>
+                <target>Date de naissance</target>
+            </trans-unit>
+            <trans-unit id="total">
+                <source>total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="pricelist">
+                <source>pricelist</source>
+                <target>Tarif</target>
+            </trans-unit>
+            <trans-unit id="amount">
+                <source>amount</source>
+                <target>Montant</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -19,6 +19,7 @@ class TicketType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+           
             $builder
                 ->add('visit', DateType::class,array(
                         'attr' => array('class' => 'form-control'),
@@ -29,9 +30,10 @@ class TicketType extends AbstractType
                 ->add('duration', ChoiceType::class,array(
                         'label' => '',
                         'choices' => array(
-                            'Journée' => Ticket::DAY,
-                            'demi-journée' => Ticket::HALFDAY
+                            'label_day' => Ticket::DAY,
+                            'label_halfday' => Ticket::HALFDAY
                         ),
+                        'choice_translation_domain' => 'messages',
                         'multiple' => false,
                         'expanded' => true
                     )
@@ -42,6 +44,8 @@ class TicketType extends AbstractType
                 )
                 ->add('save', SubmitType::class,array(
                         'attr' => array('class' => 'btn btn-primary btn-block btn-lg'),
+                        'label' => 'save_label',
+                        'translation_domain' => 'messages',
                     )
                 )
             ;

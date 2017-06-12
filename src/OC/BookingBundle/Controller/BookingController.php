@@ -29,11 +29,9 @@ class BookingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $this->get('validator')->validate($ticket);
-            if (count($errors) == 0) {
+                $ticket->setOrderdate(new \DateTime('now'));
                 $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket,$request);
                 return $this->redirectToRoute('oc_booking_visitor');
-            }
         }
 
         return $this->render(

@@ -2,16 +2,19 @@
 namespace OC\BookingBundle\Service;
 use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Service\Utils;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class Opening
 {
 
     const MAX_MONTH = 6;
     private $utils = null;
+    private $translator = null;
 
-    public function __construct(Utils $utils)
+    public function __construct(Utils $utils, TranslatorInterface $translator)
     {
         $this->utils = $utils;
+        $this->translator = $translator;
     }
 
 
@@ -66,7 +69,7 @@ class Opening
 
     public function getDefaults(Ticket $ticket){
 
-        setlocale(LC_ALL, 'fr_FR');
+        //setlocale(LC_ALL, 'fr_FR');
         $date = new \DateTime('now');
         $date2 = new \DateTime('tomorrow');
 
@@ -75,7 +78,7 @@ class Opening
 
         // Date de fin
         $endDate = new \DateTime('+'.self::MAX_MONTH.' month');
-    
+
         $default = [
             'current' => '',
             'startDate' => '',
@@ -117,7 +120,7 @@ class Opening
         } else {
             $default['current'] = $default['startDate'];
         }
-        $default['pretty'] = $this->utils->getPrettyDate($default['current']); 
+        $default['pretty'] = $this->utils->getPrettyDate($default['current']);
 
         return $default;
     }
@@ -133,7 +136,7 @@ class Opening
     {
 
         $response = [
-            'message' => 'Le musée est ouvert de 9H00 à 22H00',
+            'message' => $this->translator->trans('opening_message', array(), 'messages'),
             'open' => true
         ];
 
@@ -144,7 +147,7 @@ class Opening
         $interval = $plustard->diff($date);
         if($interval->format('%r%a') > 0){
             $response = [
-                'message' => 'Vous ne pouvez pas commander pour une date supérieur au '.$plustard->format('d/m/Y'),
+                'message' => $this->translator->trans('visit_in_future', array('%future_date%'), 'messages'),
                 'open' => false
             ];
         }
@@ -153,7 +156,7 @@ class Opening
         $interval = $today->diff($date);
         if((int)$interval->format('%r%a') < 0){
             $response = [
-                'message' => 'Vous ne pouvez pas commander pour des dates passées',
+                'message' => $this->translator->trans('visit_in_past', array(), 'messages'),
                 'open' => false
             ];
         }
@@ -164,7 +167,7 @@ class Opening
         $n = new \DateTime('now');
         if(($cur == $tdy) && ($n->format('H') > 19)){
             $response = [
-                'message' => 'Le musée ferme à 19h00',
+                'message' => $this->translator->trans('closing_hour', array(), 'messages'),
                 'open' => false
             ];
         }
@@ -173,15 +176,15 @@ class Opening
         $day = $date->format('w');
         if($day == 2){
             $response = [
-                'message' => 'Le musée est fermé le mardi',
+                'message' => $this->translator->trans('closed_day', array(), 'messages'),
                 'open' => false
             ];
         }
 
         // Dimanche
-        if($day == 1){
+        if($day == 0){
             $response = [
-                'message' => 'Il n\'est pas possible de réserver pour le dimanche, mais le musée est ouvert',
+                'message' => $this->translator->trans('sunday_warning', array(), 'messages'),
                 'open' => false
             ];
         }
@@ -193,7 +196,7 @@ class Opening
         $interval = $date->diff($bankHolidays);
         if($interval->format('%a') == 0){
             $response = [
-                'message' => 'Le musée est fermé le 1er mai',
+                'message' => $this->translator->trans('close_on_may_first', array(), 'messages'),
                 'open' => false
             ];
         }
@@ -203,7 +206,7 @@ class Opening
         $interval = $date->diff($bankHolidays);
         if($interval->format('%a') == 0){
             $response = [
-                'message' => 'Le musée est fermé le 1er novembre',
+                'message' => $this->translator->trans('close_on_november_first', array(), 'messages'),
                 'open' => false
             ];
 
@@ -214,7 +217,7 @@ class Opening
         $interval = $date->diff($bankHolidays);
         if($interval->format('%a') == 0){
             $response = [
-                'message' => 'Le musée est fermé le 25 décembre',
+                'message' => $this->translator->trans('close_on_xmass', array(), 'messages'),
                 'open' => false
             ];
         }
@@ -223,7 +226,7 @@ class Opening
         $easter = easter_date($year);
         if($date->format('Ymd') == date("Ymd", $easter)){
             $response = [
-                'message' => 'Le musée est fermé le jour de Pâques',
+                'message' => $this->translator->trans('close_on_easter', array(), 'messages'),
                 'open' => false
             ];
         }
@@ -232,7 +235,7 @@ class Opening
         $bankHolliday = new \DateTime(date("Y-m-d", $easter).' +39 days');
         if($date->format('Ymd') == $bankHolliday->format('Ymd')){
             $response = [
-                'message' => 'Le musée est fermé le jour de l\'Ascension',
+                'message' => $this->translator->trans('close_on_ascension', array(), 'messages'),
                 'open' => false
             ];
         }
@@ -241,7 +244,7 @@ class Opening
         $bankHolliday = new \DateTime(date("Y-m-d", $easter).' +49 days');
         if($date->format('Ymd') == $bankHolliday->format('Ymd')){
             $response = [
-                'message' => 'Le musée est fermé le jour de la Pentcôte',
+                'message' => $this->translator->trans('close_on_pentecost', array(), 'messages'),
                 'open' => false
             ];
         }

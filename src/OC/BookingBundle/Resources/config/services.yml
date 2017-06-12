@@ -9,7 +9,7 @@ services:
 
   oc.bookingbundle.opening:
     class: OC\BookingBundle\Service\Opening
-    arguments: ['@oc.bookingbundle.utils']
+    arguments: ['@oc.bookingbundle.utils', '@translator']
 
 
   oc.bookingbundle.booking:
