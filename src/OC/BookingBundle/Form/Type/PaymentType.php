@@ -20,55 +20,57 @@ class PaymentType extends AbstractType
     {
         $builder
                 ->add('email', EmailType::class,array(
-                        'label' => 'Votre adresse email où envoyer les billets',
-                        'attr' => array('class' => 'form-control')
+                        'label' => 'email_for_tickets',
+                        'attr' => array('class' => 'form-control'),
+                        'translation_domain' => 'messages'
                     )
                 )
                 ->add('name', TextType::class,array(
-                        'label' => 'Nom',
+                        'label' => 'name',
                         'attr' => array(
                             'class' => 'form-control',
-                            'placeholder' => 'Nom'
-                        )
+                            'placeholder' => 'name'
+                        ),
+                        'translation_domain' => 'messages'
                     )
                 )
                 ->add('cardno', TextType::class,array(
-                        'label' => 'N° de carte de crédit',
+                        'label' => 'credit_card_no',
                         'attr' => array(
                             'class' => 'form-control',
-                            'placeholder' => 'N° de carte',
+                            'placeholder' => 'credit_card_no',
                             'data-stripe' => 'number'
-                        )
+                        ),
+                        'translation_domain' => 'messages'
                     )
                 )
                 ->add('expmonth', ChoiceType::class,array(
-                        'label' => 'Date d\'expiration ',
+                        'label' => 'expiration_date',
                         'attr' => array(
                             'class' => 'form-control',
-                            'placeholder' => 'Date expiration mois',
                             'data-stripe' => 'exp-month'
                         ),
                         'choices'  => array(
-                            '1 - janvier' => '01',
-                            '2  - février' => '02',
-                            '3  - mars' => '03',
-                            '4  - avril' => '04',
-                            '5  - mai' => '05',
-                            '6  - juin' => '06',
-                            '7  - juillet' => '07',
-                            '8  - août' => '08',
-                            '9  - septembre' => '09',
-                            '10 - octobre' => '10',
-                            '11 - novembre' => '11',
-                            '12 - décembre' => '12',
-                        )
+                            'month_1' => '01',
+                            'month_2' => '02',
+                            'month_3' => '03',
+                            'month_4' => '04',
+                            'month_5' => '05',
+                            'month_6' => '06',
+                            'month_7' => '07',
+                            'month_8' => '08',
+                            'month_9' => '09',
+                            'month_10' => '10',
+                            'month_11' => '11',
+                            'month_12' => '12',
+                        ),
+                        'choice_translation_domain' => 'messages',
                     )
                 )
                 ->add('expyear', ChoiceType::class,array(
                         'label' => ' ',
                         'attr' => array(
                             'class' => 'form-control',
-                            'placeholder' => 'Date expiration année',
                             'data-stripe' => 'exp-year'
                         ),
                         'choices'  => array_combine(
@@ -78,12 +80,13 @@ class PaymentType extends AbstractType
                     )
                 )
                 ->add('cvv', TextType::class,array(
-                        'label' => 'Code de sécurité',
+                        'label' => 'security_code',
                         'attr' => array(
                             'class' => 'form-control',
-                            'placeholder' => 'Code de sécurité',
+                            'placeholder' => 'security_code',
                             'data-stripe' => 'cvc'
-                        )
+                        ),
+                        'translation_domain' => 'messages'
                     )
                 )
                 ->add('token', HiddenType::class, array(
@@ -91,8 +94,9 @@ class PaymentType extends AbstractType
                     )
                 )
                 ->add('save', SubmitType::class,array(
-                        'label' => 'Paiement',
+                        'label' => 'label_payment',
                         'attr' => array('class' => 'btn btn-primary btn-block btn-lg'),
+                        'translation_domain' => 'messages'
                     )
                 )
             ;

@@ -152,6 +152,94 @@
                 <source>amount</source>
                 <target>Montant</target>
             </trans-unit>
+            <trans-unit id="mail">
+                <source>mail</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="check_email">
+                <source>check_email</source>
+                <target>Veuillez vérifier votre adresse email avant d'envoyer votre paiement</target>
+            </trans-unit>
+            <trans-unit id="email_for_tickets">
+                <source>email_for_tickets</source>
+                <target>Votre adresse email où envoyer les billets</target>
+            </trans-unit>
+            <trans-unit id="credit_card_no">
+                <source>credit_card_no</source>
+                <target>N° de carte de crédit</target>
+            </trans-unit>
+            <trans-unit id="month_1">
+                <source>month_1</source>
+                <target>1 - Janvier</target>
+            </trans-unit>
+            <trans-unit id="month_2">
+                <source>month_2</source>
+                <target>2 - Février</target>
+            </trans-unit>
+            <trans-unit id="month_3">
+                <source>month_3</source>
+                <target>3 - Mars</target>
+            </trans-unit>
+            <trans-unit id="month_4">
+                <source>month_4</source>
+                <target>4 - Avril</target>
+            </trans-unit>
+            <trans-unit id="month_5">
+                <source>month_5</source>
+                <target>5 - Mai</target>
+            </trans-unit>
+            <trans-unit id="month_6">
+                <source>month_6</source>
+                <target>6 - Juin</target>
+            </trans-unit>
+            <trans-unit id="month_7">
+                <source>month_7</source>
+                <target>7 - Juillet</target>
+            </trans-unit>
+            <trans-unit id="month_8">
+                <source>month_8</source>
+                <target>8 - Août</target>
+            </trans-unit>
+            <trans-unit id="month_9">
+                <source>month_9</source>
+                <target>9 - Septembre</target>
+            </trans-unit>
+            <trans-unit id="month_10">
+                <source>month_10</source>
+                <target>10 - Octobre</target>
+            </trans-unit>
+            <trans-unit id="month_11">
+                <source>month_11</source>
+                <target>11 - Novembre</target>
+            </trans-unit>
+            <trans-unit id="month_12">
+                <source>month_12</source>
+                <target>12 - Décembre</target>
+            </trans-unit>
+            <trans-unit id="security_code">
+                <source>security_code</source>
+                <target>Code de sécurité</target>
+            </trans-unit>
+            <trans-unit id="label_payment">
+                <source>label_payment</source>
+                <target>Paiement</target>
+            </trans-unit>
+            <trans-unit id="expiration_date">
+                <source>expiration_date</source>
+                <target>Date d'expiration</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
+
+
+<!--
+{% trans %}{% endtrans %}
+
+
+
+
+security_code:Code de sécurité
+label_payment: Paiement
+-->

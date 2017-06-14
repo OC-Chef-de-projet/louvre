@@ -39,13 +39,15 @@ class Booking
     * @param  Request $request [description]
     * @return [type]           [description]
     */
-   public function getTicket(Request $request)
+   public function getTicket(Request $request, $visitors = false)
    {
         $ticket_id = $request->getSession()->get('ticket_id');
         if($ticket_id){
             $repository = $this->em->getRepository('OCBookingBundle:Ticket');
             $ticket = $repository->find($ticket_id);
-            $this->initVisitors($ticket);
+            if($visitors === true){
+            	$this->initVisitors($ticket);
+            }
             return $ticket;
         }
         $ticket = new Ticket();

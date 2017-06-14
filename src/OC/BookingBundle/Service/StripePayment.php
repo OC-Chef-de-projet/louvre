@@ -12,11 +12,17 @@ class StripePayment
 
         Stripe::setApiKey("sk_test_CZT8FaxCvhqRgJmIJYGdUFzs");
 
-        Charge::create([
-                "amount"      => (int)$data['amount'] * 100,
-                "currency"    => 'EUR',
-                "source"      => $data['token'],
-                "description" => $data['email']
-        ]);
+        try {
+            $result = Charge::create([
+                'amount'      => (int)$data['amount'] * 100,
+                'currency'    => 'EUR',
+                'source'      => $data['token'],
+                'description' => $data['email']
+            ]);
+            error_log(print_r($result,true));
+        } catch (\Stripe\Error\Card $e) {
+            error_log($e->getMessage())
+            throw new Exception("WOW");
+        }
     }
 }

@@ -22,7 +22,7 @@ class BookingController extends Controller
     public function selectAction(Request $request)
     {
         $errors = array();
-        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
+        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,false);
         $default = $this->container->get('oc.bookingbundle.opening')->getDefaults($ticket);
 
     	$form = $this->createForm(TicketType::class, $ticket);
@@ -53,7 +53,7 @@ class BookingController extends Controller
     public function visitorAction(Request $request)
     {
 
-		$ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
+		$ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,true);
 		if(!$ticket->getId()){
 			return $this->redirectToRoute('oc_booking_select');
 		}
@@ -88,7 +88,7 @@ class BookingController extends Controller
         $form = $this->createForm(PaymentType::class) ;
         $form->handleRequest($request);
 
-        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
+        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,true);
         if(!$ticket){
             return $this->redirectToRoute('oc_booking_select');
         }
@@ -133,7 +133,7 @@ class BookingController extends Controller
      */
     public function checkoutAction(Request $request)
     {
-        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request);
+        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,true);
         if(!$ticket->getId()){
             return $this->redirectToRoute('oc_booking_select');
         }

@@ -1,26 +1,24 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h2>Votre sélection</h2>
+	<h2>{% trans %}label_selection{% endtrans %}</h2>
 	<h3>{{ prettyDate }} -
 	{{ ticket.nbticket }} billet(s)
 		{% if ticket.duration == constant('OC\\BookingBundle\\Entity\\Ticket::DAY') %}
-		Journée
+			{% trans %}label_day{% endtrans %}
 		{% else %}
-		demi-journée
+			{% trans %}label_halfday{% endtrans %}
 		{% endif %}
-		-
-		{{ ticket.amount|number_format(2, '.', '') }} &euro;
 	</h3>
 	<table class="table" id="visitorsTable">
 			<thead>
 				<tr>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Pays</th>
-					<th>Date de naissance</th>
-					<th>Tarif</th>
-					<th class="text-right">Montant</th>
+					<th>{% trans %}surname{% endtrans %}</th>
+					<th>{% trans %}name{% endtrans %}</th>
+					<th>{% trans %}country{% endtrans %}</th>
+					<th>{% trans %}birthday{% endtrans %}</th>
+					<th>{% trans %}pricelist{% endtrans %}</th>
+					<th class="text-right">{% trans %}amount{% endtrans %}</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -39,7 +37,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="5" class="text-right">Total</th>
+					<th colspan="5" class="text-right">{% trans %}total{% endtrans %}</th>
 					<th class="text-right">
 						<span id="total">{{ ticket.amount|number_format(2, '.', '') }}</span> &euro;
 					</th>
@@ -50,12 +48,11 @@
 	<div class="row">
 		{{ form_start(form, {'attr': {'id': 'payment-form', 'class':'form-horizontal' }}) }}
 		<div class="col-xs-offset-1 col-xs-4">
-			<h2>Email</h2>
+			<h2>{% trans %}mail{% endtrans %}</h2>
 			{{ form_row(form.email) }}
 			<br/>
 			<div class="alert alert-warning text-center">
-				<b>Veuillez vérifier votre adresse email<br>
-				avant d'envoyer votre paiement</b>
+				<b>{% trans %}check_email{% endtrans %}</b>
 			</div>
 			{% if form_errors(form)|length > 0 %}
     		<div class="alert alert-danger">
@@ -76,7 +73,7 @@
 							{% image '@OCBookingBundle/Resources/public/images/stripe-secure.png'  output="images/stripe-secure.png" %}
 							<img src="{{ asset_url }}" width="50%" height="100%" alt="Stripe payment" class="pull-left">
 							{% endimage %}
-							Paiement
+							{% trans %}label_payment{% endtrans %}
 							</h2>
 						</div>
 						<div id="payment-error" class="alert alert-danger" style="display:none"></div>
@@ -84,7 +81,7 @@
   				</div>
 
 				<div class="form-group">
-					<label class="control-label col-sm-4">Montant</label>
+					<label class="control-label col-sm-4">{% trans %}amount{% endtrans %}</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="texte" readonly=true value="{{ ticket.amount }} EUR">
     				</div>
