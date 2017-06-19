@@ -62,9 +62,6 @@
 
 		</div>
 		<div class="col-xs-7">
-
-
-
 				<div class="form-group">
 					<label class="control-label col-sm-4">&nbsp;</label>
 					<div class="col-sm-6">
@@ -76,7 +73,6 @@
 							{% trans %}label_payment{% endtrans %}
 							</h2>
 						</div>
-						<div id="payment-error" class="alert alert-danger" style="display:none"></div>
     				</div>
   				</div>
 
@@ -125,6 +121,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-4">&nbsp;</label>
 					<div class="col-sm-6">
+						<div id="payment-error" class="alert alert-danger" style="display:none"></div>
 						{{ form_row(form.save) }}
     				</div>
   				</div>
@@ -140,9 +137,30 @@
 	<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 	<script type="text/javascript">
 		Stripe.setPublishableKey('{{ stripe_pk }}');
+		var errorMessages = {
+			incorrect_number: "{% trans %}incorrect_number{% endtrans %}",
+			invalid_number: "{% trans %}invalid_number{% endtrans %}",
+			invalid_expiry_month: "{% trans %}invalid_expiry_month{% endtrans %}",
+			invalid_expiry_year: "{% trans %}invalid_expiry_year{% endtrans %}",
+			invalid_cvc: "{% trans %}invalid_cvc{% endtrans %}",
+			expired_card: "{% trans %}expired_card{% endtrans %}",
+			incorrect_cvc: "{% trans %}incorrect_cvc{% endtrans %}",
+			incorrect_zip: "{% trans %}incorrect_zip{% endtrans %}",
+			card_declined: "{% trans %}card_declined{% endtrans %}",
+			missing: "{% trans %}missing{% endtrans %}",
+			processing_error: "{% trans %}processing_error{% endtrans %}",
+			rate_limit:  "{% trans %}rate_limit{% endtrans %}"
+		};
+
 		$(function() {
+			{% if stripe_error is not empty %}
+				$('#payment-error').show();
+    			$('#payment-error').text("{{stripe_error}}");
+			{% endif %}
+
 			var $form = $('#payment-form');
   			$form.submit(function(event) {
+  				event.preventDefault();
     			$('#payment_save').prop('disabled', true);
     			Stripe.card.createToken($form, stripeResponseHandler);
     			return false;
@@ -152,9 +170,9 @@
 			var $form = $('#payment-form');
   			if (response.error) {
   				$('#payment-error').show();
-    			$('#payment-error').text(response.error.message);
+    			$('#payment-error').text(errorMessages[response.error.code]);
     			$('#payment_save').prop('disabled', false);
-
+				return false;
   			} else {
     			var token = response.id;
     			$('#payment_token').val(token);

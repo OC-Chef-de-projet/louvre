@@ -228,6 +228,126 @@
                 <source>expiration_date</source>
                 <target>Date d'expiration</target>
             </trans-unit>
+            <trans-unit id="halfday_validation">
+                <source>halfday_validation</source>
+                <target>Vous ne pouvez pas acheter un billet journée pour le jour mếme après 14h00</target>
+            </trans-unit>
+            <trans-unit id="incorrect_number">
+                <source>incorrect_number</source>
+                <target>Date d'expiration</target>
+            </trans-unit>
+
+            <trans-unit id="invalid_number">
+                <source>invalid_number</source>
+                <target>Le numéro de carte n'est pas un numéro de carte valide.</target>
+            </trans-unit>
+            <trans-unit id="invalid_expiry_month">
+                <source>invalid_expiry_month</source>
+                <target>Le mois d'expiration de la carte n'est pas valide.</target>
+            </trans-unit>
+            <trans-unit id="invalid_expiry_year">
+                <source>invalid_expiry_year</source>
+                <target>L'année d’expiration de la carte n'est pas valide.</target>
+            </trans-unit>
+            <trans-unit id="invalid_cvc">
+                <source>invalid_cvc</source>
+                <target>Le code de sécurité de la carte n'est pas valide.</target>
+            </trans-unit>
+            <trans-unit id="expired_card">
+                <source>expired_card</source>
+                <target>La carte a expiré.</target>
+            </trans-unit>
+            <trans-unit id="incorrect_cvc">
+                <source>incorrect_cvc</source>
+                <target>Le code de sécurité de la carte est incorrect.</target>
+            </trans-unit>
+            <trans-unit id="incorrect_zip">
+                <source>incorrect_zip</source>
+                <target>La validation du code postal de la carte a échoué.</target>
+            </trans-unit>
+            <trans-unit id="Your_card_was_declined">
+                <source>Your card was declined.</source>
+                <target>La carte a été refusée.</target>
+            </trans-unit>
+            <trans-unit id="card_declined">
+                <source>card_declined</source>
+                <target>La carte a été refusée.</target>
+            </trans-unit>
+            <trans-unit id="missing">
+                <source>missing</source>
+                <target>Aucun client associé à cette carte</target>
+            </trans-unit>
+            <trans-unit id="processing_error">
+                <source>processing_error</source>
+                <target>Une erreur est survenue lors du contrôle de la carte.</target>
+            </trans-unit>
+            <trans-unit id="rate_limit">
+                <source>rate_limit</source>
+                <target>Une erreur est survenue en raison d'un trop grand nombre de requêtes vers le serveur. Veuillez nous contacter si vous rencontrez cette erreur systématiquement.</target>
+            </trans-unit>
+            <trans-unit id="hello">
+                <source>hello</source>
+                <target>Bonjour,</target>
+            </trans-unit>
+            <trans-unit id="order_ack">
+                <source>order_ack</source>
+                <target>Nous vous remercions pour votre commande.</target>
+            </trans-unit>
+            <trans-unit id="order_auth">
+                <source>order_auth</source>
+                <target>Votre autorisation de paiement a été confirmée et elle est considérée comme ferme.</target>
+            </trans-unit>
+            <trans-unit id="visit_document">
+                <source>visit_document</source>
+                <target>Pour votre visite au musée, veuillez vous munir d'une copie imprimée de ce mail, d'une pièce d'identité pour chacun des visiteurs et d'un justificatif pour les visiteurs qui bénéficient d'un tarif réduit.</target>
+            </trans-unit>
+
+            <trans-unit id="booking_no">
+                <source>booking_no</source>
+                <target>N° de réservation</target>
+            </trans-unit>
+            <trans-unit id="visitors">
+                <source>visitors</source>
+                <target>Visiteurs</target>
+            </trans-unit>
+            <trans-unit id="paid_by">
+                <source>paid_by</source>
+                <target>Réglé par carte bancaire le</target>
+            </trans-unit>
+            <trans-unit id="payment_amount">
+                <source>payment_amount</source>
+                <target>Montant total de la transaction</target>
+            </trans-unit>
+            <trans-unit id="team_regards">
+                <source>team_regards</source>
+                <target>Toute l'équipe du musée du Louvre vous souhaite une agréablie visite.</target>
+            </trans-unit>
+            <trans-unit id="regards">
+                <source>regards</source>
+                <target>Cordialement,</target>
+            </trans-unit>
+            <trans-unit id="museum_team">
+                <source>museum_team</source>
+                <target>L'équipe du musée du Louvre.</target>
+            </trans-unit>
+            <trans-unit id="museum_booking">
+                <source>museum_booking</source>
+                <target>Billeterie du musée du Louvre</target>
+            </trans-unit>
+            <trans-unit id="order_resume">
+                <source>order_resume</source>
+                <target>Récapitulatif de vos achats</target>
+            </trans-unit>
+            <trans-unit id="order_mailto">
+                <source>order_mailto</source>
+                <target>Vos billets ont été envoyés à l'adresse suivante</target>
+            </trans-unit>
+            <trans-unit id="mail_order_date">
+                <source>mail_order_date</source>
+                <target>Musée du Louvre - Votre réservation pour le %visit_date%</target>
+            </trans-unit>
+
+           
 
         </body>
     </file>
@@ -236,10 +356,4 @@
 
 <!--
 {% trans %}{% endtrans %}
-
-
-
-
-security_code:Code de sécurité
-label_payment: Paiement
 -->

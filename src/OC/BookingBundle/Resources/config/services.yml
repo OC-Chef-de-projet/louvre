@@ -25,7 +25,7 @@ services:
 
   oc.bookingbundle.mailer:
     class: OC\BookingBundle\Service\Mailer
-    arguments: ["@Swift_Mailer",'@templating', '@oc.bookingbundle.utils']
+    arguments: ["@Swift_Mailer",'@templating', '@oc.bookingbundle.utils', '@translator']
 
   oc.bookingbundle.validator.isopen:
         class: OC\BookingBundle\Validator\Constraints\IsopenValidator

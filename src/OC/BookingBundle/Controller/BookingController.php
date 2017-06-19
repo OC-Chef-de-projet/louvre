@@ -84,6 +84,7 @@ class BookingController extends Controller
     {
 
         $stripe_pk = $this->getParameter('stripe_pk');
+        $stripe_error = '';
 
         $form = $this->createForm(PaymentType::class) ;
         $form->handleRequest($request);
@@ -102,16 +103,22 @@ class BookingController extends Controller
             $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket, $request);
 
             // Demande de paiement
-            $data['amount'] = $ticket->getAmount();
-            $this->container->get('oc.bookingbundle.stripe')->charge($data);
-            return $this->redirectToRoute('oc_booking_checkout');
+            try {
+                $data['amount'] = $ticket->getAmount();
+                $this->container->get('oc.bookingbundle.stripe')->charge($data);
+                return $this->redirectToRoute('oc_booking_checkout');
+            } catch (\Stripe\Error\Card $e) {
+                $body = $e->getJsonBody();
+                $stripe_error = $this->get('translator')->trans($body['error']['code'], array(), 'messages');
+            }
         }
 
         return $this->render('OCBookingBundle:Payment:payment.html.twig', array(
             'form' => $form->createView(),
             'prettyDate' => $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d')),
             'ticket' => $ticket,
-            'stripe_pk' => $stripe_pk
+            'stripe_pk' => $stripe_pk,
+            'stripe_error' => $stripe_error
 
         ));
     }

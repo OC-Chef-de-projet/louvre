@@ -1,19 +1,19 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h2>Merci pour votre commande</h2>
+<h2>{% trans %}order_ack{% endtrans %}</h2>
 <div class="alert alert-info">
-	<h3>N° de réservation : {{ ticket.code }}</h3>
-	<h4>Vos billets ont été envoyés à l'adresse suivante : {{ ticket.email }} </h4>
+	<h3>{% trans %}booking_no{% endtrans %} {{ ticket.code }}</h3>
+	<h4>{% trans %}order_mailto{% endtrans %} {{ ticket.email }} </h4>
 </div>
-<h3>Récapitulatif de vos achats</h3>
+<h3>{% trans %}order_resume{% endtrans %}</h3>
 <hr>
 	<h3>{{ prettyDate }} -
-	{{ ticket.nbticket }} billet(s)
+	{{ ticket.nbticket }} {% trans %}ticket{% endtrans %}
 		{% if ticket.duration == constant('OC\\BookingBundle\\Entity\\Ticket::DAY') %}
-		Journée
+			{% trans %}label_day{% endtrans %}
 		{% else %}
-		demi-journée
+			{% trans %}label_halfday{% endtrans %}
 		{% endif %}
 		-
 		{{ ticket.amount|number_format(2, '.', '') }} &euro;
@@ -21,12 +21,12 @@
 	<table class="table" id="visitorsTable">
 			<thead>
 				<tr>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Pays</th>
-					<th>Date de naissance</th>
-					<th>Tarif</th>
-					<th class="text-right">Montant</th>
+					<th>{% trans %}name{% endtrans %}</th>
+					<th>{% trans %}surname{% endtrans %}</th>
+					<th>{% trans %}country{% endtrans %}</th>
+					<th>{% trans %}birthday{% endtrans %}</th>
+					<th>{% trans %}pricelist{% endtrans %}</th>
+					<th class="text-right">{% trans %}amount{% endtrans %}</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -45,7 +45,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="5" class="text-right">Total</th>
+					<th colspan="5" class="text-right">{% trans %}total{% endtrans %}</th>
 					<th class="text-right">
 						<span id="total">{{ ticket.amount|number_format(2, '.', '') }}</span> &euro;
 					</th>
