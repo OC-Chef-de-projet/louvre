@@ -28,7 +28,6 @@ class BookingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-                $ticket->setOrderdate(new \DateTime('now'));
                 $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket,$request);
                 return $this->redirectToRoute('oc_booking_visitor');
         }
@@ -61,7 +60,6 @@ class BookingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ticket->setOrderdate(new \DateTime('now'));
             $this->container->get('oc.bookingbundle.booking')->saveVisitors($ticket,$request);
             return $this->redirectToRoute('oc_booking_payment');
         }
@@ -82,8 +80,6 @@ class BookingController extends Controller
     public function paymentAction(Request $request)
     {
 
-        $stripe_pk = $this->getParameter('stripe_pk');
-        $stripe_error = '';
 
         $form = $this->createForm(PaymentType::class) ;
         $form->handleRequest($request);
@@ -93,17 +89,11 @@ class BookingController extends Controller
             return $this->redirectToRoute('oc_booking_select');
         }
 
+        $stripe_error = '';
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // Enregistrement du ticket
-            $data = $form->getData();
-            $ticket->setEmail($data['email']);
-            $ticket->setPaymentdate(new \DateTime('now'));
-            $this->container->get('oc.bookingbundle.booking')->saveTicket($ticket, $request);
+            $stripe_error =  $this->container->get('oc.bookingbundle.booking')->savePayment($ticket, $request,$form->getData());
 
-            // Demande de paiement
-            $data['amount'] = $ticket->getAmount();
-            $stripe_error = $this->container->get('oc.bookingbundle.stripe')->charge($data);
             if($stripe_error){
                 $stripe_error = $this->get('translator')->trans($stripe_error, array(), 'messages');
             } else {
@@ -114,7 +104,7 @@ class BookingController extends Controller
             'form' => $form->createView(),
             'prettyDate' => $this->container->get('oc.bookingbundle.utils')->getPrettyDate($ticket->getVisit()->format('y-m-d')),
             'ticket' => $ticket,
-            'stripe_pk' => $stripe_pk,
+            'stripe_pk' => $this->getParameter('stripe_pk'),
             'stripe_error' => $stripe_error
         ));
     }

@@ -5,21 +5,28 @@ use OC\BookingBundle\Entity\Ticket;
 use OC\BookingBundle\Entity\Visitor;
 use Symfony\Component\HttpFoundation\Request;
 use OC\BookingBundle\Service\Price;
+use OC\BookingBundle\Service\StripePayment;
+
 class Booking
 {
 
     private $em;
     private $price;
+    private $payment;
 
-    public function __construct(EntityManager $em, Price $price)
+    public function __construct(EntityManager $em, Price $price, StripePayment $payment)
     {
         $this->em = $em;
         $this->price = $price;
+        $this->payment = $payment;
     }
 
 
    public function saveTicket(Ticket $ticket,Request $request)
    {
+        if(empty($ticket->getOrderdate())){
+            $ticket->setOrderdate(new \DateTime('now'));
+        }
         $this->em->persist($ticket);
         $this->em->flush();
 
@@ -110,7 +117,26 @@ class Booking
         $this->em->flush();
    }
 
+   public function savePayment(Ticket $ticket, $request, $data)
+   {
+            $ticket->setEmail($data['email']);
+            $ticket->setPaymentdate(new \DateTime('now'));
+            $data['amount'] = $ticket->getAmount();
+            $stripe_error = $this->payment->charge($data);
+   }
 
+/*
+$this->container->get('oc.bookingbundle.booking')->saveTicket($ticket, $request);
+
+            // Demande de paiement
+            // Enregistrement du ticket
+            $data = $form->getData();
+            $ticket->setEmail($data['email']);
+            $ticket->setPaymentdate(new \DateTime('now'));
+
+            $data['amount'] = $ticket->getAmount();
+            $stripe_error = $this->container->get('oc.bookingbundle.stripe')->charge($data);
+*/
    /**
     * Initilalisation du champ visiteur
     *
