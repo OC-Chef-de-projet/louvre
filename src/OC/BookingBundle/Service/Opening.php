@@ -69,7 +69,6 @@ class Opening
 
     public function getDefaults(Ticket $ticket){
 
-        //setlocale(LC_ALL, 'fr_FR');
         $date = new \DateTime('now');
         $date2 = new \DateTime('tomorrow');
 

@@ -10,13 +10,20 @@ class StripePayment
     public function charge($data)
     {
 
-        Stripe::setApiKey("sk_test_CZT8FaxCvhqRgJmIJYGdUFzs");
+        try {
+            $stripe_error = '';
+            Stripe::setApiKey("sk_test_CZT8FaxCvhqRgJmIJYGdUFzs");
 
-        $result = Charge::create([
-            'amount'      => (int)$data['amount'] * 100,
-            'currency'    => 'EUR',
-            'source'      => $data['token'],
-            'description' => $data['email']
-        ]);
+            Charge::create([
+                'amount'      => (int)$data['amount'] * 100,
+                'currency'    => 'EUR',
+                'source'      => $data['token'],
+                'description' => $data['email']
+            ]);
+        } catch (\Stripe\Error\Card $e) {
+            $body = $e->getJsonBody();
+            $stripe_error = $body['error']['code'];
+        }
+        return $stripe_error;
     }
 }
