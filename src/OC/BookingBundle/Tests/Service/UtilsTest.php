@@ -8,10 +8,20 @@ class UtilsTest extends TestCase
 {
     public function testAge()
     {
-        $age = new Utils();
-        $result = $age->getAge('1963-11-26');
-        $this->assertEquals(53, $result);
+    	$age = new Utils();
+
+    	$refDate = new \DateTime('now - 1 year');
+        $result = $age->getAge($refDate->format('Y-m-d'));
+        $this->assertEquals(1, $result);
+
+    	$refDate = new \DateTime('now - 2 years + 2 days');
+        $result = $age->getAge($refDate->format('Y-m-d'));
+        $this->assertEquals(1, $result);
+
+
     }
+
+
 
     public function testPrettyDate()
     {
