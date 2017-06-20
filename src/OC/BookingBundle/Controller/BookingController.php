@@ -92,7 +92,7 @@ class BookingController extends Controller
         $stripe_error = '';
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $stripe_error =  $this->container->get('oc.bookingbundle.booking')->savePayment($ticket, $request,$form->getData());
+            $stripe_error =  $this->container->get('oc.bookingbundle.booking')->savePayment($ticket,$form->getData());
 
             if($stripe_error){
                 $stripe_error = $this->get('translator')->trans($stripe_error, array(), 'messages');

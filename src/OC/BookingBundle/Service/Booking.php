@@ -117,26 +117,16 @@ class Booking
         $this->em->flush();
    }
 
-   public function savePayment(Ticket $ticket, $request, $data)
+   public function savePayment(Ticket $ticket, $data)
    {
             $ticket->setEmail($data['email']);
             $ticket->setPaymentdate(new \DateTime('now'));
+            $this->em->persist($ticket);
+            $this->em->flush();
             $data['amount'] = $ticket->getAmount();
-            $stripe_error = $this->payment->charge($data);
+            return $this->payment->charge($data);
    }
 
-/*
-$this->container->get('oc.bookingbundle.booking')->saveTicket($ticket, $request);
-
-            // Demande de paiement
-            // Enregistrement du ticket
-            $data = $form->getData();
-            $ticket->setEmail($data['email']);
-            $ticket->setPaymentdate(new \DateTime('now'));
-
-            $data['amount'] = $ticket->getAmount();
-            $stripe_error = $this->container->get('oc.bookingbundle.stripe')->charge($data);
-*/
    /**
     * Initilalisation du champ visiteur
     *
