@@ -1,5 +1,5 @@
 <?php
-namespace Tests\OC\BookingBundle\Service;
+namespace OC\BookingBundle\Tests\Service;
 
 use OC\BookingBundle\Service\Utils;
 use PHPUnit\Framework\TestCase;
