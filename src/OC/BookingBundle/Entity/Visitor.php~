@@ -70,7 +70,7 @@ class Visitor
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="visitor")
+     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="visitors")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
      */
     private $ticket;

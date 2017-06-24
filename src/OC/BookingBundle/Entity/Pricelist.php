@@ -61,7 +61,7 @@ class Pricelist
      *
      * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="pricelist", cascade="all", orphanRemoval=true)
      */
-    private $visitor;
+    private $visitors;
 
     /**
      * Get id
