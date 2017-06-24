@@ -67,22 +67,6 @@ class Visitor
      */
     private $amount;
 
-    /**
-     * @var int
-     *
-     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="visitors")
-     * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
-     */
-    private $ticket;
-
-    /**
-     * @var int
-     *
-     * @ORM\ManyToOne(targetEntity="Pricelist", inversedBy="visitor")
-     * @ORM\JoinColumn(name="pricelist_id", referencedColumnName="id")
-     */
-    private $pricelist;
-
    /**
     * @var boolean $isEnabled
     *
@@ -201,30 +185,7 @@ class Visitor
         return $this->country;
     }
 
-    /**
-     * Set ticket
-     *
-     * @param \OC\BookingBundle\Entity\Ticket $ticket
-     *
-     * @return Visitor
-     */
-    public function setTicket(\OC\BookingBundle\Entity\Ticket $ticket = null)
-    {
-        $this->ticket = $ticket;
-
-        return $this;
-    }
-
-
-    /**
-     * Get ticket
-     *
-     * @return \OC\BookingBundle\Entity\Ticket
-     */
-    public function getTicket()
-    {
-        return $this->ticket;
-    }
+   
 
     /**
      * Set amount
@@ -258,43 +219,10 @@ class Visitor
     {
         $this->setAmount(0);
 
-        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+       
     }
 
-    /**
-     * Add ticket
-     *
-     * @param \OC\BookingBundle\Entity\Ticket $ticket
-     *
-     * @return Visitor
-     */
-    public function addTicket(\OC\BookingBundle\Entity\Ticket $ticket)
-    {
-        $this->tickets[] = $ticket;
-
-        return $this;
-    }
-
-    /**
-     * Remove ticket
-     *
-     * @param \OC\BookingBundle\Entity\Ticket $ticket
-     */
-    public function removeTicket(\OC\BookingBundle\Entity\Ticket $ticket)
-    {
-        $this->tickets->removeElement($ticket);
-    }
-
-    /**
-     * Get tickets
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTickets()
-    {
-        return $this->tickets;
-    }
-
+  
     /**
      * Set reduced
      *
@@ -319,27 +247,5 @@ class Visitor
         return $this->reduced;
     }
 
-    /**
-     * Set pricelist
-     *
-     * @param \OC\BookingBundle\Entity\Pricelist $pricelist
-     *
-     * @return Visitor
-     */
-    public function setPricelist(\OC\BookingBundle\Entity\Pricelist $pricelist = null)
-    {
-        $this->pricelist = $pricelist;
-
-        return $this;
-    }
-
-    /**
-     * Get pricelist
-     *
-     * @return \OC\BookingBundle\Entity\Pricelist
-     */
-    public function getPricelist()
-    {
-        return $this->pricelist;
-    }
+  
 }
