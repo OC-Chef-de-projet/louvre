@@ -9,6 +9,10 @@ use Stripe\Error\Card;
 class BookingControllerTest extends WebTestCase
 {
 
+
+    //private $url = 'https://louvre.lignedemire.eu';
+    private $url = 'localhost';
+
     /**
      * Test Complet d'une commande billet
      *
@@ -19,7 +23,7 @@ class BookingControllerTest extends WebTestCase
 
         // Etape 1 - Chargement de la page
         $client = static::createClient();
-        $crawler = $client->request('GET', 'https://louvre.lignedemire.eu');
+        $crawler = $client->request('GET', $this->url);
         $client->followRedirects(true);
         $this->assertEquals(200,  $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(
@@ -93,7 +97,7 @@ class BookingControllerTest extends WebTestCase
 
         // Etape 1 - Chargement de la page
         $client = static::createClient();
-        $crawler = $client->request('GET', 'https://louvre.lignedemire.eu');
+        $crawler = $client->request('GET', $this->url);
         $client->followRedirects(true);
         $this->assertEquals(200,  $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(
@@ -130,13 +134,13 @@ class BookingControllerTest extends WebTestCase
     public function testBookingRedirect()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', 'https://louvre.lignedemire.eu/visitor');
+        $crawler = $client->request('GET', $this->url.'/visitor');
         $this->assertTrue($client->getResponse()->isRedirect());
 
-        $crawler = $client->request('GET', 'https://louvre.lignedemire.eu/payment');
+        $crawler = $client->request('GET', $this->url.'/payment');
         $this->assertTrue($client->getResponse()->isRedirect());
 
-        $crawler = $client->request('GET', 'https://louvre.lignedemire.eu/checkout');
+        $crawler = $client->request('GET', $this->url.'/checkout');
         $this->assertTrue($client->getResponse()->isRedirect());
 
     }
