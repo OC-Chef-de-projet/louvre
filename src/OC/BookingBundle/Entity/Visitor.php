@@ -81,7 +81,7 @@ class Visitor
      * @ORM\ManyToOne(targetEntity="Pricelist", inversedBy="visitors")
      * @ORM\JoinColumn(name="pricelist_id", referencedColumnName="id")
      */
-    private $pricelists;
+    private $pricelist;
 
    /**
     * @var boolean $isEnabled
@@ -319,51 +319,6 @@ class Visitor
         return $this->reduced;
     }
 
-
-    /**
-     * Add pricelist
-     *
-     * @param \OC\BookingBundle\Entity\Pricelist $pricelist
-     *
-     * @return Visitor
-     */
-    public function addPricelist(\OC\BookingBundle\Entity\Pricelist $pricelist)
-    {
-        $this->pricelist[] = $pricelist;
-
-        return $this;
-    }
-
-    /**
-     * Remove pricelist
-     *
-     * @param \OC\BookingBundle\Entity\Pricelist $pricelist
-     */
-    public function removePricelist(\OC\BookingBundle\Entity\Pricelist $pricelist)
-    {
-        $this->pricelist->removeElement($pricelist);
-    }
-
-    /**
-     * Get pricelist
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPricelist()
-    {
-        return $this->pricelist;
-    }
-
-    /**
-     * Get pricelists
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPricelists()
-    {
-        return $this->pricelists;
-    }
-
     /**
      * Set pricelist
      *
@@ -379,16 +334,12 @@ class Visitor
     }
 
     /**
-     * Set pricelists
+     * Get pricelist
      *
-     * @param \OC\BookingBundle\Entity\Pricelist $pricelists
-     *
-     * @return Visitor
+     * @return \OC\BookingBundle\Entity\Pricelist
      */
-    public function setPricelists(\OC\BookingBundle\Entity\Pricelist $pricelists = null)
+    public function getPricelist()
     {
-        $this->pricelists = $pricelists;
-
-        return $this;
+        return $this->pricelist;
     }
 }

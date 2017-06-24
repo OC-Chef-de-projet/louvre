@@ -27,7 +27,6 @@ class Opening
     public function isOpenTomorrow()
     {
         $check = $this->isOpen(new \DateTime('tomorrow'));
-        error_log(print_r($check,true));
         return $check['open'];
     }
 
@@ -36,7 +35,6 @@ class Opening
             $date->modify('+1 day');
             $check = $this->isOpen($date);
             if($check['open']){
-                error_log('FOUND '.$date->format('Y-m-d'));
                 return $date->format('Y-m-d');
             }
         }
@@ -107,7 +105,6 @@ class Opening
             $default['startDate'] = $this->getNextAvailable($date2);
         }
         if($ticket->getId()){
-            error_log("..".$ticket->getVisit()->format('Y-m-d'));
             // On vérifie que le musée est ouvert ce jour là
             // même si la date à déjà été saisie.
             $check = $this->isOpen($ticket->getVisit());

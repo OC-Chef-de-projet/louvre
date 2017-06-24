@@ -102,9 +102,8 @@ class Booking
             // Le calcul du demi-tarif
             $p =  $price->getPrice() / $ticket->getDuration();
             $visitor->setAmount(number_format($p,2,'.',''));
-            $visitor->setPricelists($price);
+            $visitor->setPricelist($price);
         }
-
 
         // Sauvegarde
         $this->em->persist($ticket);

@@ -52,6 +52,7 @@ class BookingController extends Controller
     {
 
 		$ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,true);
+
 		if(!$ticket->getId()){
 			return $this->redirectToRoute('oc_booking_select');
 		}
@@ -80,16 +81,16 @@ class BookingController extends Controller
     public function paymentAction(Request $request)
     {
 
+        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,true);
+        if(!$ticket->getId()){
+            return $this->redirectToRoute('oc_booking_select');
+        }
 
         $form = $this->createForm(PaymentType::class) ;
         $form->handleRequest($request);
 
-        $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,true);
-        if(!$ticket){
-            return $this->redirectToRoute('oc_booking_select');
-        }
-
         $stripe_error = '';
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $stripe_error =  $this->container->get('oc.bookingbundle.booking')->savePayment($ticket,$form->getData());

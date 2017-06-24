@@ -9,7 +9,6 @@ class StripePayment
 
     public function charge($data)
     {
-
         try {
             $stripe_error = '';
             Stripe::setApiKey("sk_test_CZT8FaxCvhqRgJmIJYGdUFzs");

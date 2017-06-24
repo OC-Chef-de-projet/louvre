@@ -27,7 +27,7 @@
 <div>
 	<h4>{% trans %}visitors{% endtrans %}</h4>
 	{% for visitor in ticket.visitors %}
-		<b>{{ visitor.surname }} {{ visitor.name }}</b> tarif : {{ visitor.pricelists.name }} ({{ visitor.amount|number_format(2, '.', '') }} &euro;)
+		<b>{{ visitor.surname }} {{ visitor.name }}</b> tarif : {{ visitor.pricelist.name }} ({{ visitor.amount|number_format(2, '.', '') }} &euro;)
 	{% endfor %}
 </div>
 
