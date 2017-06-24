@@ -70,7 +70,7 @@ class Visitor
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="visitors")
+     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="visitor")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
      */
     private $ticket;
@@ -78,7 +78,7 @@ class Visitor
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Pricelist", inversedBy="visitors")
+     * @ORM\ManyToOne(targetEntity="Pricelist", inversedBy="visitor")
      * @ORM\JoinColumn(name="pricelist_id", referencedColumnName="id")
      */
     private $pricelist;

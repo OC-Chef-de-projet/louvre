@@ -8,10 +8,7 @@ use Stripe\Error\Card;
 
 class BookingControllerTest extends WebTestCase
 {
-
-
-    //private $url = 'https://louvre.lignedemire.eu';
-    private $url = 'localhost';
+    private $url = 'https://louvre.lignedemire.eu';
 
     /**
      * Test Complet d'une commande billet

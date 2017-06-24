@@ -59,9 +59,9 @@ class Pricelist
    /**
      * @var visitor
      *
-     * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="pricelists", cascade="all", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="pricelist", cascade="all", orphanRemoval=true)
      */
-    private $visitors;
+    private $visitor;
 
     /**
      * Get id
@@ -232,5 +232,15 @@ class Pricelist
     public function getVisitors()
     {
         return $this->visitors;
+    }
+
+    /**
+     * Get visitor
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitor()
+    {
+        return $this->visitor;
     }
 }
