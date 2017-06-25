@@ -118,6 +118,10 @@ class Opening
         }
         $default['pretty'] = $this->utils->getPrettyDate($default['current']);
 
+
+        if(!$ticket->getId()){
+            $ticket->setVisit($default['current']);
+        }
         return $default;
     }
 

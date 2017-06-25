@@ -4,7 +4,6 @@ namespace OC\BookingBundle\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Stripe\Stripe;
 use Stripe\Token;
-use Stripe\Error\Card;
 
 class BookingControllerTest extends WebTestCase
 {
@@ -28,27 +27,28 @@ class BookingControllerTest extends WebTestCase
             $crawler->filter('html:contains("oc_bookingbundle_ticket")')->count()
         );
 
-        // Etape 1 - Selection des billets avec les valeurs par défaut
+        // Etape 1 - Selection des billets
         $form = $crawler->selectButton('oc_bookingbundle_ticket_save')->form();
         $crawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("visitorsTable")')->count()
         );
 
-
         // Etape 2 - Saisie des visiteurs
-        $form = $crawler->selectButton('oc_bookingbundle_ticket_save')->form();
+        $form = $crawler->selectButton('oc_bookingbundle_visitors_save')->form();
         $values = $form->getPhpValues();
 
-        $values['oc_bookingbundle_ticket']['visitors'][0]['name'] = 'name';
-        $values['oc_bookingbundle_ticket']['visitors'][0]['surname'] = 'surname';
-        $values['oc_bookingbundle_ticket']['visitors'][0]['birthday'] = '26/11/1963';
-        $values['oc_bookingbundle_ticket']['visitors'][0]['country'] = 'FR';
+        $values['oc_bookingbundle_visitors']['visitors'][0]['name'] = 'name';
+        $values['oc_bookingbundle_visitors']['visitors'][0]['surname'] = 'surname';
+        $values['oc_bookingbundle_visitors']['visitors'][0]['birthday'] = '26/11/1963';
+        $values['oc_bookingbundle_visitors']['visitors'][0]['country'] = 'FR';
 
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        //echo $client->getResponse()->getContent();
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("payment-form")')->count()

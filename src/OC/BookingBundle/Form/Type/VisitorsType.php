@@ -45,7 +45,7 @@ class VisitorsType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'oc_bookingbundle_ticket';
+        return 'oc_bookingbundle_visitors';
     }
 
 

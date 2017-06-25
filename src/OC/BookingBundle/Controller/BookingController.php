@@ -22,7 +22,6 @@ class BookingController extends Controller
     public function selectAction(Request $request)
     {
         $ticket = $this->container->get('oc.bookingbundle.booking')->getTicket($request,false);
-
         $default = $this->container->get('oc.bookingbundle.opening')->getDefaults($ticket);
 
     	$form = $this->createForm(TicketType::class, $ticket);
@@ -60,6 +59,8 @@ class BookingController extends Controller
 
         $form = $this->createForm(VisitorsType::class, $ticket) ;
         $form->handleRequest($request);
+
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->container->get('oc.bookingbundle.booking')->saveVisitors($ticket,$request);

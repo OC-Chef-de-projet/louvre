@@ -19,7 +19,6 @@ class TicketType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-           
             $builder
                 ->add('visit', DateType::class,array(
                         'attr' => array('class' => 'form-control'),
