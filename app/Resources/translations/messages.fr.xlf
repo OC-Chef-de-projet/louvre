@@ -297,8 +297,8 @@
                 <source>order_auth</source>
                 <target>Votre autorisation de paiement a été confirmée et elle est considérée comme ferme.</target>
             </trans-unit>
-            <trans-unit id="visit_document">
-                <source>visit_document</source>
+            <trans-unit id="visit_documents">
+                <source>visit_documents</source>
                 <target>Pour votre visite au musée, veuillez vous munir d'une copie imprimée de ce mail, d'une pièce d'identité pour chacun des visiteurs et d'un justificatif pour les visiteurs qui bénéficient d'un tarif réduit.</target>
             </trans-unit>
 
