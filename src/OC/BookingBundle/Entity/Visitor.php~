@@ -76,7 +76,7 @@ class Visitor
     private $reduced;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OC\BookingBundle\Entity\Ticket")
+     * @ORM\ManyToOne(targetEntity="OC\BookingBundle\Entity\Ticket", inversedBy="visitors")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ticket;
@@ -258,4 +258,52 @@ class Visitor
     }
 
   
+
+    /**
+     * Set ticket
+     *
+     * @param \OC\BookingBundle\Entity\Ticket $ticket
+     *
+     * @return Visitor
+     */
+    public function setTicket(\OC\BookingBundle\Entity\Ticket $ticket)
+    {
+        $this->ticket = $ticket;
+
+        return $this;
+    }
+
+    /**
+     * Get ticket
+     *
+     * @return \OC\BookingBundle\Entity\Ticket
+     */
+    public function getTicket()
+    {
+        return $this->ticket;
+    }
+
+    /**
+     * Set pricelist
+     *
+     * @param \OC\BookingBundle\Entity\Pricelist $pricelist
+     *
+     * @return Visitor
+     */
+    public function setPricelist(\OC\BookingBundle\Entity\Pricelist $pricelist)
+    {
+        $this->pricelist = $pricelist;
+
+        return $this;
+    }
+
+    /**
+     * Get pricelist
+     *
+     * @return \OC\BookingBundle\Entity\Pricelist
+     */
+    public function getPricelist()
+    {
+        return $this->pricelist;
+    }
 }

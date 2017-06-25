@@ -48,9 +48,10 @@ class AjaxController extends Controller
      */
     public function getListpriceAction(Request $request)
     {
+
+
         // Requête Ajax
         if ($request->isXMLHttpRequest()) {
-
 
             $response = [
                 'id' => 0,

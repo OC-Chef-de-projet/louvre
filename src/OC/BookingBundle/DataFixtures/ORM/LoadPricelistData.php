@@ -34,8 +34,8 @@ class LoadPricelistData implements FixtureInterface
 
 		$pricelist = new Pricelist();
 		$pricelist->setName('Réduit');
-		$pricelist->setAgefrom(0);
-		$pricelist->setAgeto(999);
+		$pricelist->setAgefrom(9999);
+		$pricelist->setAgeto(9999);
 		$pricelist->setPrice(10.00);
 		$pricelist->setDescription('sous conditions');
         $manager->persist($pricelist);

@@ -52,6 +52,12 @@ class Booking
         if($ticket_id){
             $repository = $this->em->getRepository('OCBookingBundle:Ticket');
             $ticket = $repository->find($ticket_id);
+            // Dans le cas où le ticket n'existe plus dans
+            // la base de données
+            if($ticket == null){
+                $ticket = new Ticket();
+                $visitors = false;
+            }
             if($visitors === true){
             	$this->initVisitors($ticket);
             }

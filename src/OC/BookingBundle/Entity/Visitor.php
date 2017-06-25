@@ -76,7 +76,7 @@ class Visitor
     private $reduced;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OC\BookingBundle\Entity\Ticket")
+     * @ORM\ManyToOne(targetEntity="OC\BookingBundle\Entity\Ticket", inversedBy="visitors")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ticket;

@@ -56,6 +56,7 @@ class Pricelist
      */
     private $description;
 
+
     /**
      * Get id
      *
@@ -190,6 +191,6 @@ class Pricelist
      */
     public function __construct()
     {
-        $this->visitors = new \Doctrine\Common\Collections\ArrayCollection();
+        
     }
 }
