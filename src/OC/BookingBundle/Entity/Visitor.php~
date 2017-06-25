@@ -75,7 +75,17 @@ class Visitor
     */
     private $reduced;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="OC\BookingBundle\Entity\Ticket")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ticket;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="OC\BookingBundle\Entity\Pricelist")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pricelist;
 
     /**
      * Get id

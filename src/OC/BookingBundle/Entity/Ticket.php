@@ -97,14 +97,7 @@ class Ticket
      */
     private $code;
 
-    /**
-     * @var visitor
-     *
-     * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="ticket", cascade="all", orphanRemoval=true)
-     * @Assert\Count(max = 10)
-     * @Assert\Valid()
-     */
-    private $visitors;
+    
 
 
 
@@ -116,7 +109,6 @@ class Ticket
         $this->setEmail('nobody@nowhere.com');
         $this->setAmount(0);
         $this->setCode('NOCODE');
-        $this->visitors = new ArrayCollection();
     }
 
 
@@ -327,37 +319,4 @@ class Ticket
         return $this->orderdate;
     }
 
-    /**
-     * Add visitor
-     *
-     * @param \OC\BookingBundle\Entity\Visitor $visitor
-     *
-     * @return Ticket
-     */
-    public function addVisitor(\OC\BookingBundle\Entity\Visitor $visitor)
-    {
-        $this->visitors[] = $visitor;
-
-        return $this;
-    }
-
-    /**
-     * Remove visitor
-     *
-     * @param \OC\BookingBundle\Entity\Visitor $visitor
-     */
-    public function removeVisitor(\OC\BookingBundle\Entity\Visitor $visitor)
-    {
-        $this->visitors->removeElement($visitor);
-    }
-
-    /**
-     * Get visitors
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVisitors()
-    {
-        return $this->visitors;
-    }
 }

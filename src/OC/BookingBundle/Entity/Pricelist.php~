@@ -56,13 +56,6 @@ class Pricelist
      */
     private $description;
 
-   /**
-     * @var visitor
-     *
-     * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="pricelist")
-     */
-    private $visitors;
-
     /**
      * Get id
      *
@@ -198,49 +191,5 @@ class Pricelist
     public function __construct()
     {
         $this->visitors = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add visitor
-     *
-     * @param \OC\BookingBundle\Entity\Visitor $visitor
-     *
-     * @return Pricelist
-     */
-    public function addVisitor(\OC\BookingBundle\Entity\Visitor $visitor)
-    {
-        $this->visitors[] = $visitor;
-
-        return $this;
-    }
-
-    /**
-     * Remove visitor
-     *
-     * @param \OC\BookingBundle\Entity\Visitor $visitor
-     */
-    public function removeVisitor(\OC\BookingBundle\Entity\Visitor $visitor)
-    {
-        $this->visitors->removeElement($visitor);
-    }
-
-    /**
-     * Get visitors
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVisitors()
-    {
-        return $this->visitors;
-    }
-
-    /**
-     * Get visitor
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVisitor()
-    {
-        return $this->visitor;
     }
 }
