@@ -60,8 +60,6 @@ class BookingController extends Controller
         $form = $this->createForm(VisitorsType::class, $ticket) ;
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->container->get('oc.bookingbundle.booking')->saveVisitors($ticket,$request);
             return $this->redirectToRoute('oc_booking_payment');

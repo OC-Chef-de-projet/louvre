@@ -31,7 +31,9 @@ class Mailer
 					'prettyDate' => $this->utils->getPrettyDate($ticket->getVisit()->format('y-m-d')),
 				)
             );
-			$this->sendMessage($ticket->getEmail(),$this->translator->trans('mail_order_date', array($ticket->getVisit()->format('d/m/Y')), 'messages'),$content);
+            $to = $ticket->getEmail();
+            $subject = $this->translator->trans('mail_order_date', array(), 'messages').' '.$ticket->getVisit()->format('d/m/Y');
+			$this->sendMessage($to,$subject,$content);
 			// Supression de la session
 			$session = $request->getSession();
         	$session->remove('ticket_id');
