@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="capacity_limit">
+                <source>capacity_limit</source>
+                <target>La capacité du musée a été atteinte, veuillez sélectionner un autre jour</target>
+            </trans-unit>
+            <trans-unit id="halfday_validation">
+                <source>halfday_validation</source>
+                <target>Vous ne pouvez pas acheter un billet journée pour le jour mếme après 14h00</target>
+            </trans-unit>
+            <trans-unit id="visit_in_past">
+                <source>visit_in_past</source>
+                <target>La machine à remonter le temps n'existe pas encore</target>
+            </trans-unit>
+            <trans-unit id="opening_message">
+                <source>opening_message</source>
+                <target>Le musée est ouvert de 9H00 à 22H00</target>
+            </trans-unit>
+            <trans-unit id="visit_in_future">
+                <source>visit_in_future</source>
+                <target>Vous ne pouvez pas commander pour une date supérieur au %future_date%</target>
+            </trans-unit>
+            <trans-unit id="closing_hour">
+                <source>closing_hour</source>
+                <target>Le musée ferme à 19h00</target>
+            </trans-unit>
+            <trans-unit id="closed_day">
+                <source>closed_day</source>
+                <target>Le musée est fermé le mardi</target>
+            </trans-unit>
+            <trans-unit id="sunday_warning">
+                <source>sunday_warning</source>
+                <target>Le musée est ouvert le dimanche, mais il n'est pas possible de réserver de
+        billets pour ce jour là.</target>
+            </trans-unit>
+            <trans-unit id="close_on_may_first">
+                <source>close_on_may_first</source>
+                <target>Le musée est fermé le 1er mai</target>
+            </trans-unit>
+            <trans-unit id="close_on_november_first">
+                <source>close_on_november_first</source>
+                <target>Le musée est fermé le 1er novembre</target>
+            </trans-unit>
+            <trans-unit id="close_on_xmass">
+                <source>close_on_xmass</source>
+                <target>Le musée est fermé le 25 décembre</target>
+            </trans-unit>
+            <trans-unit id="close_on_easter">
+                <source>close_on_easter</source>
+                <target>Le musée est fermé le jour de Pâques</target>
+            </trans-unit>
+            <trans-unit id="close_on_ascension">
+                <source>close_on_ascension</source>
+                <target>Le musée est fermé le jour de l\'Ascension</target>
+            </trans-unit>
+            <trans-unit id="close_on_pentecost">
+                <source>close_on_pentecost</source>
+                <target>Le musée est fermé le jour de la Pentcôte</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+
+
+<!--
+{% trans %}{% endtrans %}
+-->

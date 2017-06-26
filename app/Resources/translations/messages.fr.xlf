@@ -344,10 +344,13 @@
             </trans-unit>
             <trans-unit id="mail_order_date">
                 <source>mail_order_date</source>
-                <target>Musée du Louvre - Votre réservation pour le %visit_date%</target>
+                <target>Musée du Louvre - Votre réservation pour le</target>
             </trans-unit>
 
-           
+            <trans-unit id="ticket">
+                <source>ticket</source>
+                <target>Billet(s)</target>
+            </trans-unit>
 
         </body>
     </file>
