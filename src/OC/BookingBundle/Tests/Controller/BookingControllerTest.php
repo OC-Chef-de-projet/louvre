@@ -7,7 +7,8 @@ use Stripe\Token;
 
 class BookingControllerTest extends WebTestCase
 {
-    private $url = 'https://louvre.lignedemire.eu';
+    //private $url = 'https://louvre.lignedemire.eu';
+    private $url = '';
 
     /**
      * Test Complet d'une commande billet
