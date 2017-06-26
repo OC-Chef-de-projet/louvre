@@ -3,7 +3,6 @@
 namespace OC\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use OC\BookingBundle\Entity\Ticket;
 use Symfony\Component\Validator\Constraints as Assert;
 

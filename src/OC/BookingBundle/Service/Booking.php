@@ -54,7 +54,7 @@ class Booking
             $ticket = $repository->find($ticket_id);
             // Dans le cas où le ticket n'existe plus dans
             // la base de données
-            if($ticket == null){
+            if($ticket === null){
                 $ticket = new Ticket();
                 $visitors = false;
             }
