@@ -5,7 +5,7 @@ namespace OC\BookingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use OC\BookingBundle\Validator\Constraints as BookingAssert;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Ticket
  *
@@ -113,6 +113,7 @@ class Ticket
         $this->setEmail('nobody@nowhere.com');
         $this->setAmount(0);
         $this->setCode('NOCODE');
+        $this->visitors = new ArrayCollection();
     }
 
 

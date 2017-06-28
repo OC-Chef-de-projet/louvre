@@ -31,7 +31,13 @@ class BookingControllerTest extends WebTestCase
 
         // Etape 1 - Selection des billets
         $form = $crawler->selectButton('oc_bookingbundle_ticket_save')->form();
-        $crawler = $client->submit($form);
+        $values = $form->getPhpValues();
+        $values['oc_bookingbundle_ticket']['duration'] = 2;
+        $values['oc_bookingbundle_ticket']['nbticket'] = 1;
+        //$values['oc_bookingbundle_ticket']['visit'] = '';
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
+
+        //$crawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(
             0,

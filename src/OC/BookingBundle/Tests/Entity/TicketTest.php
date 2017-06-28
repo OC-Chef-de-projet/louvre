@@ -44,7 +44,8 @@ class TicketTest extends TestCase
 		$visitor->setReduced(true);
 		$ticket->addVisitor($visitor);
 		$this->assertCount(1, $ticket->getVisitors());
-		//$ticket->removeVisitor($visitor);
-		//$this->assertCount(0, $ticket->getVisitors());
+
+		$ticket->removeVisitor($visitor);
+		$this->assertCount(0, $ticket->getVisitors());
 	}
 }
