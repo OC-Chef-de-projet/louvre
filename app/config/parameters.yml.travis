@@ -1,0 +1,9 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: lelouvre
+    database_user: travis
+    database_password: ~
+    locale: fr
+    stripe_pk: pk_test_M2bgZJgDxmShbhA2gFssedfr
