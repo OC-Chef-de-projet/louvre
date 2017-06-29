@@ -5,5 +5,10 @@ parameters:
     database_name: lelouvre
     database_user: travis
     database_password: ~
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: ~
+    mailer_password: ~
+    secret: ~
     locale: fr
     stripe_pk: pk_test_M2bgZJgDxmShbhA2gFssedfr
