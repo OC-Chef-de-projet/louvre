@@ -145,7 +145,6 @@
 				var input = $(this).find("input").val();
     			displaySelectedDate(input)
 			});
-
 		});
 
 		// Sélection de la date
@@ -181,7 +180,6 @@
 					method: 'post',
 					data : {'date': date}
 				}).done(function(msg){
-					console.log(msg);
 					response = msg.open;
 				});
 			}
@@ -192,6 +190,7 @@
 		// de saisie ainsi que les hoarires d'ouverture
 		// du musée
 		function displaySelectedDate(date){
+			if(!date)return;
 			isOpen(date).done(function(value) {
 				$("#oc_bookingbundle_ticket_visit").val(value.date);
 				$('#visit').html(value.display);
