@@ -8,71 +8,68 @@
 		{% trans %}sunday_warning{% endtrans %}
 	</div>
 
+	<div class="row row-centered">
+		{{ form_start(form) }}
+			<h2>{% trans %}choose_your_visit{% endtrans %}</h2>
+			<div class="btn-group" data-toggle="buttons">
+				<label id="btn-today" class="btn btn-primary btn-lg btn-select">
+					<label for="today">{% trans %}today{% endtrans %}</label>
+					<input id="today" value="{{ default.today }}" type="radio" autocomplete="off">
+      			</label>
+      			<label id="btn-tomorrow" class="btn btn-primary btn-lg btn-select">
+					<label for="tomorrow">{% trans %}tomorrow{% endtrans %}</label>
+					<input id="tomorrow" class="ch_date" value="{{ default.tomorrow }}" autocomplete="off" type="radio">
+      			</label>
+      			<label id="btn-other" class="btn btn-primary btn-lg btn-select">
+					<label for="other">{% trans %}other_day{% endtrans %}</label>
+					<input id="other"  class="datepicker" value="" type="radio" autocomplete="off">
+      			</label>
+    		</div>
 
-  {{ form_start(form) }}
-	<h2>{% trans %}choose_your_visit{% endtrans %}</h2>
-	<div class="btn-group" data-toggle="buttons">
-		<label id="btn-today" class="btn btn-primary btn-lg btn-select">
-			<label for="today">{% trans %}today{% endtrans %}</label>
-			<input id="today" value="{{ default.today }}" type="radio" autocomplete="off">
-      	</label>
-      	<label id="btn-tomorrow" class="btn btn-primary btn-lg btn-select">
-			<label for="tomorrow">{% trans %}tomorrow{% endtrans %}</label>
-			<input id="tomorrow" class="ch_date" value="{{ default.tomorrow }}" autocomplete="off" type="radio">
-      	</label>
-      	<label id="btn-other" class="btn btn-primary btn-lg btn-select">
-			<label for="other">{% trans %}other_day{% endtrans %}</label>
-			<input id="other"  class="datepicker" value="" type="radio" autocomplete="off">
-      	</label>
-    </div>
+    		<div style="display:none">
+				{{ form_widget(form.visit) }}
+			</div>
 
-    <div style="display:none">
-		{{ form_widget(form.visit) }}
-	</div>
+    		<h3 id="visit">{{ default.pretty }}</h3>
+    		<h4 id="message"></h4>
+    		{% if form_errors(form)|length > 0 %}
+    		<div class="alert alert-danger btn-group">
+    			{{ form_errors(form) }}
+    			{{ form_errors(form.visit) }}
+    			{{ form_errors(form.nbticket)}}
+    		</div>
+    		{% endif %}
 
-    <h3 id="visit">{{ default.pretty }}</h3>
-    <h4 id="message"></h4>
-    {% if form_errors(form)|length > 0 %}
-    	<div class="alert alert-danger">
-    		{{ form_errors(form) }}
-    		{{ form_errors(form.visit) }}
-    	</div>
-    {% endif %}
+  			<h2>{% trans %}ticket_duration{% endtrans %}</h2>
+  			<div class="btn-group" data-toggle="buttons">
+  				{% for choix in form.duration %}
+				<label class="btn btn-primary btn-lg">
+					{{ form_label(choix) }}
+					{{ form_widget(choix) }}
+      			</label>
+      			{% endfor %}
+    		</div>
+			<p>{% trans %}halfday_warning{% endtrans %}</p>
 
-  	<h2>{% trans %}ticket_duration{% endtrans %}</h2>
-  	<div class="btn-group" data-toggle="buttons">
-  		{% for choix in form.duration %}
-		<label class="btn btn-primary btn-lg">
-			{{ form_label(choix) }}
-			{{ form_widget(choix) }}
-      	</label>
-      	{% endfor %}
-    </div>
-	<p>{% trans %}halfday_warning{% endtrans %}</p>
-
-
-	<h2>{% trans %}ticket_howmany{% endtrans %}</h2>
-	<div class="input-group spinner">
-		{{ form_widget(form.nbticket) }}
-    	<div class="input-group-btn-vertical">
-      		<button class="btn btn-primary btn-lg btn-select" type="button">
-      			<i class="glyphicon glyphicon-chevron-up"></i>
-      		</button>
-      		<button class="btn btn-primary btn-lg btn-select" type="button">
-      			<i class="glyphicon glyphicon-chevron-down"></i>
-      		</button>
-    	</div>
+			<h2>{% trans %}ticket_howmany{% endtrans %}</h2>
+			<div class="btn-group">
+			<div class="input-group spinner">
+				{{ form_widget(form.nbticket) }}
+    			<div class="input-group-btn-vertical">
+      				<button class="btn btn-primary btn-lg btn-select" type="button">
+      					<i class="glyphicon glyphicon-chevron-up"></i>
+      				</button>
+      				<button class="btn btn-primary btn-lg btn-select" type="button">
+      					<i class="glyphicon glyphicon-chevron-down"></i>
+      				</button>
+    			</div>
+  			</div>
+  			</div>
+			<h3>
+				{{ form_widget(form.save) }}
+			</h3>
+  		{{ form_end(form) }}
   	</div>
-  	{{ form_errors(form.nbticket)}}
-
-	<div class="row">
-		<div class="col-xs-3 col-xs-offset-6">
-			{{ form_widget(form.save) }}
-		</div>
-	</div>
-
-  {{ form_end(form) }}
-
 {% endblock %}
 
 {% block javascripts %}
