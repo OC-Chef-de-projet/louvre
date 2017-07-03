@@ -106,8 +106,9 @@
 			displaySelectedDate("{{ default.current }}");
 
 			// Mise en évidence du type de billet par défaut
-			var $duration = $('input[name="oc_bookingbundle_ticket[duration]"]:checked');
-			$duration.each(function(index, value){
+			var duration = $('input[name="oc_bookingbundle_ticket[duration]"]:checked');
+			console.log(duration);
+			duration.each(function(index, value){
 				if(value.checked){
 					$(this).closest('label').addClass("active focus");
 				}

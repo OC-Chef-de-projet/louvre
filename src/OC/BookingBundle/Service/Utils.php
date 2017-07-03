@@ -6,6 +6,7 @@ class Utils
 
     public function getPrettyDate($date)
     {
+        setlocale(LC_TIME, "fr_FR");
         $date = new \DateTime($date);
         return strftime("%A %e %B %Y", $date->getTimestamp());
     }

@@ -118,9 +118,16 @@ class Opening
         }
         $default['pretty'] = $this->utils->getPrettyDate($default['current']);
 
-
+        // valeur par défaut du ticket
         if(!$ticket->getId()){
             $ticket->setVisit($default['current']);
+            $ticket->setDuration(Ticket::DAY);
+        }
+        $today = New \DateTime('now');
+        if($today->format('Ymd') == $ticket->getVisit()->format('Ymd')){
+            if($today->format('H') >= 14){
+                $ticket->setDuration(Ticket::HALFDAY);
+            }
         }
         return $default;
     }

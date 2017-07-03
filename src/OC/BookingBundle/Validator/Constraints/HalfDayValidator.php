@@ -12,7 +12,7 @@ class HalfDayValidator extends ConstraintValidator
     {
         $today = New \DateTime('now');
         if($today->format('Ymd') == $ticket->getVisit()->format('Ymd')){
-            if($today->format('H') > 14 && $ticket->getDuration() == Ticket::DAY){
+            if($today->format('H') >= 14 && $ticket->getDuration() == Ticket::DAY){
                 $this->context->buildViolation('halfday_validation')->addViolation();
             }
         }
