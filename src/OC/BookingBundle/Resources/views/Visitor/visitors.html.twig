@@ -14,48 +14,59 @@
 	{{ render(controller("OCBookingBundle:Pricelist:list",{ 'coeff':ticket.duration} ))  }}
 
 	{{ form_start(form) }}
-		<table class="table" id="visitorsTable">
-			<thead>
-				<tr>
-					<th>{% trans %}surname{% endtrans %}</th>
-					<th>{% trans %}name{% endtrans %}</th>
-					<th>{% trans %}country{% endtrans %}</th>
-					<th>{% trans %}birthday{% endtrans %}</th>
-					<th>{% trans %}pricelist{% endtrans %}</th>
-					<th>{% trans %}amount{% endtrans %}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for visitor in form.visitors %}
-				<tr id="user_{{ loop.index }}">
-					<td>{{ form_widget(visitor.surname) }}</td>
-					<td>{{ form_widget(visitor.name) }}</td>
-					<td>{{ form_widget(visitor.country) }}</td>
-					<td>{{ form_widget(visitor.birthday, { 'attr': {'class': 'datepicker'} } ) }}</td>
-					<td>
-						<span id="pricelist_{{ loop.index }}">&nbsp;</span><br>
-						<span id="reduced_{{ loop.index }}">
-						{{ form_widget(visitor.reduced, { 'attr': {'class': 'reduced'} }) }}&nbsp; {{ form_label(visitor.reduced) }}
-						</span>
-
-					</td>
-					<td class="text-right amount">
-						<span id="amount_{{ loop.index }}">&nbsp;</span>&nbsp;&euro;
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="5" class="text-right">{% trans %}total{% endtrans %}</th>
-					<th class="text-right">
-						<span id="total">0.00</span> &euro;
-					</th>
-				</tr>
-			</tfoot>
-		</table>
 		<div class="row">
-			<div class="col-xs-3">
+			<div class="hidden-xs col-sm-2"><b>{% trans %}surname{% endtrans %}</b></div>
+			<div class="hidden-xs col-sm-2"><b>{% trans %}name{% endtrans %}</b></div>
+			<div class="hidden-xs col-sm-2"><b>{% trans %}country{% endtrans %}</b></div>
+			<div class="hidden-xs col-sm-2"><b>{% trans %}birthday{% endtrans %}</b></div>
+			<div class="hidden-xs col-sm-2"><b>{% trans %}pricelist{% endtrans %}</b></div>
+			<div class="hidden-xs col-sm-2 text-right"><b>{% trans %}amount{% endtrans %}</b></div>
+		</div>
+		{% for visitor in form.visitors %}
+		<div class="row visitorsTable" id="user_{{ loop.index }}">
+			<div class="hidden-sm hidden-md hidden-lg col-xs-12"><b>{% trans %}surname{% endtrans %}</b></div>
+			<div class="col-xs-12 col-sm-2">
+				{{ form_widget(visitor.surname) }}
+			</div>
+
+			<div class="hidden-sm hidden-md hidden-lg col-xs-12"><b>{% trans %}name{% endtrans %}</b></div>
+			<div class="col-xs-12 col-sm-2">
+				{{ form_widget(visitor.name) }}
+			</div>
+
+			<div class="hidden-sm hidden-md hidden-lg col-xs-12"><b>{% trans %}country{% endtrans %}</b></div>
+			<div class="col-xs-12 col-sm-2">
+				{{ form_widget(visitor.country) }}
+			</div>
+
+			<div class="hidden-sm hidden-md hidden-lg col-xs-12"><b>{% trans %}birthday{% endtrans %}</b></div>
+			<div class="col-xs-12 col-sm-2">
+				{{ form_widget(visitor.birthday, { 'attr': {'class': 'datepicker'} } ) }}
+			</div>
+
+			<div class="hidden-sm hidden-md hidden-lg col-xs-12"><b>{% trans %}pricelist{% endtrans %}</b></div>
+			<div class="col-xs-12 col-sm-3">
+				<span id="pricelist_{{ loop.index }}">&nbsp;</span>&nbsp;
+				<span id="reduced_{{ loop.index }}">
+					{{ form_widget(visitor.reduced, { 'attr': {'class': 'reduced'} }) }}&nbsp; {{ form_label(visitor.reduced) }}
+				</span>
+			</div>
+
+			<div class="hidden-sm hidden-md hidden-lg col-xs-12 text-right"><b>{% trans %}amount{% endtrans %}</b></div>
+			<div class="col-xs-12 col-sm-1 text-right amount">
+				<span id="amount_{{ loop.index }}">&nbsp;</span>&nbsp;&euro;
+			</div>
+		</div>
+		{% endfor %}
+		<div class="row">
+			<hr>
+			<div class="col-xs-10 text-right"><b>{% trans %}total{% endtrans %}</b></div>
+			<div class="col-xs-2 text-right"><b><span id="total">0.00</span> &euro;</b></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">&nbsp;</div>
+			<div class="col-xs-12 col-sm-2">
+				<br/>
 				{{ form_widget(form.save) }}
 			</div>
 		</div>
@@ -90,7 +101,7 @@
 		$('.datepicker').datepicker()
     		.on('hide', function(e) {
     			// Est-ce que la case "tarif reduit" est cochée
-    			var tr_id = $(this).closest('tr').attr('id');
+    			var tr_id = $(this).closest('div').parent().attr('id');
     			var re = tr_id.replace('user_','reduced_');
     			var reduce = $('#' + re).children("input").attr('id');
     			var checked = $('#' + reduce).is(':checked');
@@ -99,8 +110,8 @@
 
     	// Mise à jour du tarif click tarif réduit
     	$(".reduced").change(function() {
-    		var tr_id = $(this).closest('tr').attr('id');
-    		var input_id = $(this).closest('td').prev('td').find('input').attr('id');
+    		var tr_id = $(this).closest('div').parent().attr('id');
+    		var input_id = $(this).closest('div').prev('div').find('input').attr('id');
     		var birthday = $('#' + input_id).val();
     		if($(this).is(':checked')) {
     			getPrice(birthday,1,this);
@@ -122,7 +133,7 @@
 	// Calcule le prix total de la commande
 	function totalPrice(){
 		var total = 0;
- 		$('#visitorsTable').find("tbody").find("tr").each(function(){
+ 		$('.visitorsTable').each(function(){
  			var amount = $(this).find(".amount").text();
  			if(!amount.trim())amount = '0.00';
 	    	total =  parseFloat(total) +  parseFloat(amount);
@@ -133,7 +144,7 @@
 	// Rechercdu prix
 	function getPrice(birthday,reduced, target){
 		getPriceList(birthday,reduced, function(data){
-    		var tr_id = $(target).closest('tr').attr('id');
+    		var tr_id = $(target).closest('div').parent().attr('id');
     		var pl = tr_id.replace('user_','pricelist_');
     		$('#' + pl).html(data.name);
 

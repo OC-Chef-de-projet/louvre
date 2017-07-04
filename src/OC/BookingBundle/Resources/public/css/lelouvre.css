@@ -2,10 +2,10 @@ h1 {
 	color: white;
 }
 
+
 nav {
 	background-color: black;
 }
-
 
 .spinner {
   width: 100px;
@@ -14,6 +14,7 @@ nav {
 .spinner input {
   text-align: right;
 }
+
 .input-group-btn-vertical {
   position: relative;
   white-space: nowrap;
