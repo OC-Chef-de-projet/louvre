@@ -17,3 +17,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: 2564qs45fDFFce81154qsfg88
+
+    locale: fr
+    stripe_pk: pk_test_M2bgZJgDxmShbhA2gFssedfr
