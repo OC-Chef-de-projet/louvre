@@ -3,11 +3,10 @@
 namespace OC\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use OC\BookingBundle\Entity\Ticket;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Visitor
+ * Visitor.
  *
  * @ORM\Table(name="visitor")
  * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\VisitorRepository")
@@ -49,7 +48,6 @@ class Visitor
      */
     private $birthday;
 
-
     /**
      * @var string
      *
@@ -66,12 +64,12 @@ class Visitor
      */
     private $amount;
 
-   /**
-    * @var boolean $isEnabled
-    *
-    * @ORM\Column(name="reduced", type="boolean")
-    * @Assert\Type("bool")
-    */
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="reduced", type="boolean")
+     * @Assert\Type("bool")
+     */
     private $reduced;
 
     /**
@@ -87,7 +85,7 @@ class Visitor
     private $pricelist;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -97,7 +95,7 @@ class Visitor
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -111,7 +109,7 @@ class Visitor
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -121,7 +119,7 @@ class Visitor
     }
 
     /**
-     * Set surname
+     * Set surname.
      *
      * @param string $surname
      *
@@ -135,7 +133,7 @@ class Visitor
     }
 
     /**
-     * Get surname
+     * Get surname.
      *
      * @return string
      */
@@ -145,7 +143,7 @@ class Visitor
     }
 
     /**
-     * Set birthday
+     * Set birthday.
      *
      * @param \DateTime $birthday
      *
@@ -154,11 +152,12 @@ class Visitor
     public function setBirthday($birthday)
     {
         $this->birthday = $birthday;
+
         return $this;
     }
 
     /**
-     * Get birthday
+     * Get birthday.
      *
      * @return \DateTime
      */
@@ -167,11 +166,8 @@ class Visitor
         return $this->birthday;
     }
 
- 
- 
-
     /**
-     * Set country
+     * Set country.
      *
      * @param string $country
      *
@@ -185,7 +181,7 @@ class Visitor
     }
 
     /**
-     * Get country
+     * Get country.
      *
      * @return string
      */
@@ -194,10 +190,8 @@ class Visitor
         return $this->country;
     }
 
-   
-
     /**
-     * Set amount
+     * Set amount.
      *
      * @param string $amount
      *
@@ -211,7 +205,7 @@ class Visitor
     }
 
     /**
-     * Get amount
+     * Get amount.
      *
      * @return string
      */
@@ -220,22 +214,18 @@ class Visitor
         return $this->amount;
     }
 
-    
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         $this->setAmount(0);
-
-       
     }
 
-  
     /**
-     * Set reduced
+     * Set reduced.
      *
-     * @param boolean $reduced
+     * @param bool $reduced
      *
      * @return Visitor
      */
@@ -247,19 +237,17 @@ class Visitor
     }
 
     /**
-     * Get reduced
+     * Get reduced.
      *
-     * @return boolean
+     * @return bool
      */
     public function getReduced()
     {
         return $this->reduced;
     }
 
-  
-
     /**
-     * Set ticket
+     * Set ticket.
      *
      * @param \OC\BookingBundle\Entity\Ticket $ticket
      *
@@ -273,7 +261,7 @@ class Visitor
     }
 
     /**
-     * Get ticket
+     * Get ticket.
      *
      * @return \OC\BookingBundle\Entity\Ticket
      */
@@ -283,7 +271,7 @@ class Visitor
     }
 
     /**
-     * Set pricelist
+     * Set pricelist.
      *
      * @param \OC\BookingBundle\Entity\Pricelist $pricelist
      *
@@ -297,7 +285,7 @@ class Visitor
     }
 
     /**
-     * Get pricelist
+     * Get pricelist.
      *
      * @return \OC\BookingBundle\Entity\Pricelist
      */

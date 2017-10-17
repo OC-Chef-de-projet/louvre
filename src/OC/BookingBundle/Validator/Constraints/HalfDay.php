@@ -1,4 +1,5 @@
 <?php
+
 namespace OC\BookingBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
@@ -8,8 +9,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class HalfDay extends Constraint
 {
-	public function getTargets()
-	{
-    	return self::CLASS_CONSTRAINT;
-	}
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
+    }
 }

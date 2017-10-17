@@ -1,18 +1,22 @@
 <?php
+
 namespace OC\BookingBundle\Twig;
+
 use Symfony\Component\Intl\Intl;
 
 class CountryExtension extends \Twig_Extension
 {
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('country', array($this, 'country')),
-        );
+        return [
+            new \Twig_SimpleFilter('country', [$this, 'country']),
+        ];
     }
 
-    public function country($countryCode){
-    	\Locale::setDefault('fr');
+    public function country($countryCode)
+    {
+        \Locale::setDefault('fr');
+
         return Intl::getRegionBundle()->getCountryName($countryCode);
     }
 
@@ -21,4 +25,3 @@ class CountryExtension extends \Twig_Extension
         return 'country_extension';
     }
 }
-

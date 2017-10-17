@@ -1,4 +1,5 @@
 <?php
+
 namespace OC\BookingBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
@@ -8,16 +9,15 @@ use Symfony\Component\Validator\Constraint;
  */
 class Capacity extends Constraint
 {
+    public $max = 0;
 
-	public $max = 0;
-
-	public function validatedBy()
+    public function validatedBy()
     {
         return 'oc_bookingbundle_validator_capacity';
     }
 
-   	public function getTargets()
-	{
-    	return self::CLASS_CONSTRAINT;
-	}
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
+    }
 }

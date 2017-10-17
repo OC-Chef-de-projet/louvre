@@ -1,9 +1,10 @@
 <?php
+
 namespace OC\BookingBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Stripe\Stripe;
 use Stripe\Token;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BookingControllerTest extends WebTestCase
 {
@@ -11,7 +12,7 @@ class BookingControllerTest extends WebTestCase
     private $url = '';
 
     /**
-     * Test Complet d'une commande billet
+     * Test Complet d'une commande billet.
      *
      * @return [type] [description]
      */
@@ -23,7 +24,7 @@ class BookingControllerTest extends WebTestCase
         $client->enableProfiler();
         $crawler = $client->request('GET', $this->url);
         $client->followRedirects(true);
-        $this->assertEquals(200,  $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("oc_bookingbundle_ticket")')->count()
@@ -43,7 +44,6 @@ class BookingControllerTest extends WebTestCase
             0,
             $crawler->filter('html:contains("visitorsTable")')->count()
         );
-        
 
         // Etape 2 - Saisie des visiteurs
         $form = $crawler->selectButton('oc_bookingbundle_visitors_save')->form();
@@ -61,7 +61,7 @@ class BookingControllerTest extends WebTestCase
             $crawler->filter('html:contains("payment-form")')->count()
         );
 
-        Stripe::setApiKey("sk_test_CZT8FaxCvhqRgJmIJYGdUFzs");
+        Stripe::setApiKey('sk_test_CZT8FaxCvhqRgJmIJYGdUFzs');
 
         // Etape 3 - Paiement
         $testDate = new \DateTime('now +1 year');
@@ -74,17 +74,17 @@ class BookingControllerTest extends WebTestCase
         $values['payment']['expyear'] = $testDate->format('Y');
         $values['payment']['cvv'] = '123';
 
-        Stripe::setApiKey("sk_test_CZT8FaxCvhqRgJmIJYGdUFzs");
-        $token = Token::create(array(
-            "card" => array(
-                "number" => "4242424242424242",
-                "exp_month" => '01',
-                "exp_year" => $testDate->format('Y'),
-                "cvc" => "123"
-            )
-        ));
+        Stripe::setApiKey('sk_test_CZT8FaxCvhqRgJmIJYGdUFzs');
+        $token = Token::create([
+            'card' => [
+                'number'    => '4242424242424242',
+                'exp_month' => '01',
+                'exp_year'  => $testDate->format('Y'),
+                'cvc'       => '123',
+            ],
+        ]);
 
-        $values['payment']['token'] =  $token['id'];
+        $values['payment']['token'] = $token['id'];
         $profile = $client->getProfile();
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -99,9 +99,8 @@ class BookingControllerTest extends WebTestCase
         $this->assertEquals('ps.augereau@gmail.com', key($message->getTo()));
     }
 
-
     /**
-     * Test de réservation pour les jours de fermeture
+     * Test de réservation pour les jours de fermeture.
      *
      * @return [type] [description]
      */
@@ -112,12 +111,11 @@ class BookingControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', $this->url);
         $client->followRedirects(true);
-        $this->assertEquals(200,  $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("oc_bookingbundle_ticket")')->count()
         );
-
 
         $form = $crawler->selectButton('oc_bookingbundle_ticket_save')->form();
         $values = $form->getPhpValues();
@@ -155,7 +153,5 @@ class BookingControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', $this->url.'/checkout');
         $this->assertTrue($client->getResponse()->isRedirect());
-
     }
 }
-

@@ -2,12 +2,13 @@
 
 namespace OC\BookingBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use OC\BookingBundle\Validator\Constraints as BookingAssert;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
+
 /**
- * Ticket
+ * Ticket.
  *
  * @ORM\Table(name="ticket")
  * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\TicketRepository")
@@ -17,7 +18,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Ticket
 {
-    /**  */
     const DAY = 1;
     const HALFDAY = 2;
 
@@ -97,28 +97,25 @@ class Ticket
     private $code;
 
     /**
-     *
      * @ORM\OneToMany(targetEntity="OC\BookingBundle\Entity\Visitor", mappedBy="ticket", cascade="all", orphanRemoval=true)
      * @Assert\Count(max = 10)
      * @Assert\Valid()
      */
     private $visitors;
 
-
     public function __construct()
     {
-    	// valeurs par défault à la création
+        // valeurs par défault à la création
         $this->setNbticket(1);
-        $this->setDuration(Ticket::DAY);
+        $this->setDuration(self::DAY);
         $this->setEmail('nobody@nowhere.com');
         $this->setAmount(0);
         $this->setCode('NOCODE');
         $this->visitors = new ArrayCollection();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -128,7 +125,7 @@ class Ticket
     }
 
     /**
-     * Set visit
+     * Set visit.
      *
      * @param \DateTime $visit
      *
@@ -136,16 +133,17 @@ class Ticket
      */
     public function setVisit($visit)
     {
-        if(is_object($visit)){
+        if (is_object($visit)) {
             $this->visit = $visit;
         } else {
             $this->visit = new \DateTime($visit);
         }
+
         return $this;
     }
 
     /**
-     * Get visit
+     * Get visit.
      *
      * @return \DateTime
      */
@@ -155,9 +153,9 @@ class Ticket
     }
 
     /**
-     * Set duration
+     * Set duration.
      *
-     * @param integer $duration
+     * @param int $duration
      *
      * @return Ticket
      */
@@ -169,7 +167,7 @@ class Ticket
     }
 
     /**
-     * Get duration
+     * Get duration.
      *
      * @return int
      */
@@ -179,7 +177,7 @@ class Ticket
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      *
@@ -193,7 +191,7 @@ class Ticket
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -203,9 +201,9 @@ class Ticket
     }
 
     /**
-     * Set nbticket
+     * Set nbticket.
      *
-     * @param integer $nbticket
+     * @param int $nbticket
      *
      * @return Ticket
      */
@@ -217,7 +215,7 @@ class Ticket
     }
 
     /**
-     * Get nbticket
+     * Get nbticket.
      *
      * @return int
      */
@@ -227,7 +225,7 @@ class Ticket
     }
 
     /**
-     * Set amount
+     * Set amount.
      *
      * @param string $amount
      *
@@ -241,7 +239,7 @@ class Ticket
     }
 
     /**
-     * Get amount
+     * Get amount.
      *
      * @return string
      */
@@ -250,10 +248,8 @@ class Ticket
         return $this->amount;
     }
 
-  
-
     /**
-     * Set code
+     * Set code.
      *
      * @param string $code
      *
@@ -267,7 +263,7 @@ class Ticket
     }
 
     /**
-     * Get code
+     * Get code.
      *
      * @return string
      */
@@ -277,7 +273,7 @@ class Ticket
     }
 
     /**
-     * Set paymentdate
+     * Set paymentdate.
      *
      * @param \DateTime $paymentdate
      *
@@ -291,7 +287,7 @@ class Ticket
     }
 
     /**
-     * Get paymentdate
+     * Get paymentdate.
      *
      * @return \DateTime
      */
@@ -301,7 +297,7 @@ class Ticket
     }
 
     /**
-     * Set orderdate
+     * Set orderdate.
      *
      * @param \DateTime $orderdate
      *
@@ -315,7 +311,7 @@ class Ticket
     }
 
     /**
-     * Get orderdate
+     * Get orderdate.
      *
      * @return \DateTime
      */
@@ -324,9 +320,8 @@ class Ticket
         return $this->orderdate;
     }
 
-
     /**
-     * Add visitor
+     * Add visitor.
      *
      * @param \OC\BookingBundle\Entity\Visitor $visitor
      *
@@ -340,7 +335,7 @@ class Ticket
     }
 
     /**
-     * Remove visitor
+     * Remove visitor.
      *
      * @param \OC\BookingBundle\Entity\Visitor $visitor
      */
@@ -350,7 +345,7 @@ class Ticket
     }
 
     /**
-     * Get visitors
+     * Get visitors.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
