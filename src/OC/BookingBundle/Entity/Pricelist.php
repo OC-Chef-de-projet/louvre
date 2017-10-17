@@ -5,7 +5,7 @@ namespace OC\BookingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Pricelist
+ * Pricelist.
  *
  * @ORM\Table(name="pricelist")
  * @ORM\Entity(repositoryClass="OC\BookingBundle\Repository\PricelistRepository")
@@ -56,9 +56,8 @@ class Pricelist
      */
     private $description;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -68,7 +67,7 @@ class Pricelist
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -82,7 +81,7 @@ class Pricelist
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -92,9 +91,9 @@ class Pricelist
     }
 
     /**
-     * Set agefrom
+     * Set agefrom.
      *
-     * @param integer $agefrom
+     * @param int $agefrom
      *
      * @return pricelist
      */
@@ -106,7 +105,7 @@ class Pricelist
     }
 
     /**
-     * Get agefrom
+     * Get agefrom.
      *
      * @return int
      */
@@ -116,9 +115,9 @@ class Pricelist
     }
 
     /**
-     * Set ageto
+     * Set ageto.
      *
-     * @param integer $ageto
+     * @param int $ageto
      *
      * @return pricelist
      */
@@ -130,7 +129,7 @@ class Pricelist
     }
 
     /**
-     * Get ageto
+     * Get ageto.
      *
      * @return int
      */
@@ -140,7 +139,7 @@ class Pricelist
     }
 
     /**
-     * Set price
+     * Set price.
      *
      * @param string $price
      *
@@ -154,7 +153,7 @@ class Pricelist
     }
 
     /**
-     * Get price
+     * Get price.
      *
      * @return string
      */
@@ -164,7 +163,7 @@ class Pricelist
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -178,7 +177,7 @@ class Pricelist
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -186,11 +185,11 @@ class Pricelist
     {
         return $this->description;
     }
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        
     }
 }

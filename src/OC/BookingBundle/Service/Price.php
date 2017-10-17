@@ -1,11 +1,11 @@
 <?php
+
 namespace OC\BookingBundle\Service;
+
 use Doctrine\ORM\EntityManager;
-use OC\BookingBundle\Service\Utils;
 
 class Price
 {
-
     private $em;
     private $utils;
 
@@ -17,35 +17,37 @@ class Price
 
     /**
      * Donne le prix d'un ticket en fonction de l'age
-     * et de la durée de la visite
+     * et de la durée de la visite.
      *
-     * @param  \DateTime $birthday
-     * @param  [type]    $duration journée ou 1/2 journée
+     * @param \DateTime $birthday
+     * @param [type]    $duration journée ou 1/2 journée
+     *
      * @return Pricelist
      */
-    public function getTicketPrice(\DateTime $birthday,$reduced = 0)
+    public function getTicketPrice(\DateTime $birthday, $reduced = 0)
     {
-
-        if($reduced == 'true'){
+        if ($reduced == 'true') {
             $reduced = 1;
         }
 
-        if($reduced == 'false'){
+        if ($reduced == 'false') {
             $reduced = 0;
         }
 
         $age = $this->utils->getAge($birthday->format('Y-m-d'));
 
-        if($reduced == 1){
+        if ($reduced == 1) {
             $age = 9999;
         }
         $tariff = $this->em->getRepository('OCBookingBundle:Pricelist')->getWithAge($age);
+
         return $tariff;
     }
 
     public function getTotalPrice($ticket_id)
     {
         $total = $this->em->getRepository('OCBookingBundle:Visitor')->getTotalAmount($ticket_id);
+
         return $total;
     }
 }

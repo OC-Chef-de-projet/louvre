@@ -1,4 +1,5 @@
 <?php
+
 namespace OC\BookingBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
@@ -8,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class Isopen extends Constraint
 {
-	public function validatedBy()
+    public function validatedBy()
     {
         return 'oc_bookingbundle_validator_isopen';
     }

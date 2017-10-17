@@ -1,22 +1,24 @@
 <?php
+
 namespace OC\BookingBundle\Service;
 
 class Utils
 {
-
     public function getPrettyDate($date)
     {
-        setlocale(LC_TIME, "fr_FR");
+        setlocale(LC_TIME, 'fr_FR');
         $date = new \DateTime($date);
-        return strftime("%A %e %B %Y", $date->getTimestamp());
+
+        return strftime('%A %e %B %Y', $date->getTimestamp());
     }
 
-    public function getAge($date) {
+    public function getAge($date)
+    {
         $age = date('Y') - date('Y', strtotime($date));
         if (date('md') < date('md', strtotime($date))) {
             return $age - 1;
         }
+
         return $age;
     }
 }
-

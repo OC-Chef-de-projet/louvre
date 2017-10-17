@@ -20,15 +20,15 @@ class PricelistType extends AbstractType
             ->add('price')
             ->add('description');
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'OC\BookingBundle\Entity\Pricelist'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'OC\BookingBundle\Entity\Pricelist',
+        ]);
     }
 
     /**
@@ -38,6 +38,4 @@ class PricelistType extends AbstractType
     {
         return 'oc_bookingbundle_pricelist';
     }
-
-
 }

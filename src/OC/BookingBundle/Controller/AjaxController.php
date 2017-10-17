@@ -1,20 +1,22 @@
 <?php
+
 namespace OC\BookingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Fonctions Ajax
+ * Fonctions Ajax.
  */
 class AjaxController extends Controller
 {
     /**
      * Retourne si le musée est ouvert ou non
-     * pour le jour demandé
+     * pour le jour demandé.
      *
-     * @param  Request $request Json
+     * @param Request $request Json
+     *
      * @return array
      */
     public function getOpeningAction(Request $request)
@@ -22,42 +24,42 @@ class AjaxController extends Controller
         $opening = $this->container->get('oc.bookingbundle.opening');
         // Requête Ajax
         if ($request->isXMLHttpRequest()) {
-            $errors = array();
+            $errors = [];
             $date = $request->get('date');
-            $date = new \DateTime(date("Y-m-d", strtotime($date)));
+            $date = new \DateTime(date('Y-m-d', strtotime($date)));
             setlocale(LC_ALL, 'fr_FR');
 
             $check = $opening->isOpen($date);
+
             return new JsonResponse(
                 [
-                    'date' => $date->format('Y-m-d'),
-                    'display' => strftime("%A %e %B %Y", $date->getTimestamp()),
-                    'open' => $check['open'],
+                    'date'    => $date->format('Y-m-d'),
+                    'display' => strftime('%A %e %B %Y', $date->getTimestamp()),
+                    'open'    => $check['open'],
                     'message' => $check['message'],
-                    'errors' => $errors
+                    'errors'  => $errors,
                 ]
             );
         }
     }
 
     /**
-     * Retourne un prix en fonction de la date de naissance
+     * Retourne un prix en fonction de la date de naissance.
      *
-     * @param  Request $request Json
+     * @param Request $request Json
+     *
      * @return array
      */
     public function getListpriceAction(Request $request)
     {
 
-
         // Requête Ajax
         if ($request->isXMLHttpRequest()) {
-
             $response = [
-                'id' => 0,
-                'name' => '',
+                'id'          => 0,
+                'name'        => '',
                 'description' => '',
-                'price' => 0
+                'price'       => 0,
             ];
 
             $birthday = $request->get('birthday');
@@ -65,7 +67,7 @@ class AjaxController extends Controller
             $reduced = $request->get('reduced');
 
             // Date à la française
-            if(preg_match('#/#',$birthday)){
+            if (preg_match('#/#', $birthday)) {
                 $birthday = \DateTime::createFromFormat('d/m/Y', $birthday);
                 $birthday = $birthday->format('Y-m-d');
             }
@@ -76,12 +78,13 @@ class AjaxController extends Controller
                 $reduced
             );
 
-            if($tariff){
+            if ($tariff) {
                 $response['id'] = $tariff->getId();
                 $response['name'] = $tariff->getName();
                 $response['description'] = $tariff->getDescription();
-                $response['price'] = number_format($tariff->getPrice() / $duration,2,'.','');
+                $response['price'] = number_format($tariff->getPrice() / $duration, 2, '.', '');
             }
+
             return new JsonResponse($response);
         }
     }
