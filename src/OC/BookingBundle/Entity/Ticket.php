@@ -110,7 +110,7 @@ class Ticket
     	// valeurs par défault à la création
         $this->setNbticket(1);
         $this->setDuration(Ticket::DAY);
-        $this->setEmail('nobody@nowhere.com');
+        $this->setEmail('nobody@gmail.com');
         $this->setAmount(0);
         $this->setCode('NOCODE');
         $this->visitors = new ArrayCollection();
